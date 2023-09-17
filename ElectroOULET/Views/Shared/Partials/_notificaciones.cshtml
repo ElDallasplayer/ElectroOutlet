@@ -1,0 +1,106 @@
+﻿@using PrincipalObjects.Objects
+@model List<Notification>
+
+@{
+    string tableClass= "";
+}
+<div class="dropdown-item">
+
+    @if (Model.Count > 0)
+    {
+        @foreach (Notification noti in Model)
+        {
+            <div class="row p-0 m-0" style="">
+                <div class="col-12 p-0 m-0">
+                    @if (noti.NotificationType == PrincipalObjects.Enums.nType.Aviso)
+                    {
+                        tableClass = "primary";
+                    }
+                    else if (noti.NotificationType == PrincipalObjects.Enums.nType.Alerta)
+                    {
+                        tableClass = "warning";
+                    }
+                    else if (noti.NotificationType == PrincipalObjects.Enums.nType.Error)
+                    {
+                        tableClass = "danger";
+                    }
+                    else if (noti.NotificationType == PrincipalObjects.Enums.nType.Exitoso)
+                    {
+                        tableClass = "success";
+                    }
+
+                     <table class="table table-@tableClass">
+                        <thead>
+                            <tr>
+                                <div scope="col" class="fw-bolder tableUp p-1 titlenot-@tableClass text-white">@noti.Message.ToUpper() <i class="mdi mdi-close-box fw-bolder NotificationButton" id="@noti.Id" style="font-size:20px; cursor: pointer;"></i></div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <div class="table-light tableDown p-1  bodynot-@tableClass" scope="row">@noti.Description</div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="row m-2">
+            <div class="col-12 p-0 m-0">
+                <div>
+                    <span>Sin notificaciones</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+
+    .titlenot-primary{
+        background-color: #0d6efd !important;
+    }
+    .titlenot-warning{
+        background-color: #ffc107 !important;
+    }
+    .titlenot-danger{
+        background-color: #dc3545 !important;
+    }
+    .titlenot-success{
+        background-color: #198754 !important;
+    }
+
+    .tableUp{
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
+        border: solid 2px black !important;
+    }
+
+    .tableDown{
+        border-bottom-left-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+        border: solid 2px black !important;
+    }
+
+    .tableFather{
+         border:solid 5px black !important;
+    }
+</style>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(".NotificationButton").on("click", (e) => {
+            let id = e.target.getAttribute("id");
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EliminarNotificacion", "Notification")?id=' + id,
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+        })
+    </script>
+

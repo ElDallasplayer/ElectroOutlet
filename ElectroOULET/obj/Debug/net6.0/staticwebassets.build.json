@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7drxYOH2rvQBMJZUjMLBKFrsQ8tNv1R+8HTf9BddEEI=",
+  "Hash": "8SixAbM8Do8P4SoHGiWv+fY+Q/trZpN50cbWYw5gfZw=",
   "Source": "ElectroOULET",
   "BasePath": "_content/ElectroOULET",
   "Mode": "Default",
@@ -185,6 +185,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\mvc-grid.css"
+    },
+    {
+      "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\mvc-grid\\fonts\\grid-glyphs.woff",
+      "SourceId": "ElectroOULET",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\",
+      "BasePath": "_content/ElectroOULET",
+      "RelativePath": "css/mvc-grid/fonts/grid-glyphs.woff",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\mvc-grid\\fonts\\grid-glyphs.woff"
+    },
+    {
+      "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\mvc-grid\\mvc-grid.css",
+      "SourceId": "ElectroOULET",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\",
+      "BasePath": "_content/ElectroOULET",
+      "RelativePath": "css/mvc-grid/mvc-grid.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\mvc-grid\\mvc-grid.css"
     },
     {
       "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\site.css",
@@ -678,6 +712,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\mvc-grid.js"
+    },
+    {
+      "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid\\mvc-grid.js",
+      "SourceId": "ElectroOULET",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\",
+      "BasePath": "_content/ElectroOULET",
+      "RelativePath": "js/mvc-grid/mvc-grid.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\mvc-grid\\mvc-grid.js"
     },
     {
       "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid-extencion.js",

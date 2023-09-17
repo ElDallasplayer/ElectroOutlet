@@ -27,5 +27,13 @@ namespace PrincipalObjects
             Update = 2,
             Delete = 4
         }
+
+        public enum nType
+        {
+            Aviso = 0,
+            Alerta = 1,
+            Error = 2,
+            Exitoso = 4
+        }
     }
 }

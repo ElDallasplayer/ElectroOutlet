@@ -14,6 +14,8 @@ namespace PrincipalObjects.Objects
         public bool EsAdmin { get; set; }
         public bool Delete { get; set; }
 
+        public List<Notification> Notifications { get; set; }
+
         #region dbObject
         string TableName = "oUsers";
         string[] ColNames = new string[5] {
@@ -42,6 +44,8 @@ namespace PrincipalObjects.Objects
                     Delete = Convert.ToBoolean(userFromDB.rows[0].Deleted.Value.ToString())
                 };
 
+                user.Notifications = new Notification().GetNotifications();
+
                 return user;
             }catch (Exception ex)
             {
@@ -69,6 +73,8 @@ namespace PrincipalObjects.Objects
                             EsAdmin = Convert.ToBoolean(user.isAdmin.Value.ToString()),
                             Delete = Convert.ToBoolean(user.Deleted.Value.ToString())
                         };
+
+                        userToList.Notifications = new Notification().GetNotifications();
                         users.Add(userToList);
                     }
                     catch (Exception ex)

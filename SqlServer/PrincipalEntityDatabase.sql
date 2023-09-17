@@ -1,9 +1,9 @@
-CREATE TABLE [oUsers] (
-  [id] integer PRIMARY KEY,
-  [username] nvarchar(255),
-  [password] nvarchar(255),
-  [isAdmin] bit,
-  [Deleted] bit
+CREATE TABLE [oNotifications] (
+  [notId] integer PRIMARY KEY,
+  [userId] integer,
+  [notMessage] varchar(255),
+  [notDescription] varchar(255),
+  [notType] integer
 )
 GO
 

@@ -1,10 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using PrincipalObjects.Objects
+@model List<Report>
+
 @{
+    User user = (User)ViewData["ActiveUser"];
     ViewData["Title"] = "Reportes";
 }
 
-<div>
+<div class="hasBlur">
+</div>
+<div class="row p-0 mt-4">
+
+    @foreach (Report rep in Model)
+    {
+        <div class="row p-0 m-0 justify-content-start">
+            <div class="card mt-2 col-12 ">
+                <div class="row p-0 m-0">
+                    <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
+                    <div class="col-4"><h5 class="">@rep.Name</h5></div>
+                    <div class="col-4"><h5 class="">@rep.Description</h5></div>
+                    <div class="col-1" id="@rep.Id"><i class="mdi mdi-pencil ReportIconEdit"></i></div>
+                    <div class="col-1" id="@rep.Id"><i class="mdi mdi-delete ReportIconDelete"></i></div>
+                    <div class="col-1" id="@rep.Id"><i class="mdi mdi-play-box ReportIconPlay"></i></div>
+                </div>
+            </div>
+        </div>
+    }
 
 </div>
+
+<style>
+
+    .ReportIcon {
+        cursor: pointer;
+        font-size: 50px;
+        margin: 0px;
+        padding: 0px;
+        top: 30%;
+        position: absolute;
+        left: 30px;
+    }
+
+    .ReportIconEdit {
+        cursor: pointer;
+        font-size: 50px;
+        margin: 0px;
+        padding: 0px;
+        top: 30%;
+        position: absolute;
+        right: 110px;
+    }
+
+    .ReportIconDelete {
+        cursor: pointer;
+        font-size: 50px;
+        margin: 0px;
+        padding: 0px;
+        top: 30%;
+        position: absolute;
+        right: 60px;
+    }
+
+    .ReportIconPlay {
+        cursor: pointer;
+        font-size: 50px;
+        margin: 0px;
+        padding: 0px;
+        top: 30%;
+        position: absolute;
+        right: 10px;
+    }
+
+</style>

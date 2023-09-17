@@ -18,7 +18,8 @@
         <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     }
     <link rel="stylesheet" href="~/ElectroOULET.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/mvc-grid.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/css/mvc-grid.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/mvc-grid/mvc-grid.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/SwalContainers.css" asp-append-version="true" />
 
     <link rel="stylesheet" href="~/css/materialdesignicons.min.css?v=@ver" />
@@ -66,16 +67,26 @@
                                         </ul>
                                     </div>
                                 </li>
+
+                                <li class="nav-item mr-3">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+
+                                            <i class="mdi mdi-bell-ring" style="font-size:20px;"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                                            @Html.Partial("Partials/_notificaciones",@user.Notifications)
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </nav>
         }
 
     </header>
-
     <script src="~/js/material.js"></script>
     <script src="~/js/material-components-web.min.js"></script>
     <script src="~/js/material-ui.min.js"></script>
@@ -86,10 +97,14 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/getmdl-select.min.js"></script>
 
-    <script src="~/js/mvc-grid.js" asp-append-version="true"></script>
-    <script src="~/js/mvc-grid-extencion.js" asp-append-version="true"></script>
-    <script src="~/js/mvc-grid-init.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @*<script src="~/js/mvc-grid.js" asp-append-version="true"></script>
+        <script src="~/js/mvc-grid-extencion.js" asp-append-version="true"></script>
+        <script src="~/js/mvc-grid-init.js" asp-append-version="true"></script>
+    *@
+    <script src="~/js/mvc-grid/mvc-grid.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+    @RenderSection("scripts", required: false)
 
 
     <div class="container">
@@ -99,24 +114,24 @@
     </div>
 
     <script>
-            $("#ToHomeButton").on("click", () => {
-                window.location.replace('@Url.Action("Index","Home")?id=' + @user?.Id);
+        $("#ToHomeButton").on("click", () => {
+            window.location.replace('@Url.Action("Index","Home")?id=' + @user?.Id);
+        })
+
+        $(".LogOutButton").on("click", (e) => {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            let id = e.target.getAttribute("id");
+
+            $.ajax({
+                url: "@Url.Action("LogOut","Account")?id=" + id,
+                type: "POST",
+                success: function(e){
+                   window.location.replace('@Url.Action("Login","Account")')
+                }
             })
-
-            $(".LogOutButton").on("click", (e) => {
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-
-                let id = e.target.getAttribute("id");
-
-                $.ajax({
-                    url: "@Url.Action("LogOut","Account")?id=" + id,
-                    type: "POST",
-                    success: function(e){
-                       window.location.replace('@Url.Action("Login","Account")')
-                    }
-                })
-            })
+        })
     </script>
 </body>
 </html>

@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PrincipalObjects.Objects;
 
 namespace ElectroOULET.Controllers
 {
     public class ReportController : Controller
     {
         // GET: ReportController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View();
+            ViewData["ActiveUser"] = new User().GetUserById(id);
+
+            List<Report> reports = new Report().GetReports();
+
+            return View(reports);
         }
 
         // GET: ReportController/Details/5

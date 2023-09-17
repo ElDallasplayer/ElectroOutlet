@@ -16,7 +16,7 @@ namespace ElectroOULET.Controllers
 
         public IActionResult Index(User activeUser)
         {
-            ViewData["ActiveUser"] = activeUser;
+            ViewData["ActiveUser"] = new User().GetUserById(activeUser.Id);
 
             return View();
         }

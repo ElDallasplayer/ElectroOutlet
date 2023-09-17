@@ -50,5 +50,9 @@
     $("#AsistanceButton").on("click", () => {
         window.location.replace('@Url.Action("Index","Turno")?id=' + @user.Id);
     })
+
+    $("#ReportButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Report")?id=' + @user.Id);
+    })
 </script>
 

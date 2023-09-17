@@ -13,7 +13,7 @@
 
         columns.Add(c => Html.Raw("<i class='mdi mdi-pencil-box' id='"+ c.marcId +"' style='font-size: 25px; cursor: pointer;'></i>")).Titled(Html.Raw("<i class='mdi mdi-pencil-box' style='font-size: 25px;'></i>"));
         columns.Add(c => Html.Raw("<i class='mdi mdi-delete-circle' id='"+ c.marcId +"' style='font-size: 25px; cursor: pointer;'></i>")).Titled(Html.Raw("<i class='mdi mdi-delete-circle' style='font-size: 25px;'></i>"));
-    }).Named("employees-grid").Sortable().Empty("SIN MARCACIONES").Css("employee-grid").Pageable(pager =>
+    }).Named("employees-grid").Filterable().Sortable().Empty("SIN MARCACIONES").Css("employee-grid").Pageable(pager =>
         {
             pager.PagesToDisplay = 20;
             pager.RowsPerPage = 50;
