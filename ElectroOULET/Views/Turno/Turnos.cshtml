@@ -1,0 +1,33 @@
+﻿@using PrincipalObjects.Objects
+@model List<WorkShift>;
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "Turnos";
+}
+
+<div class="bg-container">
+    <div class="row pt-3 justify-content-around">
+        <div class="col-2">
+            <button type="button" class="btn btn-secondary m-3"><i class="mdi mdi-account-search" style="font-size: 15px;font-style: normal !important;">AGREGAR</i></button>
+        </div>
+        <div class="col-4 f-inline">
+            <div class="row p-0 m-0 w-100 justify-content-around">
+                <div class="col-10">
+                    <input type="text" class="form-control m-3" placeholder="Buscar..." />
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-secondary m-3"><i class="mdi mdi-account-search" style="font-size: 15px;"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 justify-content-center">
+        <div class="col-11 mt-3 text-center" id="PartialEmployee">
+            @Html.Partial("Partials/_turnos",Model)
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
+    </script>
+</div>

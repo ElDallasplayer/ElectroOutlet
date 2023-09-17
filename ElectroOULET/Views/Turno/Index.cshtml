@@ -1,0 +1,35 @@
+﻿@using PrincipalObjects.Objects
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "Asistencias";
+}
+
+<div class="hasBlur">
+</div>
+<div class="row p-0 mt-4">
+    <div class="row p-0 m-0 cards justify-content-around">
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="TurnosButton">
+            <i class="mdi mdi-book-account principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">TURNOS</h5>
+            </i>
+        </div>
+
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="MarcacionesButton">
+            <i class="mdi mdi-fingerprint principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">MARCACIONES</h5>
+            </i>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#TurnosButton").on("click", () => {
+        window.location.replace('@Url.Action("WorkShiftList","Turno")?id=' + @user?.Id);
+    })
+
+    $("#MarcacionesButton").on("click", () => {
+        window.location.replace('@Url.Action("MarcationsList","Turno")?id=' + @user?.Id);
+    })
+</script>

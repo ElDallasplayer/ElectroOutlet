@@ -1,0 +1,54 @@
+﻿@using PrincipalObjects.Objects
+@{
+    
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="hasBlur">
+</div>
+<div class="row p-0 mt-4">
+    <div class="text-center" style="z-index: 100;">
+        <h1 class="display-4">Bienvenido</h1>
+        @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+    </div>
+
+    <div class="row p-0 m-0 cards justify-content-around">
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="EmployeeButton">
+            <i class="mdi mdi-badge-account principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">EMPLEADOS</h5>
+            </i>
+        </div>
+
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="AsistanceButton">
+            <i class="mdi mdi-store-clock principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">ASISTENCIAS</h5>
+            </i>
+        </div>
+
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ReportButton">
+            <i class="mdi mdi-microsoft-excel principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">REPORTES</h5>
+            </i>
+        </div>
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="DevicesButton">
+            <i class="mdi mdi-deskphone principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">DISPOSITIVOS</h5>
+            </i>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#EmployeeButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Employee")?id=' + @user.Id);
+    })
+
+    $("#AsistanceButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Turno")?id=' + @user.Id);
+    })
+</script>
+

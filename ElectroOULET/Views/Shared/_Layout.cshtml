@@ -1,0 +1,122 @@
+﻿@using PrincipalObjects.Objects
+@{
+    string ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+    User user = (User)ViewData["ActiveUser"];
+    string clase = "BlurBack";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "Login")</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @if (ViewData["Title"] == null)
+    {
+        <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    }
+    <link rel="stylesheet" href="~/ElectroOULET.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mvc-grid.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/SwalContainers.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/materialdesignicons.min.css?v=@ver" />
+    <link rel="stylesheet" href="~/css/material-components-web.min.css" />
+    <link rel="stylesheet" href="~/css/material.min.css?v=@ver" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        @if (ViewData["Title"] != null)
+        {
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <i class="navbar-brand mdi mdi-home IndexIcon m-0 p-0" style="font-size:40px;" id="ToHomeButton" asp-action="Index"></i>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+
+                        <div class="text-end">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item mr-3">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                            <i class="mdi mdi-account-circle" style="font-size:20px;"></i>
+                                            <span class="fw-bolder">@user?.UserName</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                                            @if (user.EsAdmin)
+                                            {
+                                                <li><button class="dropdown-item fw-bold" type="text">Administrador</button></li>
+                                            }
+                                            else
+                                            {
+                                                <li><button class="dropdown-item fw-bold" type="text">Usuario</button></li>
+                                            }
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><button class="dropdown-item" type="button"><i class="mdi mdi-cog" style="font-size:15px;"></i>Configurar</button></li>
+                                            <li><button id="@user?.Id" class="dropdown-item LogOutButton" type="button"><i class="mdi mdi-account-arrow-left" style="font-size:15px;"></i>Cerrar sesion</button></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        }
+
+    </header>
+
+    <script src="~/js/material.js"></script>
+    <script src="~/js/material-components-web.min.js"></script>
+    <script src="~/js/material-ui.min.js"></script>
+    <script src="~/js/material.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/getmdl-select.min.js"></script>
+
+    <script src="~/js/mvc-grid.js" asp-append-version="true"></script>
+    <script src="~/js/mvc-grid-extencion.js" asp-append-version="true"></script>
+    <script src="~/js/mvc-grid-init.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script>
+            $("#ToHomeButton").on("click", () => {
+                window.location.replace('@Url.Action("Index","Home")?id=' + @user?.Id);
+            })
+
+            $(".LogOutButton").on("click", (e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                let id = e.target.getAttribute("id");
+
+                $.ajax({
+                    url: "@Url.Action("LogOut","Account")?id=" + id,
+                    type: "POST",
+                    success: function(e){
+                       window.location.replace('@Url.Action("Login","Account")')
+                    }
+                })
+            })
+    </script>
+</body>
+</html>

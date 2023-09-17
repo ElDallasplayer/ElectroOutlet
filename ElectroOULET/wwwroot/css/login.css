@@ -1,0 +1,13 @@
+﻿
+.loginContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+body {
+    margin-bottom: 60px;
+    background: url(../img/Imagen_Background_2.jpg) center !important;
+    background-size: cover;
+}

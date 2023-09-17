@@ -1,0 +1,41 @@
+﻿@model PrincipalObjects.Objects.User;
+
+@{
+    //ViewData["Title"] => SI NO ESTA, NO PONE NOMBRE DE PAGINA NI NAVBAR
+    //ViewData["Title"] = "Login Page";
+}
+
+<div class="row justify-content-center align-content-center">
+    <div class="col-3">
+        <div class="box-shadow wrapPersonalizado rounded-3">
+            <div class="card" style="width: 24rem;">
+                <div class="card-body text-black-50 text-muted">
+                    <img src="img/electroOULET.jpeg" class="card-img-top" alt="...">
+                    <form asp-action="Login" asp-controller="Account">
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.Delete)
+                        @Html.HiddenFor(x => x.EsAdmin)
+                        <label for="UserName">INICIAR SESION</label>
+                        @*<label for="UserName">USUARIO</label>*@
+                        <input type="text" name="UserName" id="UserName" class="form-control p-2" value='@Model?.UserName' placeholder="Usuario..." />
+                        <br />
+                        @*<label for="Password">CONTRASEÑA</label>*@
+                        <input type="password" name="Password" id="Password" class="form-control p-2" value="@Model?.Password" placeholder="Contraseña..." />
+                        <br />
+                        <button class="btn btn-dark" type="submit"> ENVIAR </button>
+                    </form>
+                    <a href="#" class="mt-2 card-link">Nuestra pagina</a>
+
+                    @if (ViewBag.DataResponse != null)
+                    {
+                        <div>
+                            <div class="mt-2">
+                                <li class="list-group-item">@ViewBag.DataResponse</li>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

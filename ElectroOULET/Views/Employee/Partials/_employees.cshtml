@@ -1,0 +1,19 @@
+﻿@using NonFactors.Mvc.Grid
+@using PrincipalObjects.Objects;
+@model List<Employee>;
+
+@Html.Grid(Model).Build(columns =>
+    {
+        columns.Add(c => c.empName).Titled("Nombre").Sortable(true);
+        columns.Add(c => c.empSurName).Titled("Apellido").Sortable(true);
+        columns.Add(c => c.empLegajo).Titled("Legajo").Sortable(true);
+        columns.Add(c => c.empCard).Titled("Tarjeta").Sortable(true);
+        columns.Add(c => c.Turno == null?"Sin turno":c.Turno.turName).Titled("Turno").Sortable(true);
+        columns.Add(c => Html.Raw("<i class='mdi mdi-pencil-box' id='"+ c.empId +"' style='font-size: 25px; cursor: pointer;'></i>")).Titled(Html.Raw("<i class='mdi mdi-pencil-box' style='font-size: 25px;'></i>"));
+        columns.Add(c => Html.Raw("<i class='mdi mdi-delete-circle' id='"+ c.empId +"' style='font-size: 25px; cursor: pointer;'></i>")).Titled(Html.Raw("<i class='mdi mdi-delete-circle' style='font-size: 25px;'></i>"));
+    }).Named("employees-grid").Sortable().Empty("SIN EMPLEADOS").Css("employee-grid").Pageable(pager =>
+        {
+            pager.PagesToDisplay = 20;
+            pager.RowsPerPage = 50;
+        })
+    @*.Css("tablas acceso")*@
