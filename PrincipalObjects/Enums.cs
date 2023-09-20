@@ -35,5 +35,12 @@ namespace PrincipalObjects
             Error = 2,
             Exitoso = 4
         }
+
+        //REPORTES
+        public enum Reports
+        {
+            ReporteDeMarcaciones = 1,
+            ReporteDeHorasPorDia = 2
+        }
     }
 }

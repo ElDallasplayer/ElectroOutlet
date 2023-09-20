@@ -34,73 +34,13 @@ namespace ElectroOULET.Controllers
             return View("Marcaciones", marcationsToView);
         }
 
-        // GET: TurnoController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult EditTurno(int id, int userId)
         {
-            return View();
-        }
+            ViewData["ActiveUser"] = new User().GetUserById(userId);
 
-        // GET: TurnoController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            WorkShift workShift = new WorkShift().GetTurById(id);
 
-        // POST: TurnoController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TurnoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TurnoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TurnoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TurnoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(workShift);
         }
     }
 }

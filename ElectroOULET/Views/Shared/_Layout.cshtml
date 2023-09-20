@@ -2,6 +2,8 @@
 @{
     string ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
     User user = (User)ViewData["ActiveUser"];
+
+    ViewBag.UsuarioVista = user?.Id;
     string clase = "BlurBack";
 }
 
@@ -17,6 +19,7 @@
     {
         <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     }
+    <link rel="stylesheet" href="~/css/Loader.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ElectroOULET.styles.css" asp-append-version="true" />
     @*<link rel="stylesheet" href="~/css/mvc-grid.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/css/mvc-grid/mvc-grid.css" asp-append-version="true" />
@@ -32,61 +35,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+
+    @if (ViewData["Title"] != "EDIT")
+    {
         @if (ViewData["Title"] != null)
         {
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <i class="navbar-brand mdi mdi-home IndexIcon m-0 p-0" style="font-size:40px;" id="ToHomeButton" asp-action="Index"></i>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <div class="container-fluid">
+                        <i class="navbar-brand mdi mdi-home IndexIcon m-0 p-0" style="font-size:40px;" id="ToHomeButton" asp-action="Index"></i>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <div class="text-end">
 
-                        <div class="text-end">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item mr-3">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                                            <i class="mdi mdi-account-circle" style="font-size:20px;"></i>
-                                            <span class="fw-bolder">@user?.UserName</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-lg-end">
-                                            @if (user.EsAdmin)
-                                            {
-                                                <li><button class="dropdown-item fw-bold" type="text">Administrador</button></li>
-                                            }
-                                            else
-                                            {
-                                                <li><button class="dropdown-item fw-bold" type="text">Usuario</button></li>
-                                            }
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><button class="dropdown-item" type="button"><i class="mdi mdi-cog" style="font-size:15px;"></i>Configurar</button></li>
-                                            <li><button id="@user?.Id" class="dropdown-item LogOutButton" type="button"><i class="mdi mdi-account-arrow-left" style="font-size:15px;"></i>Cerrar sesion</button></li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item active" id="empNavbar">
+                                        <a class="nav-link" href="/Employee/Index?id=@user.Id">Empleados</a>
+                                    </li>
+                                    <li class="nav-item" id="asiNavbar">
+                                        <a class="nav-link" href="/Turno/Index?id=@user.Id">Asistencias</a>
+                                    </li>
+                                    <li class="nav-item" id="repNavbar">
+                                        <a class="nav-link" href="/Report/Index?id=@user.Id">Reportes</a>
+                                    </li>
+                                    <li class="nav-item" id="devNavbar">
+                                        <a class="nav-link" href="/Report/Index?id=@user.Id">Dispositivos</a>
+                                    </li>
+                                </ul>
 
-                                <li class="nav-item mr-3">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-
-                                            <i class="mdi mdi-bell-ring" style="font-size:20px;"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-lg-end">
-                                            @Html.Partial("Partials/_notificaciones",@user.Notifications)
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
+                            </div>
+                            <div class="text-end">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item mr-3">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                <i class="mdi mdi-account-circle" style="font-size:20px;"></i>
+                                                <span class="fw-bolder">@user?.UserName</span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                                @if (user.EsAdmin)
+                                                {
+                                                    <li><button class="dropdown-item fw-bold" type="text">Administrador</button></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><button class="dropdown-item fw-bold" type="text">Usuario</button></li>
+                                                }
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><button class="dropdown-item" type="button"><i class="mdi mdi-cog" style="font-size:15px;"></i>Configurar</button></li>
+                                                <li><button id="@user?.Id" class="dropdown-item LogOutButton" type="button"><i class="mdi mdi-account-arrow-left" style="font-size:15px;"></i>Cerrar sesion</button></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    @Html.Partial("Partials/_notificaciones")
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </header>
         }
+    }
 
-    </header>
     <script src="~/js/material.js"></script>
     <script src="~/js/material-components-web.min.js"></script>
     <script src="~/js/material-ui.min.js"></script>
@@ -104,34 +117,19 @@
     <script src="~/js/mvc-grid/mvc-grid.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
-    @RenderSection("scripts", required: false)
 
-
+    <div id="loader-container" class="loader-container notVisible">
+        <div id="principal-loader" class="custom-loader"></div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <script>
-        $("#ToHomeButton").on("click", () => {
-            window.location.replace('@Url.Action("Index","Home")?id=' + @user?.Id);
-        })
-
-        $(".LogOutButton").on("click", (e) => {
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-
-            let id = e.target.getAttribute("id");
-
-            $.ajax({
-                url: "@Url.Action("LogOut","Account")?id=" + id,
-                type: "POST",
-                success: function(e){
-                   window.location.replace('@Url.Action("Login","Account")')
-                }
+            $("#ToHomeButton").on("click", () => {
+                window.location.replace('@Url.Action("Index","Home")?id=' + @user?.Id);
             })
-        })
     </script>
 </body>
 </html>

@@ -60,6 +60,32 @@ namespace PrincipalObjects.Objects
             }
         }
 
+        public WorkShift GetTurById(long Id)
+        {
+            dynamic turnosFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where turId = " + Id }), (false, "", false));
+            try
+            {
+                WorkShift turn = new WorkShift()
+                {
+                    empId = Convert.ToInt64(turnosFromDB.rows[0].empId.Value.ToString()),
+                    turId = Convert.ToInt64(turnosFromDB.rows[0].turId.Value.ToString()),
+                    turName = turnosFromDB.rows[0].turName.Value.ToString(),
+                    turDescription = turnosFromDB.rows[0].turDescription.Value.ToString(),
+                    turInit = Convert.ToDateTime(turnosFromDB.rows[0].turInit.Value.ToString()),
+                    turEnd = Convert.ToDateTime(turnosFromDB.rows[0].turEnd.Value.ToString()),
+                    turDelete = Convert.ToBoolean(turnosFromDB.rows[0].turDelete.Value.ToString())
+                };
+                turn.Segments = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId);
+
+                return turn;
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog(ex.Message);
+                return null;
+            }
+        }
+
         public List<WorkShift> GetTurnos()
         {
             dynamic turnosFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (false, new string[0] {}), (false, "", false));

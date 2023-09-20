@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PrincipalObjects.Enums;
 
 namespace PrincipalObjects.Objects
 {
@@ -15,15 +16,20 @@ namespace PrincipalObjects.Objects
         public int ReportType { get; set; }
         public bool Delete { get; set; }
 
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+
         #region dbObject
         string TableName = "oReports";
-        string[] ColNames = new string[6] {
+        string[] ColNames = new string[8] {
             "repId", 
             "repName", 
             "repDescription",
             "empsId", 
             "repType", 
-            "repDeleted" 
+            "repDeleted",
+            "repFechaInicio",
+            "repFechaFin"
         };
         #endregion
 
@@ -32,7 +38,7 @@ namespace PrincipalObjects.Objects
         //CONSTRUCTORS
         public Report GetReportById(long id)
         {
-            dynamic repFromDB = SQLInteract.GetDataFromDataBase((false,-1),ColNames, TableName, (true,new string[1] { "where id = " + id }),(false,"",false));
+            dynamic repFromDB = SQLInteract.GetDataFromDataBase((false,-1),ColNames, TableName, (true,new string[1] { "where repId = " + id }),(false,"",false));
             try
             {
                 Report report = new Report()
@@ -42,7 +48,9 @@ namespace PrincipalObjects.Objects
                     Description = repFromDB.rows[0].repDescription.Value.ToString(),
                     EmpsIds = repFromDB.rows[0].empsId.Value.ToString(),
                     ReportType = Convert.ToInt32(repFromDB.rows[0].repType.Value.ToString()),
-                    Delete = Convert.ToBoolean(repFromDB.rows[0].repDeleted.Value.ToString())
+                    Delete = Convert.ToBoolean(repFromDB.rows[0].repDeleted.Value.ToString()),
+                    FechaInicio = Convert.ToDateTime(String.IsNullOrEmpty(repFromDB.rows[0].repFechaInicio.Value.ToString()) ? "1900-01-01 00:00:00" : repFromDB.rows[0].repFechaInicio.Value.ToString()),
+                    FechaFin = Convert.ToDateTime(String.IsNullOrEmpty(repFromDB.rows[0].repFechaInicio.Value.ToString()) ? "1900-01-01 00:00:00" : repFromDB.rows[0].repFechaInicio.Value.ToString())
                 };
 
                 return report;
@@ -71,7 +79,9 @@ namespace PrincipalObjects.Objects
                             Description = report.repDescription.Value.ToString(),
                             EmpsIds = report.empsId.Value.ToString(),
                             ReportType = Convert.ToInt32(report.repType.Value.ToString()),
-                            Delete = Convert.ToBoolean(report.repDeleted.Value.ToString())
+                            Delete = Convert.ToBoolean(report.repDeleted.Value.ToString()),
+                            FechaInicio = Convert.ToDateTime(String.IsNullOrEmpty(report.repFechaInicio.Value.ToString())? "1900-01-01 00:00:00": report.repFechaInicio.Value.ToString()),
+                            FechaFin = Convert.ToDateTime(String.IsNullOrEmpty(report.repFechaInicio.Value.ToString())? "1900-01-01 00:00:00": report.repFechaInicio.Value.ToString())
                         };
                         reports.Add(repToList);
                     }
@@ -87,6 +97,37 @@ namespace PrincipalObjects.Objects
             {
                 Utilities.WriteLog(ex.Message);
                 return new List<Report>(); //SI LA LISTA VIENE VACIA, ES POR QUE ALGO ESTA MAL
+            }
+        }
+
+        public Report EditarReporte(Report reporteAGuardar)
+        {
+            try
+            {
+                List<(string, string, eDataType)> datosAGuardar = new List<(string, string, eDataType)>();
+                datosAGuardar.Add(("repName", reporteAGuardar.Name, eDataType.text));
+                datosAGuardar.Add(("repDescription", reporteAGuardar.Description, eDataType.text));
+                datosAGuardar.Add(("empsId", reporteAGuardar.EmpsIds, eDataType.text));
+                datosAGuardar.Add(("repType", reporteAGuardar.ReportType.ToString(), eDataType.number));
+                datosAGuardar.Add(("repDeleted", (reporteAGuardar.Delete?"1":"0"), eDataType.number));
+                datosAGuardar.Add(("repFechaInicio", reporteAGuardar.FechaInicio.ToString("yyyy-MM-dd HH:mm:ss"), eDataType.text));
+                datosAGuardar.Add(("repFechaFin", reporteAGuardar.FechaFin.ToString("yyyy-MM-dd HH:mm:ss"), eDataType.text));
+
+                bool repGuardado = SQLInteract.UpdateDataInDataBase(TableName, datosAGuardar, (true, new string[1] { "repId = " + reporteAGuardar.Id }));
+
+                if (repGuardado)
+                {
+                    return reporteAGuardar;
+                }
+                else
+                {
+                    return new Report() { Id = -1 };
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog(ex.Message);
+                return new Report() { Id = -1}; //SI LA LISTA VIENE VACIA, ES POR QUE ALGO ESTA MAL
             }
         }
     }

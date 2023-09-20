@@ -1,0 +1,18 @@
+﻿@using PrincipalObjects.Objects
+@using NonFactors.Mvc.Grid
+
+@{
+    List<Employee> empleadosTodos = new Employee().GetEmployees();
+    List<Employee> empleados = new Employee().GetEmployeesToReport(ViewBag.Empleados);
+}
+
+<div class="mt-3">
+    @Html.Grid(empleadosTodos).Build(columns =>
+    {
+        columns.Add(c => Html.Raw("<div class='form-check form-switch'> <input class='form-check-input CheckBoxEmpleado' type='checkbox' id='"+c.empId+"' "+(empleados.Any(x => x.empId == c.empId)?"checked": "")+"></div>")).Titled("").Sortable(true);
+        columns.Add(c => c.NombreCompleto).Titled("Nombre Completo").Sortable(true);
+        columns.Add(c => c.empLegajo).Titled("Legajo").Sortable(true);
+    }).Named("employees-grid").Filterable().Empty("SIN EMPLEADOS").Css("employee-grid emp-Selector")
+    @*.Css("tablas acceso")*@
+    
+</div>

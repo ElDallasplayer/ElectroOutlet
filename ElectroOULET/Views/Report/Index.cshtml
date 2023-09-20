@@ -6,7 +6,10 @@
     ViewData["Title"] = "Reportes";
 }
 
-<div class="hasBlur">
+<div id="EditBlur" class="hasBlur">
+</div>
+<div class="EditReport-Container">
+
 </div>
 <div class="row p-0 mt-4">
 
@@ -18,15 +21,39 @@
                     <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
                     <div class="col-4"><h5 class="">@rep.Name</h5></div>
                     <div class="col-4"><h5 class="">@rep.Description</h5></div>
-                    <div class="col-1" id="@rep.Id"><i class="mdi mdi-pencil ReportIconEdit"></i></div>
-                    <div class="col-1" id="@rep.Id"><i class="mdi mdi-delete ReportIconDelete"></i></div>
-                    <div class="col-1" id="@rep.Id"><i class="mdi mdi-play-box ReportIconPlay"></i></div>
+                    <div class="col-1"><a class="buttonMakeReport" id="@rep.Id" href="#"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
+                    <div class="col-1"><a class="buttonMakeReport" href="/Report/DescargarReporte?id=@rep.Id"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
+                    <div class="col-1"><a class="buttonMakeReport" href="/Report/DescargarReporte?id=@rep.Id"><i class="mdi mdi-play-box ReportIconPlay"></i></a></div>
                 </div>
             </div>
         </div>
     }
-
 </div>
+
+<script>
+    $(".ReportIconPlay").on("click", (e) => {
+        StartLoader();
+
+        setTimeout (StopLoader, 2000)
+    } )
+
+    $(".ReportIconEdit").on("click", (e) => {
+        StartLoader();
+        $('.EditReport-Container').empty();
+        let id = e.target.getAttribute('id');
+
+        $.ajax({
+            url: '/Report/EditReport?id=' + id + '&userId=@user.Id',
+            dataType: 'html',
+            async: true,
+            success: function (data) {
+                $('.EditReport-Container').append(data);
+            }
+        });
+        StopLoader();
+    } )
+
+</script>
 
 <style>
 

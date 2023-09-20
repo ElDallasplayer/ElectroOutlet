@@ -1,0 +1,84 @@
+﻿@using PrincipalObjects.Objects
+@model WorkShift
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "EDIT";
+}
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+<div id="ObjectEdit">
+    <div class="hasBlur">
+    </div>
+    <div class="Edit-Container">
+        <div class="Edit-Title text-center">
+            <h2>Editar turno</h2>
+        </div>
+        <div class="row justify-content-center Edit-Body">
+            <div class="col-12">
+                <form id="EditForm" asp-action="GuardarReporte" asp-controller="Report">
+
+                    <input type="number" class="form-control Form-data" name="Id" value="@Model.turId" hidden />
+                    <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
+
+                    <div class="row p-0 m-0 justify-content-center">
+                        <label for="Name">Nombre</label>
+                        <input type="text" class="form-control Form-data" name="Name" value="@Model.turName" />
+
+                        <label for="Description">Descripcion</label>
+                        <input type="text" class="form-control Form-data" name="Description" value="@Model.turDescription" />
+                    </div>
+                    <div class="row p-0 m-0 justify-content-around">
+                        <div class="col-6">
+                            <label for="FechaInicio">Fecha Inicio</label>
+                            <input name="FechaInicio" type="datetime" class="form-control Form-data" value="@Model.turInit" />
+                        </div>
+                        <div class="col-6">
+                            <label for="FechaFin">Fecha Inicio</label>
+                            <input name="FechaFin" type="datetime" class="form-control Form-data" value="@Model.turEnd" />
+                        </div>
+
+                    </div>
+                    <input id="empsIds" name="listEmps" type="text" class="form-control Form-data" value="@Model.SegmentsToView" hidden />
+                    <div id="EmpsContainer" class="row p-0 m-0 w-100">
+                        <iframe src="Partials/_empSelector"></iframe>
+                    </div>
+
+
+                    <div class="row p-0 m-0 justify-content-between buttons-function-container">
+                        <div class="col-6 p-1">
+                            <button type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</button>
+                        </div>
+                        <div class="col-6 p-1">
+                            <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+        $(".CheckBoxEmpleado").on("change", function (e){
+            let valActual = $("#empsIds").val();
+
+            if (e.target.checked)
+            {
+                valActual = valActual + "," + e.target.getAttribute("id");
+                $("#empsIds").val(valActual);
+            }else{
+                valActual = valActual.replace("," + e.target.getAttribute("id"),'');
+                $("#empsIds").val(valActual);
+            }
+        })
+        //# sourceURL=editreport.js
+
+</script>
+
+<style>
+    .hasBlur {
+        z-index: 9000;
+    }
+</style>

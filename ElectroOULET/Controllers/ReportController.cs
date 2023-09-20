@@ -1,6 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using PrincipalObjects.Objects;
+using System.Data;
+using System.Xml.Serialization;
+using ElectroOULET;
+using PrincipalObjects;
+using System.Reflection;
 
 namespace ElectroOULET.Controllers
 {
@@ -16,73 +23,62 @@ namespace ElectroOULET.Controllers
             return View(reports);
         }
 
-        // GET: ReportController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult EditReport(int id, int userId)
         {
-            return View();
+            ViewData["ActiveUser"] = new User().GetUserById(userId);
+
+            Report report = new Report().GetReportById((long)id);
+
+            return View(report);
         }
 
-        // GET: ReportController/Create
-        public ActionResult Create()
+        public ActionResult GuardarReporte(Report reporte, string listEmps, int UserId)
         {
-            return View();
+            ViewData["ActiveUser"] = new User().GetUserById(UserId);
+
+            reporte.EmpsIds = listEmps;
+            Report rep = new Report();
+            //HACER EL GUARDAR REPORTE
+            if (reporte.Id != -1)
+            {
+                rep = new Report().EditarReporte(reporte);
+            }
+            else
+            {
+                //INSERTAR REPORTE
+            }
+            List<Report> reports = reporte.GetReports();
+            return View("index", reports);
         }
 
-        // POST: ReportController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<FileResult> DescargarReporte(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Report report = new Report().GetReportById((long)id);
+
+            return GenerarExcel(report.Name + "_" + DateTime.Now.ToString("ddMM_HHmm") + ".xlsx", report.EmpsIds, (Enums.Reports)report.ReportType).Result;
         }
 
-        // GET: ReportController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<FileResult> GenerarExcel(string nombreArchivo, string employeesId, Enums.Reports reportType)
         {
-            return View();
-        }
+            string[] parameters = { employeesId };
+            Type thisType = typeof(Reports);
+            MethodInfo theMethod = thisType.GetMethod(reportType.ToString());
+            DataTable dataTable = await (Task<DataTable>)theMethod.Invoke(null, parameters);
 
-        // POST: ReportController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: ReportController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
 
-        // POST: ReportController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        nombreArchivo);
+                }
             }
-            catch
-            {
-                return View();
-            }
+
         }
     }
 }

@@ -27,6 +27,45 @@ body {
 .BlurBack {
 }
 
+.Edit-Container {
+    height: 700px !important;
+    width: 700px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 20px;
+    background-color: #F9F9F9;
+    z-index: 10000;
+    box-shadow: 7px 7px 20px #808080;
+}
+
+.Edit-Title {
+    height: 80px !important;
+    width: 700px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 15px 15px 0px 0px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   0% 0% 0%;;
+    background-color: #4F4F4F;
+    z-index: 10000;
+    color:aliceblue;
+}
+
+.Edit-Body{
+    padding: 80px;
+}
+
+.buttons-function-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
 .wrapPersonalizado {
     /* background-color: #fff; */
     /*padding: 2rem 3rem;*/
@@ -112,8 +151,55 @@ body {
     width: 100%;
     height: 100%;
     backdrop-filter: blur(1px);
+    margin:auto;
+    left:0;
 }
 
 .noDataTable{
     position: absolute;
+}
+
+.NotificationList{
+    width: 400px !important;
+}
+
+.NotificationButton{
+    position:absolute;
+    right: 20px;
+}
+
+.dropdown-menu {
+    border-radius: 1rem;
+}
+
+.titlenot-primary {
+    background-color: #0d6efd !important;
+}
+
+.titlenot-warning {
+    background-color: #ffc107 !important;
+}
+
+.titlenot-danger {
+    background-color: #dc3545 !important;
+}
+
+.titlenot-success {
+    background-color: #198754 !important;
+}
+
+.tableUp {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border: solid 2px black !important;
+}
+
+.tableDown {
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border: solid 2px black !important;
+}
+
+.tableFather {
+    border: solid 5px black !important;
 }
