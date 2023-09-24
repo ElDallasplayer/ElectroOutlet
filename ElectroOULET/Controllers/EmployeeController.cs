@@ -11,86 +11,52 @@ namespace ElectroOULET.Controllers
         {
             ViewData["ActiveUser"] = new User().GetUserById(id);
 
-            List<Employee> employees = new Employee().GetEmployees(); List<Employee> marcs = new Employee().GetEmployees();
+            List<Employee> employees = new Employee().GetEmployees();
 
             return View(employees);
         }
 
         public ActionResult ObtenerEmpleadosGrid()
         {
-            List<Employee> employees = new Employee().GetEmployees(); List<Employee> marcs = new Employee().GetEmployees();
+            List<Employee> employees = new Employee().GetEmployees();
 
             return View("Partials/_employees",employees);
         }
 
-        // GET: EmployeeController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult EditEmployee(int id, int userId)
         {
-            return View();
-        }
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
 
-        // GET: EmployeeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            Employee employee = new Employee(); ;
+            employee.empId = -1;
+            employee.Turno = new WorkShift() { turId = -1 };
+            employee.turId = -1;
+            if (id != -1)
             {
-                return RedirectToAction(nameof(Index));
+                employee = new Employee().GetEmployeeById(id);
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(employee);
         }
 
-        // GET: EmployeeController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult GuardarEmpleado(Employee employeeToSave, int userId)
         {
-            return View();
-        }
-
-        // POST: EmployeeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
+            Employee employees = employeeToSave;
+            if(employeeToSave.empId != -1)
             {
-                return RedirectToAction(nameof(Index));
+                employees = employees.EditarEmpleado(employees);
             }
-            catch
+            else
             {
-                return View();
+                if(employeeToSave.turId == -1|| employeeToSave.turId == 0)
+                {
+                    employeeToSave.turId = -1;
+                }
+                employees = employees.SaveEmp(employees);
             }
-        }
 
-        // GET: EmployeeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return View("Index", new Employee().GetEmployees());
         }
-
-        // POST: EmployeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
     }
 }

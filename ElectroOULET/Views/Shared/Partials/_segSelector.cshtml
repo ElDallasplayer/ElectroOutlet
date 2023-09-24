@@ -1,0 +1,49 @@
+﻿@using PrincipalObjects.Objects
+@using NonFactors.Mvc.Grid
+@model (int,List<WorkShiftSegments>)
+
+@{
+    PrincipalObjects.Enums.eDayWeek enumDay = (PrincipalObjects.Enums.eDayWeek)Model.Item1;
+}
+
+<div class="mt-3">
+    <div class="row p-0 m-0 d-flex justify-content-between align-items-center">
+    @switch (enumDay)
+    {
+        case PrincipalObjects.Enums.eDayWeek.Lunes:
+            <div class="col-2 p-0"><h6>LUNES</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+        case PrincipalObjects.Enums.eDayWeek.Martes:
+            <div class="col-2 p-0"><h6>MARTES</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+        case PrincipalObjects.Enums.eDayWeek.Miercoles:
+            <div class="col-2 p-0"><h6>MIERCOLES</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+        case PrincipalObjects.Enums.eDayWeek.Jueves:
+            <div class="col-2 p-0"><h6>JUEVES</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+        case PrincipalObjects.Enums.eDayWeek.Viernes:
+            <div class="col-2 p-0"><h6>VIERNES</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+        case PrincipalObjects.Enums.eDayWeek.Sabado:
+            <div class="col-2 p-0"><h6>SABADO</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+        case PrincipalObjects.Enums.eDayWeek.Domingo:
+            <div class="col-2 p-0"><h6>DOMINGO</h6> </div><div class="col-2 p-0"><div class="btn btn-secondary">AGREGAR</div></div>
+            ;break;
+    }
+    </div>
+
+    @Html.Grid(Model.Item2).Build(columns =>
+    {
+        columns.Add(c => c.wsName).Titled("Nombre");
+        columns.Add(c => c.wsInit.ToString("HH:mm")).Titled("Inicio segmento");
+        columns.Add(c => c.wsEnd.ToString("HH:mm")).Titled("Fin segmento");
+        columns.Add(c => Html.Raw("<i class='mdi mdi-delete-circle CheckBoxSegmento' id='"+ c.wsId +"' style='font-size: 25px; cursor: pointer;'></i>")).Titled(Html.Raw("<i class='mdi mdi-delete-circle' style='font-size: 25px;'></i>"));
+    }).Named("segJueves-grid").Empty("SIN SEGMENTOS").Css("jusegment-grid segjueves-Selector")
+    @*.Css("tablas acceso")
+        UTILIZO EL ID DEL BOTON ELIMINAR PARA ENLISTARLOS EN LAS VISTAS
+    *@
+    
+</div>
+

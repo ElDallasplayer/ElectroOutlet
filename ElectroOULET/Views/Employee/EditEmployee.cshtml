@@ -1,0 +1,134 @@
+﻿@using PrincipalObjects.Objects
+@model Employee
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "EDIT";
+
+    List<WorkShift> turnos = new WorkShift().GetTurnosReducidos();
+}
+
+
+<div id="ObjectEdit">
+    <div class="hasBlur">
+    </div>
+    <div class="Edit-Container">
+        <div class="Edit-Title text-center">
+            <h2>Editar empleado</h2>
+        </div>
+        <div class="row justify-content-center Edit-Body">
+            <div class="col-12">
+                <form id="EditForm" asp-action="GuardarEmpleado" asp-controller="Employee">
+
+                    <input type="number" class="form-control Form-data" name="empId" value="@Model.empId" hidden />
+                    <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
+
+                    <div class="row pt-2 mt-3 justify-content-center">
+                        <div class="col-4">
+                            <i class="mdi mdi-account-tie empIcon"></i>
+                        </div>
+                        <div class="col-8">
+                            <div class="row p-0 m-0 justify-content-center">
+                                <div class="col-6">
+                                    <label for="Name">Nombre</label>
+                                    <input type="text" class="form-control Form-data" name="empName" value="@Model.empName" />
+                                </div>
+                                <div class="col-6">
+                                    <label for="Description">Apellido</label>
+                                    <input type="text" class="form-control Form-data" name="empSurName" value="@Model.empSurName" />
+                                </div>
+                            </div>
+                            <div class="row p-0 m-0 justify-content-around">
+                                <div class="col-6">
+                                    <label for="empLegajo">Legajo</label>
+                                    <input id="empLegajo" name="empLegajo" type="datetime" class="form-control Form-data" value="@Model.empLegajo" />
+                                </div>
+                                <div class="col-6">
+                                    <label for="empCard">Tarjeta</label>
+                                    <input id="empCard" name="empCard" type="datetime" class="form-control Form-data" value="@Model.empCard" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-0 m-0 justify-content-around">
+                        <div class="col-12">
+                            <label for="empIdHikVision">Id de HikVision</label>
+                            <input id="empIdHikVision" name="empIdHikVision" type="datetime" class="form-control Form-data" value="@Model.empIdHikVision" />
+                        </div>
+                    </div>
+                    <h5>Turno</h5>
+                    <input id="turId" name="turId" type="number" class="form-control Form-data" value="@(Model.turId == -1?"":Model.turId)" hidden />
+                    <div id="EmpsContainer" class="row p-0 m-0 w-100">
+                        <select id="empTurnSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            @if (turnos.Count > 0 && Model.turId != -1 && Model.turId != 0)
+                            {
+                                @foreach (WorkShift tur in turnos)
+                                {
+                                    @if (Model.turId == tur.turId)
+                                    {
+                                        <option value="@tur.turId" selected>@tur.turName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@tur.turId">@tur.turName</option>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <option value="-1" selected>Sin turnos</option>
+                                @foreach (WorkShift tur in turnos)
+                                {
+                                    <option value="@tur.turId">@tur.turName</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+
+
+                    <div class="row p-0 m-0 justify-content-between buttons-function-container">
+                        <div class="col-6 p-1">
+                            <button type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</button>
+                        </div>
+                        <div class="col-6 p-1">
+                            <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+            $("#empTurnSelector").change(function(){
+                $('#turId').val($(this).val());
+        });
+    </script>
+</div>
+
+<style>
+    .hasBlur {
+        z-index: 5000 !important;
+    }
+
+    .Edit-Container {
+        width: 1000px !important;
+    }
+
+    .Edit-Title {
+        width: 1000px !important;
+    }
+
+    .empIcon {
+        position: absolute;
+        top: 6%;
+        left: 20%;
+        font-style: normal !important;
+        font-size: 150px;
+        padding-bottom: 35px;
+        padding-top: 100px;
+        border-radius: 10px;
+        z-index: 20;
+    }
+</style>

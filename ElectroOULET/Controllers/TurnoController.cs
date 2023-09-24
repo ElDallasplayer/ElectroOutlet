@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PrincipalObjects.Objects;
+using static PrincipalObjects.Enums;
 
 namespace ElectroOULET.Controllers
 {
@@ -27,7 +28,7 @@ namespace ElectroOULET.Controllers
         {
             ViewData["ActiveUser"] = new User().GetUserById(id);
 
-            DateTime yesterday = DateTime.Today.AddDays(-2);
+            DateTime yesterday = DateTime.Today.AddDays(-30);
             DateTime today = DateTime.Today;
             List<Marcations> marcationsToView = new Marcations().GetMarcations(yesterday, today.AddDays(1));
 
@@ -41,6 +42,23 @@ namespace ElectroOULET.Controllers
             WorkShift workShift = new WorkShift().GetTurById(id);
 
             return View(workShift);
+        }
+
+        public ActionResult GuardarTurno(WorkShift workToSave, int userId)
+        {
+            ViewData["ActiveUser"] = new User().GetUserById(userId);
+
+            WorkShift workShift = workToSave;
+
+            return View(workShift);
+        }
+
+        public IActionResult LoadSegment((int,int) idTurnoIdDay)
+        {
+            WorkShift workShift = new WorkShift().GetTurById(idTurnoIdDay.Item1);
+            ViewBag.Day = (eDayWeek)idTurnoIdDay.Item2;
+
+            return PartialView("Partials/_segSelector", workShift);
         }
     }
 }

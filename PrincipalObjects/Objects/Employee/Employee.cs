@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PrincipalObjects.Enums;
 
 namespace PrincipalObjects.Objects
 {
@@ -15,6 +16,7 @@ namespace PrincipalObjects.Objects
         public string empCard { get; set; }
         public long empIdHikVision { get; set; }
         public bool empDelete { get; set; }
+        public long turId { get; set; }
 
         public string NombreCompleto { get; set; }
 
@@ -22,14 +24,15 @@ namespace PrincipalObjects.Objects
 
         #region dbObject
         string TableName = "oEmployee";
-        string[] ColNames = new string[7] {
+        string[] ColNames = new string[8] {
             "empId",
             "empName",
             "empSurname",
             "empLegajo",
             "empCard",
             "empIdHikVision",
-            "empDelete"
+            "empDelete",
+            "turId"
         };
         #endregion
 
@@ -39,10 +42,10 @@ namespace PrincipalObjects.Objects
         public Employee GetEmployeeById(long id)
         {
             dynamic userFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where empId = " + id }), (false, "", false));
-            
+
             try
             {
-                
+
                 Employee employee = new Employee()
                 {
                     empId = Convert.ToInt64(userFromDB.rows[0].empId.Value),
@@ -54,8 +57,9 @@ namespace PrincipalObjects.Objects
                     empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString())
                 };
                 employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
-                employee.Turno = new WorkShift().GetTurByEmpId(employee.empId);
-                
+                employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString())));
+                employee.turId = Convert.ToInt64(String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString());
+
                 return employee;
             }
             catch (Exception ex)
@@ -86,7 +90,7 @@ namespace PrincipalObjects.Objects
                             empDelete = Convert.ToBoolean(row.empDelete.Value.ToString())
                         };
                         employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
-                        employee.Turno = new WorkShift().GetTurByEmpId(employee.empId);
+                        employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(row.turId.Value.ToString())?"-1": row.turId.Value.ToString())));
 
                         employees.Add(employee);
                     }
@@ -108,7 +112,8 @@ namespace PrincipalObjects.Objects
 
         public List<Employee> GetEmployeesToReport(string empleados)
         {
-            dynamic employeeFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where empId in(" + empleados +")" }), (true, "empName", false));
+            empleados = empleados.TrimStart(',');
+            dynamic employeeFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where empId in(" + (String.IsNullOrEmpty(empleados) ? "0" : empleados) + ")" }), (true, "empName", false));
             List<Employee> employees = new List<Employee>();
             try
             {
@@ -127,7 +132,7 @@ namespace PrincipalObjects.Objects
                             empDelete = Convert.ToBoolean(row.empDelete.Value.ToString())
                         };
                         employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
-                        employee.Turno = new WorkShift().GetTurByEmpId(employee.empId);
+                        employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(row.turId.Value.ToString()) ? "-1" : row.turId.Value.ToString())));
 
                         employees.Add(employee);
                     }
@@ -139,6 +144,87 @@ namespace PrincipalObjects.Objects
                 }
 
                 return employees;
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog(ex.Message);
+                return null;
+            }
+        }
+
+        public Employee SaveEmp(Employee empleado)
+        {
+            List<(string, eDataType)> dataToSend = new List<(string, eDataType)>();
+            long LastId = SQLInteract.GetLastIdFromInsertedElement(TableName, "empId") + 1;
+
+            dataToSend.Add((LastId.ToString(), eDataType.number));
+            dataToSend.Add((empleado.empName.ToString(), eDataType.text));
+            dataToSend.Add((empleado.empSurName.ToString(), eDataType.text));
+            dataToSend.Add((empleado.empLegajo.ToString(), eDataType.text));
+            dataToSend.Add((empleado.empCard.ToString(), eDataType.text));
+            dataToSend.Add((empleado.empIdHikVision.ToString(), eDataType.text));
+            dataToSend.Add(("0", eDataType.number));
+
+            dataToSend.Add((empleado.turId != -1? empleado.turId.ToString():"-1", eDataType.number));
+
+            bool rest = SQLInteract.InsertDataInDatabase(TableName, ColNames, dataToSend);
+
+            if (rest)
+            {
+                return empleado;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Employee EditarEmpleado(Employee empleado)
+        {
+            List<(string, string, eDataType)> dataToSend = new List<(string, string, eDataType)>();
+
+            dataToSend.Add(("empId",empleado.empId.ToString(), eDataType.number));
+            dataToSend.Add(("empName",empleado.empName.ToString(), eDataType.text));
+            dataToSend.Add(("empSurname",empleado.empSurName.ToString(), eDataType.text));
+            dataToSend.Add(("empLegajo",empleado.empLegajo.ToString(), eDataType.text));
+            dataToSend.Add(("empCard",empleado.empCard.ToString(), eDataType.text));
+            dataToSend.Add(("empIdHikVision",empleado.empIdHikVision.ToString(), eDataType.text));
+            dataToSend.Add(("empDelete","0", eDataType.number));
+            dataToSend.Add(("turId",empleado.turId.ToString(), eDataType.number));
+
+            bool rest = SQLInteract.UpdateDataInDataBase(TableName, dataToSend, (true, new string[1]{ "empId = " + empleado.empId }));
+
+            if (rest)
+            {
+                return empleado;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Employee GetEmployeeByCardId(string cardId)
+        {
+            dynamic userFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where empCard = '" + cardId + "'"}), (false, "", false));
+
+            try
+            {
+                Employee employee = new Employee()
+                {
+                    empId = Convert.ToInt64(userFromDB.rows[0].empId.Value),
+                    empName = userFromDB.rows[0].empName.Value.ToString(),
+                    empSurName = userFromDB.rows[0].empSurname.Value.ToString(),
+                    empLegajo = userFromDB.rows[0].empLegajo.Value.ToString(),
+                    empCard = userFromDB.rows[0].empCard.Value.ToString(),
+                    empIdHikVision = Convert.ToInt64(userFromDB.rows[0].empIdHikVision.Value.ToString()),
+                    empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString())
+                };
+                employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
+                employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString())));
+                employee.turId = Convert.ToInt64(String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString());
+
+                return employee;
             }
             catch (Exception ex)
             {

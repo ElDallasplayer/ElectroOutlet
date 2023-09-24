@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrincipalObjects.Objects;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -42,7 +43,7 @@ namespace PrincipalObjects
 
             if (useOrderBy.Item1)
             {
-                query = query + " order by " + useOrderBy.Item2 + (useOrderBy.Item3 ? "" : " DESC");
+                query = query + " order by " + useOrderBy.Item2 + (useOrderBy.Item3 == false? "" : " DESC");
             }
 
             SqlConnection connection = CreateConnection();

@@ -1,0 +1,16 @@
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.csproj.AssemblyReference.cache
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.csproj.SuggestedBindingRedirects.cache
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.DevForm.resources
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.csproj.GenerateResource.cache
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.csproj.CoreCompileInputs.cache
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\ServicioWindows.exe.config
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\ServicioWindows.exe
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\ServicioWindows.pdb
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\Newtonsoft.Json.dll
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\Newtonsoft.Json.xml
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.csproj.CopyComplete
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.exe
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.pdb
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\PrincipalObjects.dll
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\PrincipalObjects.pdb
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\PrincipalObjects.dll.config

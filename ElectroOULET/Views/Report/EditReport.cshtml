@@ -42,8 +42,7 @@
 
                     </div>
                     <input id="empsIds" name="listEmps" type="text" class="form-control Form-data" value="@Model.EmpsIds" hidden />
-                    <div id="EmpsContainer" class="row p-0 m-0 w-100">
-                        <iframe src="Partials/_empSelector"></iframe>
+                    <div id="EmpsContainer" class="row p-0 m-0 w-100 conttainerOverflow">
                         @Html.Partial("Partials/_empSelector")
                     </div>
 
@@ -83,5 +82,8 @@
 <style>
     .hasBlur {
         z-index: 9000;
+    }
+    .conttainerOverflow{
+            overflow-y: scroll;
     }
 </style>

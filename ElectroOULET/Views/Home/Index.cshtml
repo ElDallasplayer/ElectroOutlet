@@ -1,6 +1,6 @@
 ﻿@using PrincipalObjects.Objects
 @{
-    
+
     User user = (User)ViewData["ActiveUser"];
     ViewData["Title"] = "Home Page";
 }
@@ -40,6 +40,20 @@
             </i>
         </div>
     </div>
+
+    <div class="row p-0 mt-3 cards justify-content-around">
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="CTecnicoButton">
+            <i class="mdi mdi-list-status principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">CONTROLES</h5>
+            </i>
+        </div>
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ConfigurationButton">
+            <i class="mdi mdi-cog principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">CONFIGURACION</h5>
+            </i>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -53,6 +67,10 @@
 
     $("#ReportButton").on("click", () => {
         window.location.replace('@Url.Action("Index","Report")?id=' + @user.Id);
+    })
+
+    $("#CTecnicoButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Reparaciones")?id=' + @user.Id);
     })
 </script>
 

@@ -6,12 +6,14 @@
     ViewData["Title"] = "Empleados";
 }
 
+<div class="Employee-Container">
+</div>
 <div class="bg-container">
     <div class="row pt-3 justify-content-start">
         <div class="col-2 ml-2">
-            <button type="button" class="btn btn-secondary m-3"><i class="mdi mdi-account-search" style="font-size: 15px;font-style: normal !important;">AGREGAR</i></button>
+            <div type="button" class="btn btn-secondary m-3" id="AgregarEmpleado"><i class="mdi mdi-account-search" style="font-size: 15px;font-style: normal !important;">AGREGAR</i></div>
         </div>
-        
+
     </div>
     <div class="row mt-4 justify-content-center">
         <div class="col-11 mt-3 text-center" id="PartialEmployee">
@@ -19,6 +21,41 @@
         </div>
     </div>
     <script>
-        document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
+            document.querySelectorAll(".mvc-grid").forEach(element => {
+                new MvcGrid(element);
+            
+            $("#AgregarEmpleado").on("click",() =>{
+                StartLoader();
+                $('.Employee-Container').empty();
+                    let id = -1;
+
+                    $.ajax({
+                        url: '/Employee/EditEmployee?id=' + id + '&userId=@user.Id',
+                        dataType: 'html',
+                        async: true,
+                        success: function (data) {
+                            $('.Employee-Container').append(data);
+                        }
+                    });
+                StopLoader();
+            })
+
+            $(".buttonEditEmployee").on("click", (e) => {
+            StartLoader();
+                $('.Employee-Container').empty();
+                    let id = e.target.getAttribute('id');
+
+                    $.ajax({
+                        url: '/Employee/EditEmployee?id=' + id + '&userId=@user.Id',
+                        dataType: 'html',
+                        async: true,
+                        success: function (data) {
+                            $('.Employee-Container').append(data);
+                        }
+                    });
+                StopLoader();
+            });
+        } )
     </script>
 </div>
+

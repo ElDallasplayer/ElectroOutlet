@@ -184,11 +184,13 @@
   <ItemGroup>
     <Compile Include="ConnectionObject.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Objects\CodProductos\CodigoProducto.cs" />
     <Compile Include="Objects\Devices\Device.cs" />
     <Compile Include="Objects\Employee\Employee.cs" />
     <Compile Include="Objects\Marcations\Marcations.cs" />
     <Compile Include="Objects\Notifications\Notification.cs" />
     <Compile Include="Objects\Permissions\Permissions.cs" />
+    <Compile Include="Objects\Reparaciones\Reparaciones.cs" />
     <Compile Include="Objects\Report\Report.cs" />
     <Compile Include="Objects\User\User.cs" />
     <Compile Include="Objects\WorkShiftSegments\WorkShiftSegments.cs" />

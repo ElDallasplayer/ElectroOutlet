@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PrincipalObjects.Enums;
 
 namespace PrincipalObjects.Objects
 {
@@ -15,25 +16,29 @@ namespace PrincipalObjects.Objects
         public DateTime wsInit { get; set; }
         public DateTime wsEnd { get; set; }
         public bool wsDelete { get; set; }
+        public int wsDay { get; set; } //DEL 0 AL 6 => 0;Lunes,1:Martes,2:Miercoles,3:Jueves,4:Viernes,5:Sabado,6:Domingo
+        public int wsOrder { get; set; }
 
         #region dbObject
         string TableName = "oWorkShift_Segment";
-        string[] ColNames = new string[7] {
+        string[] ColNames = new string[9] {
             "wsId",
             "turId",
             "wsName",
             "wsDescription",
             "wsInit",
             "wsEnd",
-            "wsDelete"
+            "wsDelete",
+            "swDay",
+            "swOrder"
         };
         #endregion
 
         public WorkShiftSegments() { }
 
-        public List<WorkShiftSegments> GetWorkShiftSegmentsByTurId(long turId) 
+        public List<WorkShiftSegments> GetWorkShiftSegmentsByTurId(long turId, eDayWeek dayOfWeek) 
         {
-            dynamic segmentsFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where turId = " + turId }), (true, "wsInit", false));
+            dynamic segmentsFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[2] { "where turId = " + turId, " swDay = " + (int)dayOfWeek }), (true, "wsInit", false));
             List<WorkShiftSegments> segments = new List<WorkShiftSegments>();
             try
             {
@@ -50,6 +55,8 @@ namespace PrincipalObjects.Objects
                             wsInit = Convert.ToDateTime(row.wsInit.Value.ToString()),
                             wsEnd = Convert.ToDateTime(row.wsEnd.Value.ToString()),
                             wsDelete = Convert.ToBoolean(row.wsDelete.Value.ToString()),
+                            wsDay = Convert.ToInt32(row.swDay.Value.ToString()),
+                            wsOrder = Convert.ToInt32(row.swOrder.Value.ToString()),
                         };
                         segments.Add(workShiftSegment);
                     }

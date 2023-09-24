@@ -39,8 +39,25 @@ namespace PrincipalObjects
         //REPORTES
         public enum Reports
         {
-            ReporteDeMarcaciones = 1,
-            ReporteDeHorasPorDia = 2
+            ReporteDeMarcaciones = 0,
+            ReporteDeHorasPorDia = 1
+        }
+
+        public enum eDayWeek
+        {
+            Lunes = 0,
+            Martes = 1,
+            Miercoles = 2,
+            Jueves = 3,
+            Viernes = 4,
+            Sabado = 5,
+            Domingo = 6
+        }
+
+        public enum reState
+        {
+            Reparando = 0,
+            Reparado = 1
         }
     }
 }

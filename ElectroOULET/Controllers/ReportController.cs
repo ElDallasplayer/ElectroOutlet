@@ -62,7 +62,7 @@ namespace ElectroOULET.Controllers
         {
             string[] parameters = { employeesId };
             Type thisType = typeof(Reports);
-            MethodInfo theMethod = thisType.GetMethod(reportType.ToString());
+            MethodInfo theMethod = thisType.GetMethod(((Enums.Reports)reportType).ToString());
             DataTable dataTable = await (Task<DataTable>)theMethod.Invoke(null, parameters);
 
 

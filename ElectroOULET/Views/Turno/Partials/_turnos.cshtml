@@ -5,8 +5,8 @@
 @Html.Grid(Model).Build(columns =>
     {
         columns.Add(c => c.turName).Titled("Nombre").Sortable(true);
-        columns.Add(c => c.turDescription).Titled("Apellido").Sortable(true);
-        columns.Add(c => c.SegmentsToView == ""?"Sin segmentos":c.SegmentsToView).Titled("Segmentos").Sortable(true);
+        columns.Add(c => c.turDescription).Titled("Descripcion").Sortable(true);
+        //columns.Add(c => c.SegmentsToView == ""?"Sin segmentos":c.SegmentsToView).Titled("Segmentos").Sortable(true);
         columns.Add(c => Html.Raw("<a id='" + c.turId +"' href='#'><i class='mdi mdi-pencil-box TurnoIconEdit' id='"+ c.turId +"' style='font-size: 25px; cursor: pointer;'></i></a>")).Titled(Html.Raw("<i class='mdi mdi-pencil-box' style='font-size: 25px;'></i>"));
         columns.Add(c => Html.Raw("<i class='mdi mdi-delete-circle' id='"+ c.turId +"' style='font-size: 25px; cursor: pointer;'></i>")).Titled(Html.Raw("<i class='mdi mdi-delete-circle' style='font-size: 25px;'></i>"));
     }).Named("employees-grid").Filterable().Sortable().Empty("SIN TURNOS").Css("employee-grid").Pageable(pager =>

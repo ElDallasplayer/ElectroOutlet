@@ -12,29 +12,3 @@
     </div>
 </li>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-<script>
-    $(document).ready(ReloadNotifications);
-
-      function ReloadNotifications() {
-        $(".NotificationList").empty();
-        $(".NotificationList").load("/Home/NotificacionesParaVista");
-
-        $(".NotificationButton").on("click", (e) => {
-            let id = e.target.getAttribute("id");
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("EliminarNotificacion", "Notification")?id=' + id,
-                    success: function (result) {
-                        console.log(result);
-                    }
-                });
-            })
-            
-        setInterval(ReloadNotifications, 3000);
-        }
-
-        ReloadNotifications();
-
-</script>

@@ -4,6 +4,7 @@
 @{
     User user = (User)ViewData["ActiveUser"];
     ViewData["Title"] = "EDIT";
+
 }
 
 <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
@@ -16,7 +17,7 @@
         </div>
         <div class="row justify-content-center Edit-Body">
             <div class="col-12">
-                <form id="EditForm" asp-action="GuardarReporte" asp-controller="Report">
+                <form id="EditForm" asp-action="GuardarTurno" asp-controller="Turno">
 
                     <input type="number" class="form-control Form-data" name="Id" value="@Model.turId" hidden />
                     <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
@@ -28,7 +29,7 @@
                         <label for="Description">Descripcion</label>
                         <input type="text" class="form-control Form-data" name="Description" value="@Model.turDescription" />
                     </div>
-                    <div class="row p-0 m-0 justify-content-around">
+                    <div class="row p-0 mb-3 justify-content-around">
                         <div class="col-6">
                             <label for="FechaInicio">Fecha Inicio</label>
                             <input name="FechaInicio" type="datetime" class="form-control Form-data" value="@Model.turInit" />
@@ -39,9 +40,15 @@
                         </div>
 
                     </div>
-                    <input id="empsIds" name="listEmps" type="text" class="form-control Form-data" value="@Model.SegmentsToView" hidden />
-                    <div id="EmpsContainer" class="row p-0 m-0 w-100">
-                        <iframe src="Partials/_empSelector"></iframe>
+
+                    <div id="SegmentsContainer" class="row p-0 m-0 w-100 este">
+                        @Html.Partial("Partials/_segSelector",(0,Model.Lunes.OrderBy(x=>x.wsInit).ToList()))
+                        @Html.Partial("Partials/_segSelector",(1,Model.Martes.OrderBy(x=>x.wsInit).ToList()))
+                        @Html.Partial("Partials/_segSelector",(2,Model.Miercoles.OrderBy(x=>x.wsInit).ToList()))
+                        @Html.Partial("Partials/_segSelector",(3,Model.Jueves.OrderBy(x=>x.wsInit).ToList()))
+                        @Html.Partial("Partials/_segSelector",(4,Model.Viernes.OrderBy(x=>x.wsInit).ToList()))
+                        @Html.Partial("Partials/_segSelector",(5,Model.Sabado.OrderBy(x=>x.wsInit).ToList()))
+                        @Html.Partial("Partials/_segSelector",(6,Model.Domingo.OrderBy(x=>x.wsInit).ToList()))
                     </div>
 
 
@@ -61,23 +68,39 @@
 </div>
 
 <script>
-        $(".CheckBoxEmpleado").on("change", function (e){
-            let valActual = $("#empsIds").val();
+    $(".CheckBoxEmpleado").on("change", function (e){
+        let valActual = $("#empsIds").val();
 
-            if (e.target.checked)
-            {
-                valActual = valActual + "," + e.target.getAttribute("id");
-                $("#empsIds").val(valActual);
-            }else{
-                valActual = valActual.replace("," + e.target.getAttribute("id"),'');
-                $("#empsIds").val(valActual);
-            }
-        })
-        //# sourceURL=editreport.js
+        if (e.target.checked)
+        {
+            valActual = valActual + "," + e.target.getAttribute("id");
+            $("#empsIds").val(valActual);
+        }else{
+            valActual = valActual.replace("," + e.target.getAttribute("id"),'');
+            $("#empsIds").val(valActual);
+        }
+    })
+    //# sourceURL=editreport.js
 
 </script>
 
 <style>
+    body {
+        scrollbar-width: thin !important; /* "auto" or "thin" */
+        scrollbar-color: blue orange !important; /* scroll thumb and track */
+    }
+    
+
+    .este {
+        height: 380px;
+        line-height: 1em;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        width: 100%;
+        border: 1px solid gray;
+        border-radius: 10px;
+    }
+
     .hasBlur {
         z-index: 9000;
     }

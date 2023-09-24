@@ -16,8 +16,13 @@ namespace PrincipalObjects.Objects
         public DateTime turEnd { get; set; }
         public bool turDelete { get; set; }
 
-        public List<WorkShiftSegments> Segments { get; set; }
-        public string SegmentsToView { get; set; }
+        public List<WorkShiftSegments> Lunes { get; set; }
+        public List<WorkShiftSegments> Martes { get; set; }
+        public List<WorkShiftSegments> Miercoles { get; set; }
+        public List<WorkShiftSegments> Jueves { get; set; }
+        public List<WorkShiftSegments> Viernes { get; set; }
+        public List<WorkShiftSegments> Sabado { get; set; }
+        public List<WorkShiftSegments> Domingo { get; set; }
 
         #region dbObject
         string TableName = "oWorkShift";
@@ -49,7 +54,13 @@ namespace PrincipalObjects.Objects
                     turEnd = Convert.ToDateTime(turnosFromDB.rows[0].turEnd.Value.ToString()),
                     turDelete = Convert.ToBoolean(turnosFromDB.rows[0].turDelete.Value.ToString())
                 };
-                turn.Segments = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId);
+                turn.Lunes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Lunes);
+                turn.Martes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Martes);
+                turn.Miercoles = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Miercoles);
+                turn.Jueves = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Jueves);
+                turn.Viernes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Viernes);
+                turn.Sabado = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Sabado);
+                turn.Domingo = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Domingo);
 
                 return turn;
             }
@@ -62,6 +73,11 @@ namespace PrincipalObjects.Objects
 
         public WorkShift GetTurById(long Id)
         {
+            if (Id == -1)
+            {
+                return null;
+            }
+
             dynamic turnosFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where turId = " + Id }), (false, "", false));
             try
             {
@@ -75,7 +91,14 @@ namespace PrincipalObjects.Objects
                     turEnd = Convert.ToDateTime(turnosFromDB.rows[0].turEnd.Value.ToString()),
                     turDelete = Convert.ToBoolean(turnosFromDB.rows[0].turDelete.Value.ToString())
                 };
-                turn.Segments = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId);
+
+                turn.Lunes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Lunes);
+                turn.Martes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Martes);
+                turn.Miercoles = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Miercoles);
+                turn.Jueves = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Jueves);
+                turn.Viernes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Viernes);
+                turn.Sabado = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Sabado);
+                turn.Domingo = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Domingo);
 
                 return turn;
             }
@@ -102,16 +125,52 @@ namespace PrincipalObjects.Objects
                         turDescription = row.turDescription.Value.ToString(),
                         turInit = Convert.ToDateTime(row.turInit.Value.ToString()),
                         turEnd = Convert.ToDateTime(row.turEnd.Value.ToString()),
-                        turDelete = (row.turDelete.Value.ToString() == "0" ? false : true)
+                        turDelete = Convert.ToBoolean(row.turDelete.Value.ToString())
                     };
-                    turn.Segments = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId).OrderBy(x => x.wsInit).ToList();
+                    turn.Lunes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Lunes).OrderBy(x => x.wsInit).ToList();
+                    turn.Martes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Martes).OrderBy(x => x.wsInit).ToList();
+                    turn.Miercoles = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Miercoles).OrderBy(x => x.wsInit).ToList();
+                    turn.Jueves = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Jueves).OrderBy(x => x.wsInit).ToList();
+                    turn.Viernes = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Viernes).OrderBy(x => x.wsInit).ToList();
+                    turn.Sabado = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Sabado).OrderBy(x => x.wsInit).ToList();
+                    turn.Domingo = new WorkShiftSegments().GetWorkShiftSegmentsByTurId(turn.turId, Enums.eDayWeek.Domingo).OrderBy(x => x.wsInit).ToList();
 
-                    turn.SegmentsToView = "";
-                    foreach (WorkShiftSegments seg in turn.Segments)
+                    //turn.SegmentsToView = "";
+                    //foreach (WorkShiftSegments seg in turn.Segments)
+                    //{
+                    //    turn.SegmentsToView = turn.SegmentsToView + seg.wsName + ",";
+                    //}
+                    //turn.SegmentsToView = turn.SegmentsToView.TrimEnd(',');
+                    turnos.Add(turn);
+                }
+
+                return turnos;
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog(ex.Message);
+                return null;
+            }
+        }
+
+        public List<WorkShift> GetTurnosReducidos()
+        {
+            dynamic turnosFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (false, new string[0] { }), (false, "", false));
+            List<WorkShift> turnos = new List<WorkShift>();
+            try
+            {
+                foreach (dynamic row in turnosFromDB.rows)
+                {
+                    WorkShift turn = new WorkShift()
                     {
-                        turn.SegmentsToView = turn.SegmentsToView + seg.wsName + ",";
-                    }
-                    turn.SegmentsToView = turn.SegmentsToView.TrimEnd(',');
+                        empId = Convert.ToInt64(row.empId.Value.ToString()),
+                        turId = Convert.ToInt64(row.turId.Value.ToString()),
+                        turName = row.turName.Value.ToString(),
+                        turDescription = row.turDescription.Value.ToString(),
+                        turInit = Convert.ToDateTime(row.turInit.Value.ToString()),
+                        turEnd = Convert.ToDateTime(row.turEnd.Value.ToString()),
+                        turDelete = Convert.ToBoolean(row.turDelete.Value.ToString())
+                    };
                     turnos.Add(turn);
                 }
 
