@@ -19,24 +19,24 @@
             <div class="col-12">
                 <form id="EditForm" asp-action="GuardarTurno" asp-controller="Turno">
 
-                    <input type="number" class="form-control Form-data" name="Id" value="@Model.turId" hidden />
+                    <input type="number" class="form-control Form-data" name="turId" value="@Model.turId" hidden />
                     <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
 
                     <div class="row p-0 m-0 justify-content-center">
                         <label for="Name">Nombre</label>
-                        <input type="text" class="form-control Form-data" name="Name" value="@Model.turName" />
+                        <input type="text" class="form-control Form-data" name="turName" value="@Model.turName" />
 
                         <label for="Description">Descripcion</label>
-                        <input type="text" class="form-control Form-data" name="Description" value="@Model.turDescription" />
+                        <input type="text" class="form-control Form-data" name="turDescription" value="@Model.turDescription" />
                     </div>
                     <div class="row p-0 mb-3 justify-content-around">
                         <div class="col-6">
                             <label for="FechaInicio">Fecha Inicio</label>
-                            <input name="FechaInicio" type="datetime" class="form-control Form-data" value="@Model.turInit" />
+                            <input id="FechaInicio" name="turInit" type="datetime" class="form-control Form-data" value="@Model.turInit" />
                         </div>
                         <div class="col-6">
-                            <label for="FechaFin">Fecha Inicio</label>
-                            <input name="FechaFin" type="datetime" class="form-control Form-data" value="@Model.turEnd" />
+                            <label for="FechaFin">Fecha Fin</label>
+                            <input id="FechaFin" name="turEnd" type="datetime" class="form-control Form-data" value="@Model.turEnd" />
                         </div>
 
                     </div>
@@ -54,7 +54,7 @@
 
                     <div class="row p-0 m-0 justify-content-between buttons-function-container">
                         <div class="col-6 p-1">
-                            <button type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</button>
+                            <div type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</div>
                         </div>
                         <div class="col-6 p-1">
                             <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
@@ -90,17 +90,6 @@
         scrollbar-color: blue orange !important; /* scroll thumb and track */
     }
     
-
-    .este {
-        height: 380px;
-        line-height: 1em;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        width: 100%;
-        border: 1px solid gray;
-        border-radius: 10px;
-    }
-
     .hasBlur {
         z-index: 9000;
     }

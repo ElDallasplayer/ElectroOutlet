@@ -91,3 +91,4 @@ C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\Electro
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ElectroOULET\obj\Debug\net6.0\ElectroOULET.pdb
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ElectroOULET\obj\Debug\net6.0\ElectroOULET.genruntimeconfig.cache
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ElectroOULET\obj\Debug\net6.0\ref\ElectroOULET.dll
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ElectroOULET\bin\Debug\net6.0\SpreadsheetLight.dll

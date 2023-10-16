@@ -181,7 +181,7 @@ namespace PrincipalObjects
             connection.Open();
             SqlCommand command = new SqlCommand(query, connection);
             SqlDataReader reader = command.ExecuteReader();
-            long i = -1;
+            long i = 0;
             if (reader.HasRows)
             {
                 while (reader.Read())

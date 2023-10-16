@@ -2,6 +2,7 @@
 @model List<Reparacion>
 
 @{
+    User user = (User)ViewData["ActiveUser"];
     ViewData["Title"] = "Reparaciones";
 }
 
@@ -23,5 +24,95 @@
 </div>
 
 <script>
-    document.querySelectorAll(".mvc-grid").forEach(element => {new MvcGrid(element)});
+            document.addEventListener("keyup", function (e) {
+                e.stopImmediatePropagation();
+                console.log(e.key);
+                if (e.key === 'Tab') {
+                        let a = $("#ReparacionRealizada").val();
+                        let b = $("#Repuesto").val();
+                        let c = $("#Trazabilidad").val();
+
+                        if(a == "")
+                        {
+                            $("#ReparacionRealizada").focus();
+                        }else
+                        {
+                            if(b == "")
+                            {
+                                $("#Repuesto").focus();
+                            }else
+                            {
+                                if(c == "")
+                                {
+                                    $("#Trazabilidad").focus();
+                                }
+                            }
+                        }
+                }
+            }, false);
+
+    document.querySelectorAll(".mvc-grid").forEach(element => {new MvcGrid(element)
+        $("#AgregarReparacion").on("click",(e) =>{
+            StartLoader();
+                e.stopImmediatePropagation();
+
+                $('.EditReparacion-Container').empty();
+                    let id = -1;
+                    $.ajax({
+                        url: '/Reparaciones/EditReparacion?id=' + id + '&userId=@user.Id',
+                        dataType: 'html',
+                        async: true,
+                        success: function (data) {
+                            $('.EditReparacion-Container').append(data);
+                        }
+                    });
+                StopLoader();
+            })
+    });
+
+    $(".buttonEditReparacion").on("click", (e) => {
+                StartLoader();
+                e.stopImmediatePropagation();
+
+                $('.EditReparacion-Container').empty();
+                    let id = e.target.getAttribute('id');
+
+                    $.ajax({
+                        url: '/Reparaciones/EditReparacion?id=' + id + '&userId=@user.Id',
+                        dataType: 'html',
+                        async: true,
+                        success: function (data) {
+                            $('.EditReparacion-Container').append(data);
+                        }
+                    });
+                StopLoader();
+            });
+
+            $(".buttonDeleteReparacion").on("click", (e) => {
+                StartLoader();
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                let id = e.target.getAttribute('id');
+
+                Swal.fire({
+                  title: 'Seguro que deseas eliminar el registro?',
+                  showDenyButton: true,
+                  confirmButtonText: 'Eliminar',
+                  denyButtonText: `Cancelar`,
+                }).then((result) => {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Reparaciones/EliminarReparacion?reparacionId=' + id + '&userId=@user.Id',
+                            dataType: 'html',
+                            async: true,
+                            success: function (data) {
+                                location.reload();
+                            }
+                        });
+                  }
+                })
+                StopLoader();
+            });
+
 </script>

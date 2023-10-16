@@ -1,0 +1,207 @@
+﻿@using PrincipalObjects.Objects
+@using static PrincipalObjects.Enums
+@model Reparacion
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "EDIT";
+
+    int esAgregado = Convert.ToInt32(ViewData["EsAgregado"]);
+
+    List<Employee> empleados = new Employee().GetEmployees();
+    List<CodigoProducto> codigos = new CodigoProducto().GetCodigoProductos();
+}
+
+
+<div id="ObjectEdit">
+    <div class="hasBlur">
+    </div>
+    <div class="Edit-Container">
+        <div class="Edit-Title text-center">
+            @if (esAgregado == 1)
+            {
+                <h2>Agregar reparaciones continuamente</h2>
+            }
+            else
+            {
+                <h2>Editar reparacion</h2>
+            }
+        </div>
+        <div class="row justify-content-center Edit-Body">
+            <div class="col-12">
+                <form id="EditForm" asp-action="GuardarReparacion" asp-controller="Reparaciones">
+
+                    <input type="number" id="ModelReparacionId" class="form-control Form-data" name="Id" value="@Model.Id" hidden />
+                    <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
+                    <input type="number" class="form-control Form-data" name="esAgregar" value="@esAgregado" hidden />
+                    <input type="number" class="form-control Form-data" name="Estado" id="Estado" value="1" hidden />
+
+                    <div class="row pt-2 mt-3 justify-content-center">
+                        <div class="col-3">
+
+                            <label for="Fecha">Fecha</label>
+                            <input type="date" class="form-control Form-data" name="Fecha" value='@Model.Fecha.ToString("yyyy-MM-dd")' />
+
+                        </div>
+                        <div class="col-9"> <!-- SI LE AGREGO LA CLASE "sin-boton-agregar" ENTONCES NO TENDRA BOTON AL NO TENER RESULTADO -->
+                            <input type="number" class="form-control Form-data" name="Empleado" id="Empleado" value="@Model.Empleado" hidden />
+
+                            <label for="EmpleadosSelector">Empleado</label>
+                            <select id="EmpleadosSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" required>
+                                @if (empleados.Count > 0 && Model.Id != -1)
+                                {
+                                    @foreach (Employee emp in empleados)
+                                    {
+                                        @if (Model.Empleado == emp.empId)
+                                        {
+                                            <option value="@emp.empId" selected>@emp.NombreCompleto</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@emp.empId">@emp.NombreCompleto</option>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="-1" selected>Seleccionar</option>
+                                    @foreach (Employee emp in empleados)
+                                    {
+                                        <option value="@emp.empId">@emp.NombreCompleto</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row mt-3 p-0">
+
+                        <div class="col-4 p-0 m-0">
+                            <input type="number" class="form-control Form-data" id="CodProducto" name="CodProducto" value="@Model.CodProducto" hidden />
+                            <label for="CodigosSelector">Codigo de producto</label>
+                            <select id="CodigosSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                @if (codigos.Count > 0 && Model.Id != -1 && (Model.CodProducto > 0))
+                                {
+                                    @foreach (CodigoProducto rep in codigos)
+                                    {
+                                        @if (Model.CodProducto == rep.Id)
+                                        {
+                                            <option value="@rep.Id" selected>@rep.CodProducto</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@rep.Id">@rep.CodProducto</option>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="-1" selected>Seleccionar</option>
+                                    @foreach (CodigoProducto rep in codigos)
+                                    {
+                                        <option value="@rep.Id">@rep.CodProducto</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 p-0">
+                        <div class="row p-0 mt-3 justify-content-center">
+                            <div class="col-12">
+                                <label for="ReparacionRealizada">Reparacion</label>
+                                <input type="text" id="ReparacionRealizada" class="form-control Form-data" name="ReparacionRealizada" value="@Model.ReparacionRealizada" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 p-0">
+                        <div class="col-4 p-0 m-0"> <!-- SI LE AGREGO LA CLASE "sin-boton-agregar" ENTONCES NO TENDRA BOTON AL NO TENER RESULTADO -->
+                            <label for="Repuesto">Repuesto</label>
+                            <input type="text" id="Repuesto" class="form-control Form-data" name="Repuesto" value="@Model.Repuesto" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 p-0">
+
+                        <div class="col-4 m-0 p-0">
+                            <label for="Trazabilidad">Trazabilidad</label>
+                            <input type="text" id="Trazabilidad" class="form-control Form-data" name="Trazabilidad" value="@Model.Trazabilidad" required />
+                        </div>
+                    </div>
+
+                    <div class="row p-0 m-0 justify-content-between buttons-function-container">
+                        <div class="col-6 p-1">
+                            <button type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</button>
+                        </div>
+                        <div class="col-6 p-1">
+                            <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+            $(document).ready(function() {
+                $('#CodigosSelector').select2();
+            });
+
+            $("#CodigosSelector").change(function(e){
+                $('#CodProducto').val($(this).val());
+            });
+
+        $("#EmpleadosSelector").change(function(e){
+                $('#Empleado').val($(this).val());
+        });
+
+        function UpdateButtonSelect(){
+            $("#agregarButtonSelect").on("click", function (e){
+
+                let valorBusqueda = $(".select2-search__field").val();
+
+                 $.ajax({
+                        url: '/Reparaciones/AgregarCodigoProducto?nombreDeCodigo=' + valorBusqueda,
+                        dataType: 'json',
+                        async: true,
+                        success: function (data) {
+                            if(data.result == "OK"){
+                                let codigo = data.codigo;
+                                let nombre = data.nombre;
+
+                                $('#CodProducto').val(codigo)
+                                $("#CodigosSelector").append("<option value='"+codigo+"' selected>" + nombre + "</option>");
+                            }
+                        }
+                 });
+
+            });
+        }
+
+        UpdateButtonSelect();
+
+        $("#Repuesto").on("change", function(e){
+            e.stopImmediatePropagation()
+            if(e.val() == ""){
+                $("#Repuesto").focus();
+            }
+        });
+        //# sourceURL=editReparacion.js
+    </script>
+</div>
+
+<style>
+    .hasBlur {
+        z-index: 5000 !important;
+    }
+
+    .Edit-Container {
+        width: 1000px !important;
+    }
+
+    .Edit-Title {
+        width: 1000px !important;
+    }
+</style>

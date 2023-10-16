@@ -99,7 +99,7 @@ namespace PrincipalObjects
             {
                 string sLogFile = ProgramDataPath + folderName + fileName + DateTime.Now.ToString("yyyyMMdd") + ".txt";
 
-                if (DirectoryExists(ProgramDataPath + folderName))
+                if (!DirectoryExists(ProgramDataPath + folderName))
                 {
                     File.Create(sLogFile).Dispose();
                 }

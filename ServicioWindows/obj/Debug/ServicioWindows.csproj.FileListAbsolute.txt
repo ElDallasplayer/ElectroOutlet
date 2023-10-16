@@ -14,3 +14,4 @@ C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\Servici
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\PrincipalObjects.dll
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\PrincipalObjects.pdb
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\bin\Debug\PrincipalObjects.dll.config
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\ServicioWindows\obj\Debug\ServicioWindows.ProjectInstaller.resources

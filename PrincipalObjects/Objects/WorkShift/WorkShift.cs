@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PrincipalObjects.Enums;
 
 namespace PrincipalObjects.Objects
 {
@@ -179,6 +180,30 @@ namespace PrincipalObjects.Objects
             catch (Exception ex)
             {
                 Utilities.WriteLog(ex.Message);
+                return null;
+            }
+        }
+
+        public WorkShift EditarTurno(WorkShift turnoAEditar)
+        {
+            List<(string, string, eDataType)> dataToSend = new List<(string, string, eDataType)>();
+
+            dataToSend.Add(("empId", "0", eDataType.number));
+            dataToSend.Add(("turId", turnoAEditar.turId.ToString(), eDataType.number));
+            dataToSend.Add(("turName", turnoAEditar.turName, eDataType.text));
+            dataToSend.Add(("turDescription", turnoAEditar.turDescription, eDataType.text));
+            dataToSend.Add(("turInit", turnoAEditar.turInit.ToString("yyyyMMdd HH:mm:ss"), eDataType.text));
+            dataToSend.Add(("turEnd", turnoAEditar.turEnd.ToString("yyyyMMdd HH:mm:ss"), eDataType.text));
+            dataToSend.Add(("turDelete", "0", eDataType.number));
+
+            bool rest = SQLInteract.UpdateDataInDataBase(TableName, dataToSend, (true, new string[1] { "turId = " + turnoAEditar.turId }));
+
+            if (rest)
+            {
+                return turnoAEditar;
+            }
+            else
+            {
                 return null;
             }
         }

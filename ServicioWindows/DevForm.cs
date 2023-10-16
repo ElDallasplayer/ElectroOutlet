@@ -19,7 +19,7 @@ namespace ServicioWindows
 
         public void StartButton_Click(object sender, EventArgs e)
         {
-            bool res = new Service().StartService().Result;
+            bool res = Service.StartService().Result;
         }
     }
 }

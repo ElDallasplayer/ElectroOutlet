@@ -1,7 +1,10 @@
 using PrincipalObjects.Objects;
 
-var builder = WebApplication.CreateBuilder(args);
+#region TEST
+PrincipalObjects.TestMethods.CallUnitMethods();
+#endregion
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

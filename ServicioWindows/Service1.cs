@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ServicioWindows
@@ -19,6 +20,11 @@ namespace ServicioWindows
 
         protected override void OnStart(string[] args)
         {
+            Thread funcion = new Thread(new ParameterizedThreadStart(delegate
+            {
+                Task<bool> task = Service.StartService();
+            }));
+            funcion.Start();
         }
 
         protected override void OnStop()

@@ -40,7 +40,10 @@ namespace PrincipalObjects
         public enum Reports
         {
             ReporteDeMarcaciones = 0,
-            ReporteDeHorasPorDia = 1
+            ReporteDeHorasPorDia = 1,
+            ReporteDeHorasPorPeriodo = 2,
+            ReporteDeRegistros = 3,
+            ReporteDeRegistrosReducido = 4
         }
 
         public enum eDayWeek
@@ -58,6 +61,21 @@ namespace PrincipalObjects
         {
             Reparando = 0,
             Reparado = 1
+        }
+
+        public enum eDedo
+        {
+            SinDefinir = 0,
+            PulgarIzquierdo = 1,
+            IndiceIzquierdo = 2,
+            MedioIzquierdo = 3,
+            AnularIzquierdo = 4,
+            MeñiqueIzquierdo = 5,
+            PulgarDerecho = 6,
+            IndiceDerecho = 7,
+            MedioDerecho = 8,
+            AnularDerecho = 9,
+            MeñiqueDerecho = 10
         }
     }
 }

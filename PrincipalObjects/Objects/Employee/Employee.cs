@@ -17,14 +17,18 @@ namespace PrincipalObjects.Objects
         public long empIdHikVision { get; set; }
         public bool empDelete { get; set; }
         public long turId { get; set; }
+        public string empDocumento { get; set; }
 
         public string NombreCompleto { get; set; }
 
         public WorkShift Turno { get; set; }
 
+        public string HuellaBase64 { get; set; }
+        public eDedo DedoEnrolado { get; set; }
+
         #region dbObject
         string TableName = "oEmployee";
-        string[] ColNames = new string[8] {
+        string[] ColNames = new string[11] {
             "empId",
             "empName",
             "empSurname",
@@ -32,7 +36,10 @@ namespace PrincipalObjects.Objects
             "empCard",
             "empIdHikVision",
             "empDelete",
-            "turId"
+            "turId",
+            "empHuella",
+            "empDedo",
+            "empDocumento"
         };
         #endregion
 
@@ -54,11 +61,44 @@ namespace PrincipalObjects.Objects
                     empLegajo = userFromDB.rows[0].empLegajo.Value.ToString(),
                     empCard = userFromDB.rows[0].empCard.Value.ToString(),
                     empIdHikVision = Convert.ToInt64(userFromDB.rows[0].empIdHikVision.Value.ToString()),
-                    empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString())
+                    empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString()),
+                    empDocumento = userFromDB.rows[0].empDocumento.Value.ToString()
                 };
                 employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
                 employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString())));
                 employee.turId = Convert.ToInt64(String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString());
+
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog(ex.Message);
+                return null;
+            }
+        }
+
+        public Employee GetEmployeeById_Huella(long id)
+        {
+            dynamic userFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where empId = " + id }), (false, "", false));
+
+            try
+            {
+
+                Employee employee = new Employee()
+                {
+                    empId = Convert.ToInt64(userFromDB.rows[0].empId.Value),
+                    empName = userFromDB.rows[0].empName.Value.ToString(),
+                    empSurName = userFromDB.rows[0].empSurname.Value.ToString(),
+                    empLegajo = userFromDB.rows[0].empLegajo.Value.ToString(),
+                    empCard = userFromDB.rows[0].empCard.Value.ToString(),
+                    empIdHikVision = Convert.ToInt64(userFromDB.rows[0].empIdHikVision.Value.ToString()),
+                    empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString()),
+                    empDocumento = userFromDB.rows[0].empDocumento.Value.ToString()
+                };
+                employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
+
+                employee.HuellaBase64 = userFromDB.rows[0]["empHuella"].ToString();
+                employee.DedoEnrolado = (eDedo)Convert.ToInt32((userFromDB.rows[0]["empDedo"] == ""?"0": userFromDB.rows[0]["empDedo"]));
 
                 return employee;
             }
@@ -87,7 +127,8 @@ namespace PrincipalObjects.Objects
                             empLegajo = row.empLegajo.Value.ToString(),
                             empCard = row.empCard.Value.ToString(),
                             empIdHikVision = Convert.ToInt64(row.empIdHikVision.Value.ToString()),
-                            empDelete = Convert.ToBoolean(row.empDelete.Value.ToString())
+                            empDelete = Convert.ToBoolean(row.empDelete.Value.ToString()),
+                            empDocumento = row.empDocumento.Value.ToString()
                         };
                         employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
                         employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(row.turId.Value.ToString())?"-1": row.turId.Value.ToString())));
@@ -129,7 +170,8 @@ namespace PrincipalObjects.Objects
                             empLegajo = row.empLegajo.Value.ToString(),
                             empCard = row.empCard.Value.ToString(),
                             empIdHikVision = Convert.ToInt64(row.empIdHikVision.Value.ToString()),
-                            empDelete = Convert.ToBoolean(row.empDelete.Value.ToString())
+                            empDelete = Convert.ToBoolean(row.empDelete.Value.ToString()),
+                            empDocumento = row.empDocumento.Value.ToString()
                         };
                         employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
                         employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(row.turId.Value.ToString()) ? "-1" : row.turId.Value.ToString())));
@@ -167,6 +209,10 @@ namespace PrincipalObjects.Objects
 
             dataToSend.Add((empleado.turId != -1? empleado.turId.ToString():"-1", eDataType.number));
 
+            dataToSend.Add((empleado.HuellaBase64, eDataType.text));
+            dataToSend.Add((empleado.DedoEnrolado.ToString(), eDataType.number));
+            dataToSend.Add((empleado.empDocumento, eDataType.text));
+
             bool rest = SQLInteract.InsertDataInDatabase(TableName, ColNames, dataToSend);
 
             if (rest)
@@ -191,6 +237,9 @@ namespace PrincipalObjects.Objects
             dataToSend.Add(("empIdHikVision",empleado.empIdHikVision.ToString(), eDataType.text));
             dataToSend.Add(("empDelete","0", eDataType.number));
             dataToSend.Add(("turId",empleado.turId.ToString(), eDataType.number));
+            dataToSend.Add(("empHuella", empleado.HuellaBase64, eDataType.text));
+            dataToSend.Add(("empDedo", empleado.DedoEnrolado.ToString(), eDataType.number));
+            dataToSend.Add(("empDocumento", empleado.empDocumento, eDataType.text));
 
             bool rest = SQLInteract.UpdateDataInDataBase(TableName, dataToSend, (true, new string[1]{ "empId = " + empleado.empId }));
 
@@ -218,7 +267,8 @@ namespace PrincipalObjects.Objects
                     empLegajo = userFromDB.rows[0].empLegajo.Value.ToString(),
                     empCard = userFromDB.rows[0].empCard.Value.ToString(),
                     empIdHikVision = Convert.ToInt64(userFromDB.rows[0].empIdHikVision.Value.ToString()),
-                    empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString())
+                    empDelete = Convert.ToBoolean(userFromDB.rows[0].empDelete.Value.ToString()),
+                    empDocumento = userFromDB.rows[0].empDocumento.Value.ToString()
                 };
                 employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
                 employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(userFromDB.rows[0].turId.Value.ToString()) ? "-1" : userFromDB.rows[0].turId.Value.ToString())));
@@ -231,6 +281,12 @@ namespace PrincipalObjects.Objects
                 Utilities.WriteLog(ex.Message);
                 return null;
             }
+        }
+
+        public bool DeleteEmployee(int id)
+        {
+            bool isDelete = SQLInteract.DeleteDataInDatabase(TableName, (true, new string[1] { "empId = " + id }));
+            return isDelete;
         }
     }
 }

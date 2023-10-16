@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PrincipalObjects.Enums;
 
 namespace PrincipalObjects.Objects
 {
@@ -75,6 +76,28 @@ namespace PrincipalObjects.Objects
                 Utilities.WriteLog("JSON => " + codReturn.rows[0].ToString());
             }
             return rep;
+        }
+
+        public CodigoProducto AgregarCodigoDeProducto(string codProdNombre)
+        {
+            long lastId = SQLInteract.GetLastIdFromInsertedElement(TableName, "codId") + 1;
+
+            List<(string, eDataType)> listaDatosAguardar = new List<(string, eDataType)>();
+            listaDatosAguardar.Add((lastId.ToString(), eDataType.number));
+            listaDatosAguardar.Add((codProdNombre, eDataType.text));
+            listaDatosAguardar.Add(("", eDataType.text));
+            listaDatosAguardar.Add(("0", eDataType.number));
+
+            bool guardado = SQLInteract.InsertDataInDatabase(TableName, ColNames, listaDatosAguardar);
+
+            if (guardado)
+            {
+                return new CodigoProducto() { Id = lastId, CodProducto = codProdNombre };
+            }
+            else
+            {
+                return new CodigoProducto() { Id = -1, CodProducto = "ERROR AL GUARDAR" };
+            }
         }
     }
 }

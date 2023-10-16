@@ -1,0 +1,117 @@
+﻿@using PrincipalObjects.Objects
+@using static PrincipalObjects.Enums
+@model Vale
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "EDIT";
+
+    int esAgregado = Convert.ToInt32(ViewData["EsAgregado"]);
+
+    List<Employee> empleados = new Employee().GetEmployees();
+}
+
+
+<div id="ObjectEdit">
+    <div class="hasBlur">
+    </div>
+    <div class="Edit-Container">
+        <div class="Edit-Title text-center">
+            @if (esAgregado == 1)
+            {
+                <h2>Agregar vale</h2>
+            }
+            else
+            {
+                <h2>Editar vale</h2>
+            }
+        </div>
+        <div class="row justify-content-center Edit-Body">
+            <div class="col-12">
+                <form id="EditForm" asp-action="GuardarVale" asp-controller="Vales">
+                    <input type="number" id="ModelValeId" class="form-control Form-data" name="Id" value="@Model.Id" hidden />
+
+                    <div class="row pt-2 mt-3 justify-content-center">
+                        <div class="col-3">
+
+                            <label for="Fecha">Fecha</label>
+                            <input type="date" class="form-control Form-data" name="Fecha" value='@Model.Fecha.ToString("yyyy-MM-dd")' />
+
+                        </div>
+                        <div class="col-9">
+                            <input type="number" class="form-control Form-data" name="EmpleadoCodigo" id="EmpleadoCodigo" value="@Model.EmpleadoCodigo" hidden />
+
+                            <label for="EmpleadosSelector">Empleado</label>
+                            <select id="EmpleadosSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" required>
+                                @if (empleados.Count > 0 && Model.Id != -1)
+                                {
+                                    @foreach (Employee emp in empleados)
+                                    {
+                                        @if (Model.EmpleadoCodigo == emp.empId)
+                                        {
+                                            <option value="@emp.empId" selected>@emp.NombreCompleto</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@emp.empId">@emp.NombreCompleto</option>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="-1" selected>Seleccionar</option>
+                                    @foreach (Employee emp in empleados)
+                                    {
+                                        <option value="@emp.empId">@emp.NombreCompleto</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 p-0 m-0">
+                            <label for="Concepto">Concepto</label>
+                            <input type="text" class="form-control Form-data" name="Concepto" value='@Model.Concepto' />
+                        </div>
+                        <div class="col-6 p-0 m-0">
+                            <label for="Monto">Monto</label>
+                            <span>$</span><input type="number" class="form-control Form-data" name="Monto" value='@Model.Monto' />
+                        </div>
+                    </div>
+
+                    <!-- BOTONES QUE VAN EN TODAS LAS EDICIONES -->
+                    <div class="row p-0 m-0 justify-content-between buttons-function-container">
+                        <div class="col-6 p-1">
+                            <button type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</button>
+                        </div>
+                        <div class="col-6 p-1">
+                            <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#EmpleadosSelector").change(function(e){
+            $('#EmpleadoCodigo').val($(this).val());
+        });
+        //# sourceURL=editVale.js
+    </script>
+</div>
+
+<style>
+    .hasBlur {
+        z-index: 5000 !important;
+    }
+
+    .Edit-Container {
+        width: 1000px !important;
+    }
+
+    .Edit-Title {
+        width: 1000px !important;
+    }
+</style>

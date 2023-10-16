@@ -13,14 +13,14 @@ namespace ElectroOULET.Controllers
 
             List<Employee> employees = new Employee().GetEmployees();
 
-            return View(employees);
+            return View(employees.Where(x => !x.empDelete).ToList());
         }
 
         public ActionResult ObtenerEmpleadosGrid()
         {
             List<Employee> employees = new Employee().GetEmployees();
 
-            return View("Partials/_employees",employees);
+            return View("Partials/_employees", employees.Where(x => !x.empDelete).ToList());
         }
 
         public ActionResult EditEmployee(int id, int userId)
@@ -39,7 +39,7 @@ namespace ElectroOULET.Controllers
             return View(employee);
         }
 
-        public ActionResult GuardarEmpleado(Employee employeeToSave, int userId)
+        public JsonResult GuardarEmpleado(Employee employeeToSave, int userId)
         {
             ViewData["ActiveUser"] = new User().GetUserById((long)userId);
             Employee employees = employeeToSave;
@@ -56,7 +56,22 @@ namespace ElectroOULET.Controllers
                 employees = employees.SaveEmp(employees);
             }
 
-            return View("Index", new Employee().GetEmployees());
+            return new JsonResult(new { Result = "OK", Message = "Empleado guardado con exito"});
+        }
+
+        public JsonResult EliminarEmpleado(int empleadoId, int userId)
+        {
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
+            bool eliminado = new Employee().DeleteEmployee(empleadoId);
+
+            if (eliminado)
+            {
+                return new JsonResult(new { Result = "OK", Message = "Empleado eliminado correctamente" });
+            }
+            else
+            {
+                return new JsonResult(new { Result = "ERROR", Message = "Error al eliminar" });
+            }
         }
     }
 }

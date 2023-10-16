@@ -23,8 +23,27 @@
     <script>
             document.querySelectorAll(".mvc-grid").forEach(element => {
                 new MvcGrid(element);
-            
-            $("#AgregarEmpleado").on("click",() =>{
+
+                $(".buttonEditEmployee").on("click", (e) => {
+                    e.stopImmediatePropagation();
+                    StartLoader();
+                        $('.Employee-Container').empty();
+                            let id = e.target.getAttribute('id');
+
+                            $.ajax({
+                                url: '/Employee/EditEmployee?id=' + id + '&userId=@user.Id',
+                                dataType: 'html',
+                                async: true,
+                                success: function (data) {
+                                    $('.Employee-Container').append(data);
+                                }
+                            });
+                        StopLoader();
+                });
+            });
+
+        $("#AgregarEmpleado").on("click",(e) =>{
+                e.stopImmediatePropagation();
                 StartLoader();
                 $('.Employee-Container').empty();
                     let id = -1;
@@ -40,22 +59,34 @@
                 StopLoader();
             })
 
-            $(".buttonEditEmployee").on("click", (e) => {
-            StartLoader();
-                $('.Employee-Container').empty();
-                    let id = e.target.getAttribute('id');
+        $(".buttonDeleteEmployee").on("click", (e) => {
+                StartLoader();
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                let id = e.target.getAttribute('id');
 
-                    $.ajax({
-                        url: '/Employee/EditEmployee?id=' + id + '&userId=@user.Id',
-                        dataType: 'html',
-                        async: true,
-                        success: function (data) {
-                            $('.Employee-Container').append(data);
-                        }
-                    });
+                Swal.fire({
+                  title: 'Seguro que deseas eliminar el registro?',
+                  showDenyButton: true,
+                  confirmButtonText: 'Eliminar',
+                  denyButtonText: `Cancelar`,
+                }).then((result) => {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Employee/EliminarEmpleado?empleadoId=' + id + '&userId=@user.Id',
+                            dataType: 'html',
+                            async: true,
+                            success: function (data) {
+                                location.reload();
+                            }
+                        });
+                  }
+                })
                 StopLoader();
             });
-        } )
+
+            //# sourceURL=IndexEmployee.js
     </script>
 </div>
 

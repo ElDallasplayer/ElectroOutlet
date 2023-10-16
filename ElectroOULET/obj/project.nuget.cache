@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WOebvghL2/mOl+aJivcT1aJEK5rWcO9YB2wao/mdq8ORlJqhePQuaMA55diQPEqDuOss2AXENMDdfKOIqgO/3g==",
+  "dgSpecHash": "5U9pDBp7dkFWHCkTbBqzJ71KrnnSL62xmmZnCN+Yg0Pt/qXLGxE+2/AZ+YYU3tjDA5CbRFgL+3wlYPW85JsXqA==",
   "success": true,
   "projectFilePath": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\ElectroOULET.csproj",
   "expectedPackageFiles": [
@@ -95,6 +95,7 @@
     "C:\\Users\\CristianMedina\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\CristianMedina\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\CristianMedina\\.nuget\\packages\\sixlabors.fonts\\1.0.0\\sixlabors.fonts.1.0.0.nupkg.sha512",
+    "C:\\Users\\CristianMedina\\.nuget\\packages\\spreadsheetlight\\3.5.0\\spreadsheetlight.3.5.0.nupkg.sha512",
     "C:\\Users\\CristianMedina\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\CristianMedina\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\CristianMedina\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

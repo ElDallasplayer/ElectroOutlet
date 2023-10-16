@@ -14,19 +14,22 @@
     </div>
 
     <div class="row p-0 m-0 cards justify-content-around">
-        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="EmployeeButton">
-            <i class="mdi mdi-badge-account principalIcon">
-                <h5 class="fw-bolder cardTitlePrincipal text-center">EMPLEADOS</h5>
-            </i>
-        </div>
+
+        @if (user.EsAdmin)
+        {
+            <div class="card col-8 col-md-6 col-lg-2 cardFather" id="EmployeeButton">
+                <i class="mdi mdi-badge-account principalIcon">
+                    <h5 class="fw-bolder cardTitlePrincipal text-center">EMPLEADOS</h5>
+                </i>
+            </div>
 
 
-        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="AsistanceButton">
-            <i class="mdi mdi-store-clock principalIcon">
-                <h5 class="fw-bolder cardTitlePrincipal text-center">ASISTENCIAS</h5>
-            </i>
-        </div>
-
+            <div class="card col-8 col-md-6 col-lg-2 cardFather" id="AsistanceButton">
+                <i class="mdi mdi-store-clock principalIcon">
+                    <h5 class="fw-bolder cardTitlePrincipal text-center">ASISTENCIAS</h5>
+                </i>
+            </div>
+        }
 
         <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ReportButton">
             <i class="mdi mdi-microsoft-excel principalIcon">
@@ -34,14 +37,24 @@
             </i>
         </div>
 
-        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="DevicesButton">
-            <i class="mdi mdi-deskphone principalIcon">
-                <h5 class="fw-bolder cardTitlePrincipal text-center">DISPOSITIVOS</h5>
-            </i>
-        </div>
+        @if (user.EsAdmin)
+        {
+            <div class="card col-8 col-md-6 col-lg-2 cardFather" id="DevicesButton">
+                <i class="mdi mdi-deskphone principalIcon">
+                    <h5 class="fw-bolder cardTitlePrincipal text-center">DISPOSITIVOS</h5>
+                </i>
+            </div>
+        }
     </div>
 
     <div class="row p-0 mt-3 cards justify-content-around">
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ValesButton">
+            <i class="mdi mdi-account-cash principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">VALES</h5>
+            </i>
+        </div>
+
         <div class="card col-8 col-md-6 col-lg-2 cardFather" id="CTecnicoButton">
             <i class="mdi mdi-list-status principalIcon">
                 <h5 class="fw-bolder cardTitlePrincipal text-center">CONTROLES</h5>
@@ -53,6 +66,7 @@
                 <h5 class="fw-bolder cardTitlePrincipal text-center">CONFIGURACION</h5>
             </i>
         </div>
+
     </div>
 </div>
 
@@ -71,6 +85,10 @@
 
     $("#CTecnicoButton").on("click", () => {
         window.location.replace('@Url.Action("Index","Reparaciones")?id=' + @user.Id);
+    })
+
+    $("#ValesButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Vales")?id=' + @user.Id);
     })
 </script>
 

@@ -116,8 +116,47 @@ namespace PrincipalObjects.Objects
 
         public Marcations GetLastMarcation()
         {
-            dynamic marcsFromDB = SQLInteract.GetDataFromDataBase((true, 1), ColNames, TableName, (true, new string[0] { }), (true, "marcId", true));
+            dynamic marcsFromDB = SQLInteract.GetDataFromDataBase((true, 1), ColNames, TableName, (false, new string[0] { }), (true, "marcId", true));
             Marcations marc = new Marcations();
+
+            try
+            {
+                marc = new Marcations()
+                {
+                    marcId = Convert.ToInt64(marcsFromDB.rows[0].marcId.Value.ToString()),
+                    empId = Convert.ToInt64(marcsFromDB.rows[0].empId.Value.ToString()),
+                    marcCard = marcsFromDB.rows[0].marcCard.Value.ToString(),
+                    marcHikId = Convert.ToInt64(marcsFromDB.rows[0].marcHikId.Value.ToString()),
+                    marcDirection = (Enums.mDirection)Convert.ToInt32(marcsFromDB.rows[0].marcDirection.Value.ToString()),
+                    marcDate = Convert.ToDateTime(marcsFromDB.rows[0].marcDate.Value.ToString()),
+                    marcEdited = Convert.ToBoolean(marcsFromDB.rows[0].marcEdited.Value.ToString()),
+                    marcEditedValue = Convert.ToDateTime(String.IsNullOrEmpty(marcsFromDB.rows[0].marcEditedValue.Value.ToString()) ? "1900-01-01 00:00:00" : marcsFromDB.rows[0].marcEditedValue.Value.ToString()),
+                    marcDescription = marcsFromDB.rows[0].marcDescription.Value.ToString(),
+                    Deleted = Convert.ToBoolean(marcsFromDB.rows[0].marcDelete.Value.ToString()),
+                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString())
+                };
+
+                Employee emp = new Employee().GetEmployeeById(marc.empId);
+                marc.EmpleadoNombre = emp.empSurName + " ," + emp.empName;
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog("ERROR AL CREAR MARCACION: " + ex.Message);
+                Utilities.WriteLog(" => " + marcsFromDB.rows[0].ToString());
+            }
+
+            return marc;
+        }
+
+        public Marcations GetLastMarcationByDate(DateTime date)
+        {
+            dynamic marcsFromDB = SQLInteract.GetDataFromDataBase((true, 1), ColNames, TableName, (true, new string[1] { " where marcDate = '" + date.ToString("yyyyMMdd HH:mm:ss") + "'"}), (true, "marcId", true));
+            Marcations marc = new Marcations();
+
+            if (marcsFromDB.rows.Count == 0)
+            {
+                return null;
+            }
 
             try
             {
@@ -190,14 +229,15 @@ namespace PrincipalObjects.Objects
         {
             List<(string, eDataType)> dataToSend = new List<(string, eDataType)>();
 
-            Marcations marcaLast = new Marcations().GetLastMarcation();
-            if (marcaLast.marcDate != marcation.marcDate)
+            Marcations marcaLast = new Marcations().GetLastMarcationByDate(marcation.marcDate);
+
+            if (marcaLast == null)
             {
                 long LastId = SQLInteract.GetLastIdFromInsertedElement(TableName, "marcId") + 1;
 
                 dataToSend.Add((LastId.ToString(), eDataType.number));
                 dataToSend.Add((marcation.empId.ToString(), eDataType.number));
-                dataToSend.Add((marcation.marcCard.ToString(), eDataType.text));
+                dataToSend.Add(((marcation.marcCard != null? marcation.marcCard.ToString():"Sin tarjeta"), eDataType.text));
                 dataToSend.Add((marcation.marcHikId.ToString(), eDataType.text));
                 dataToSend.Add((((int)marcation.marcDirection).ToString(), eDataType.number));
                 dataToSend.Add((marcation.marcDate.ToString("yyyyMMdd HH:mm:ss"), eDataType.text));

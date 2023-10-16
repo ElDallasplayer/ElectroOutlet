@@ -44,13 +44,18 @@ namespace ElectroOULET.Controllers
             return View(workShift);
         }
 
-        public ActionResult GuardarTurno(WorkShift workToSave, int userId)
+        public JsonResult GuardarTurno(WorkShift workToSave, int userId)
         {
             ViewData["ActiveUser"] = new User().GetUserById(userId);
 
             WorkShift workShift = workToSave;
 
-            return View(workShift);
+            if (workShift.turId != -1)
+            {
+                workShift = new WorkShift().EditarTurno(workToSave);
+            }
+
+            return new JsonResult(new {Result = "OK", Message = "Turno guardado correctamente"});
         }
 
         public IActionResult LoadSegment((int,int) idTurnoIdDay)

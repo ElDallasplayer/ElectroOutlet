@@ -3,9 +3,6 @@ C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\Princip
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\PrincipalObjects.pdb
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Azure.Core.dll
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Azure.Identity.dll
-C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Analytics.Interfaces.dll
-C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Analytics.Interfaces.Streaming.dll
-C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Analytics.Types.dll
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Identity.Client.dll
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Identity.Client.Extensions.Msal.dll
@@ -65,3 +62,6 @@ C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\Princip
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\obj\Debug\PrincipalObjects.csproj.CopyComplete
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\obj\Debug\PrincipalObjects.dll
 C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\obj\Debug\PrincipalObjects.pdb
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Analytics.Interfaces.dll
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Analytics.Interfaces.Streaming.dll
+C:\Users\CristianMedina\Documents\Intelektron\Aplicaciones\ElectroOutlet\PrincipalObjects\bin\Debug\Microsoft.Analytics.Types.dll

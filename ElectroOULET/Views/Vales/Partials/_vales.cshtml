@@ -1,0 +1,20 @@
+﻿@using NonFactors.Mvc.Grid
+@using PrincipalObjects.Objects
+@model List<Vale>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+
+@Html.Grid(Model).Build(columns =>
+    {
+        columns.Add(c => c.FechaAsString).Titled("Fecha").Sortable(true);
+        columns.Add(c => c.EmpleadoName).Titled("Empleado").Sortable(true);
+        columns.Add(c => c.Concepto).Titled("Concepto").Sortable(true);
+        columns.Add(c => c.MontoAsString).Titled("Monto").Sortable(true);
+        columns.Add(c => Html.Raw("<a class='buttonEditVale' href='#'><i id='"+c.Id+"' class='mdi mdi-pencil-box p-0 m-0' style='font-size: 25px; cursor: pointer;'></i></a>")).Titled(Html.Raw("<i class='mdi mdi-pencil-box p-0 m-0' style='font-size: 25px;'></i>"));
+        columns.Add(c => Html.Raw("<a class='buttonDeleteVale' href='#'><i class='mdi mdi-delete-circle p-0 m-0' id='"+ c.Id +"' style='font-size: 25px; cursor: pointer;'></i></a>")).Titled(Html.Raw("<i class='mdi mdi-delete-circle p-0 m-0' style='font-size: 25px;'></i>"));
+        }).Named("Vale-grid").Filterable().Empty("SIN VALES").Css("mvc-grid").Pageable(pager =>
+        {
+            pager.PagesToDisplay = 20;
+            pager.RowsPerPage = 30;
+        })
+    @*.Css("tablas acceso")*@

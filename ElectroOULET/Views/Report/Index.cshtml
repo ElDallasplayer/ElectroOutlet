@@ -4,56 +4,130 @@
 @{
     User user = (User)ViewData["ActiveUser"];
     ViewData["Title"] = "Reportes";
+
+    DateTime hoy = DateTime.Now;
+    DateTime menosMes = DateTime.Now.AddDays(-30);
 }
 
 <div id="EditBlur" class="hasBlur">
 </div>
 <div class="EditReport-Container">
-
+</div>
+<div class="row p-0 m-0 justify-content-end" style="position:relative;z-index:1000 !important;">
+    <div class="row p-0">
+        <div class="col-3">
+            <div class="btn btn-secondary" id="AgregarReporteButton">AGREGAR</div>
+        </div>
+        <div class="col-9">
+            <div class="row p-0 m-0 justify-content-end">
+                <div class="col-5">
+                    <label for="dateI">DESDE</label>
+                    <input class="form-control" value='@menosMes.ToString("yyyy-MM-dd")' type="date" id="dateI" />
+                </div>
+                <div class="col-5">
+                    <label for="dateE">HASTA</label>
+                    <input class="form-control" value='@hoy.ToString("yyyy-MM-dd")' type="date" id="dateE" />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row p-0 mt-4">
 
     @foreach (Report rep in Model)
     {
-        <div class="row p-0 m-0 justify-content-start">
-            <div class="card mt-2 col-12 ">
-                <div class="row p-0 m-0">
-                    <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
-                    <div class="col-4"><h5 class="">@rep.Name</h5></div>
-                    <div class="col-4"><h5 class="">@rep.Description</h5></div>
-                    <div class="col-1"><a class="buttonMakeReport" id="@rep.Id" href="#"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
-                    <div class="col-1"><a class="buttonMakeReport" href="/Report/DescargarReporte?id=@rep.Id"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
-                    <div class="col-1"><a class="buttonMakeReport" href="/Report/DescargarReporte?id=@rep.Id"><i class="mdi mdi-play-box ReportIconPlay"></i></a></div>
+        @if (user.EsAdmin && (rep.ReportType == 0 || rep.ReportType == 1 || rep.ReportType == 2|| rep.ReportType == 4))
+        {
+            <div class="row p-0 m-0 justify-content-start">
+                <div class="card mt-2 col-12 ">
+                    <div class="row p-0 m-0">
+                        <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
+                        <div class="col-4"><h5 class="">@rep.Name</h5></div>
+                        <div class="col-4"><h5 class="">@rep.Description</h5></div>
+                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
+                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
+                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-play-box ReportIconPlay"></i></a></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            @if (rep.ReportType == 3 || rep.ReportType == 4)
+            {
+                <div class="row p-0 m-0 justify-content-start">
+                    <div class="card mt-2 col-12 ">
+                        <div class="row p-0 m-0">
+                            <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
+                            <div class="col-4"><h5 class="">@rep.Name</h5></div>
+                            <div class="col-4"><h5 class="">@rep.Description</h5></div>
+                            <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
+                            <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
+                            <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-play-box ReportIconPlay"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     }
+    <script>
+        $(".ReportIconPlay").on("click", (e) => {
+            StartLoader();
+            e.stopImmediatePropagation();
+            MakeReport(e);
+            StopLoader();
+        } );
+
+        function MakeReport(e){
+            let id = e.target.getAttribute("id");
+            let fechaInit = $("#dateI").val();
+            let fechaEnd = $("#dateE").val();
+            
+            window.location = '@Url.Action("DescargarReporte", "Report")?id=' + id + "&dateInit=" + fechaInit + "&dateEnd=" + fechaEnd;
+        }
+
+        $(".ReportIconEdit").on("click", (e) => {
+            StartLoader();
+            $('.EditReport-Container').empty();
+            let id = e.target.getAttribute('id');
+
+            $.ajax({
+                url: '/Report/EditReport?id=' + id + '&userId=@user.Id',
+                dataType: 'html',
+                async: true,
+                success: function (data) {
+                    $('.EditReport-Container').append(data);
+                    
+                    StopLoader();
+                }
+            });
+        } )
+
+        $("#AgregarReporteButton").on("click",(e) =>{
+            e.stopImmediatePropagation();
+
+            StartLoader();
+            $('.EditReport-Container').empty();
+
+            $.ajax({
+                url: '/Report/EditReport?id=-1&userId=@user.Id',
+                dataType: 'html',
+                async: true,
+                success: function (data) {
+                    $('.EditReport-Container').append(data);
+                }
+            });
+            StopLoader();
+        });
+
+         $(".ReportIconDelete").on("click", (e) => {
+                ButtonEliminar(e,'/Report/EliminarReporte',@user.Id);
+            });
+
+        //#sourceURL: reportes.js
+    </script>
 </div>
 
-<script>
-    $(".ReportIconPlay").on("click", (e) => {
-        StartLoader();
-
-        setTimeout (StopLoader, 2000)
-    } )
-
-    $(".ReportIconEdit").on("click", (e) => {
-        StartLoader();
-        $('.EditReport-Container').empty();
-        let id = e.target.getAttribute('id');
-
-        $.ajax({
-            url: '/Report/EditReport?id=' + id + '&userId=@user.Id',
-            dataType: 'html',
-            async: true,
-            success: function (data) {
-                $('.EditReport-Container').append(data);
-            }
-        });
-        StopLoader();
-    } )
-
-</script>
 
 <style>
 

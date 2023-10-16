@@ -1,9 +1,10 @@
 ﻿@using PrincipalObjects.Objects
+@using static PrincipalObjects.Enums.Reports
 @model Report
 
 @{
     User user = (User)ViewData["ActiveUser"];
-    string repName = Model.Name.ToString();
+    string repName = Model.Name.ToString() ?? "";
     ViewData["Title"] = "EDIT";
     ViewBag.Empleados = Model.EmpsIds;
 }
@@ -31,21 +32,41 @@
                         <input type="text" class="form-control Form-data" name="Description" value="@Model.Description" />
                     </div>
                     <div class="row p-0 m-0 justify-content-around">
-                        <div class="col-6">
-                            <label for="FechaInicio">Fecha Inicio</label>
-                            <input name="FechaInicio" type="datetime" class="form-control Form-data" value="@Model.FechaInicio" />
+                        <div class="col-4">
+                            @*<label for="FechaInicio">Fecha Inicio</label>*@
+                            <input name="FechaInicio" type="datetime" class="form-control Form-data" value="@Model.FechaInicio" hidden/>
                         </div>
-                        <div class="col-6">
-                            <label for="FechaFin">Fecha Inicio</label>
-                            <input name="FechaFin" type="datetime" class="form-control Form-data" value="@Model.FechaInicio" />
+                        <div class="col-4">
+                            @*<label for="FechaFin">Fecha Inicio</label>*@
+                            <input name="FechaFin" type="datetime" class="form-control Form-data" value="@Model.FechaInicio" hidden/>
+                        </div>
+
+                        <div class="col-6 p-0 m-0">
+                            <input type="number" class="form-control Form-data" name="ReportType" id="ReportType" value="@Model.ReportType" hidden />
+
+                            <label for="EstadosSelector">Tipo de reporte</label>
+                            <select id="EstadosSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+
+                                @foreach (PrincipalObjects.Enums.Reports report in Enum.GetValues(typeof(PrincipalObjects.Enums.Reports)))
+                                {
+                                    @if (Model.ReportType == (int)report)
+                                    {
+                                        <option value="@((int)report)" selected>@report.ToString()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@((int)report)">@report.ToString()</option>
+                                    }
+                                }
+                                }
+                            </select>
                         </div>
 
                     </div>
                     <input id="empsIds" name="listEmps" type="text" class="form-control Form-data" value="@Model.EmpsIds" hidden />
-                    <div id="EmpsContainer" class="row p-0 m-0 w-100 conttainerOverflow">
+                    <div id="EmpsContainer" class="row p-0 m-0 w-100 conttainerOverflow este">
                         @Html.Partial("Partials/_empSelector")
                     </div>
-
 
                     <div class="row p-0 m-0 justify-content-between buttons-function-container">
                         <div class="col-6 p-1">
@@ -63,27 +84,39 @@
 </div>
 
 <script>
-        $(".CheckBoxEmpleado").on("change", function (e){
-            let valActual = $("#empsIds").val();
+    document.querySelectorAll(".mvc-grid").forEach(element => {new MvcGrid(element)});
 
-            if (e.target.checked)
-            {
-                valActual = valActual + "," + e.target.getAttribute("id");
-                $("#empsIds").val(valActual);
-            }else{
-                valActual = valActual.replace("," + e.target.getAttribute("id"),'');
-                $("#empsIds").val(valActual);
-            }
-        })
-        //# sourceURL=editreport.js
+    $(".CheckBoxEmpleado").on("change", function (e){
+        let valActual = $("#empsIds").val();
+
+        if (e.target.checked)
+        {
+            valActual = valActual + "," + e.target.getAttribute("id");
+            $("#empsIds").val(valActual);
+        }else{
+            valActual = valActual.replace("," + e.target.getAttribute("id"),'');
+            $("#empsIds").val(valActual);
+        }
+    })
+
+     $("#EstadosSelector").change(function(e){
+                $('#ReportType').val($(this).val());
+        });
+
+    //# sourceURL=editreport.js
 
 </script>
 
 <style>
+    .mvc-grid-popup{
+        z-index: 12000 !important;
+    }
+
     .hasBlur {
         z-index: 9000;
     }
-    .conttainerOverflow{
-            overflow-y: scroll;
+
+    .conttainerOverflow {
+        overflow-y: scroll;
     }
 </style>

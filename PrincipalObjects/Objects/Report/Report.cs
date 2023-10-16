@@ -130,5 +130,45 @@ namespace PrincipalObjects.Objects
                 return new Report() { Id = -1}; //SI LA LISTA VIENE VACIA, ES POR QUE ALGO ESTA MAL
             }
         }
+
+        public Report AgregarReporte(Report reporteAGuardar)
+        {
+            try
+            {
+                long LastId = SQLInteract.GetLastIdFromInsertedElement(TableName, "repId") + 1;
+
+                List<(string, eDataType)> datosAGuardar = new List<(string, eDataType)>();
+                datosAGuardar.Add((LastId.ToString(), eDataType.number));
+                datosAGuardar.Add((reporteAGuardar.Name, eDataType.text));
+                datosAGuardar.Add((reporteAGuardar.Description, eDataType.text));
+                datosAGuardar.Add((reporteAGuardar.EmpsIds, eDataType.text));
+                datosAGuardar.Add((reporteAGuardar.ReportType.ToString(), eDataType.number));
+                datosAGuardar.Add(((reporteAGuardar.Delete ? "1" : "0"), eDataType.number));
+                datosAGuardar.Add((reporteAGuardar.FechaInicio.ToString("yyyy-MM-dd HH:mm:ss"), eDataType.text));
+                datosAGuardar.Add((reporteAGuardar.FechaFin.ToString("yyyy-MM-dd HH:mm:ss"), eDataType.text));
+
+                bool repGuardado = SQLInteract.InsertDataInDatabase(TableName, ColNames, datosAGuardar);
+
+                if (repGuardado)
+                {
+                    return reporteAGuardar;
+                }
+                else
+                {
+                    return new Report() { Id = -1 };
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog(ex.Message);
+                return new Report() { Id = -1 }; //SI LA LISTA VIENE VACIA, ES POR QUE ALGO ESTA MAL
+            }
+        }
+
+        public bool EliminarReporte(long id)
+        {
+            bool isDelete = SQLInteract.DeleteDataInDatabase(TableName, (true, new string[1] { "repId = " + id }));
+            return isDelete;
+        }
     }
 }

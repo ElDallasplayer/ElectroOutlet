@@ -1490,6 +1490,19 @@
           "lib/netcoreapp3.1/SixLabors.Fonts.dll": {}
         }
       },
+      "SpreadsheetLight/3.5.0": {
+        "type": "package",
+        "dependencies": {
+          "DocumentFormat.OpenXml": "2.11.3",
+          "System.Drawing.Common": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/SpreadsheetLight.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/SpreadsheetLight.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4756,6 +4769,20 @@
         "sixlabors.fonts.1.0.0.nupkg.sha512",
         "sixlabors.fonts.128.png",
         "sixlabors.fonts.nuspec"
+      ]
+    },
+    "SpreadsheetLight/3.5.0": {
+      "sha512": "Yo262RbayDSUqQOKSjDxo61MTnCcEZ1i7NZvQeytIcggRwrrze6B7UMpJq+LR6vgJM9zwu3M39oXFQlJWpPY1A==",
+      "type": "package",
+      "path": "spreadsheetlight/3.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/SpreadsheetLight.dll",
+        "lib/netstandard2.0/SpreadsheetLight.xml",
+        "license.txt",
+        "spreadsheetlight.3.5.0.nupkg.sha512",
+        "spreadsheetlight.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -8897,6 +8924,7 @@
       "Newtonsoft.Json >= 13.0.3",
       "NonFactors.Grid.Core.Mvc6 >= 5.1.2",
       "PrincipalObjects >= 1.0.0",
+      "SpreadsheetLight >= 3.5.0",
       "System.Data.SqlClient >= 4.8.5"
     ]
   },
@@ -8971,6 +8999,10 @@
           "NonFactors.Grid.Core.Mvc6": {
             "target": "Package",
             "version": "[5.1.2, )"
+          },
+          "SpreadsheetLight": {
+            "target": "Package",
+            "version": "[3.5.0, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",

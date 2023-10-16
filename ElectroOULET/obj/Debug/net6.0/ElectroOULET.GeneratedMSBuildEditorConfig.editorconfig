@@ -43,6 +43,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/Reparaciones/EditReparacion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwYXJhY2lvbmVzXEVkaXRSZXBhcmFjaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/Reparaciones/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwYXJhY2lvbmVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -109,6 +113,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/Turno/Turnos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHVybm9cVHVybm9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/Vales/EditVale.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmFsZXNcRWRpdFZhbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/Vales/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmFsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/Vales/Partials/_vales.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmFsZXNcUGFydGlhbHNcX3ZhbGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/CristianMedina/Documents/Intelektron/Aplicaciones/ElectroOutlet/ElectroOULET/Views/_ViewImports.cshtml]
