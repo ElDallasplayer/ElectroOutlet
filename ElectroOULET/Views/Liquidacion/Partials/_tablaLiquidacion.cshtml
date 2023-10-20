@@ -1,0 +1,39 @@
+﻿@using PrincipalObjects.Objects;
+@using NonFactors.Mvc.Grid
+@model List<ArchivoViewModel>
+
+@{
+    ViewData["Title"] = "EDIT";
+}
+
+<div class="row justify-content-end pb-2">
+    <div class="col-2">
+        <div class="btn btn-primary" id="btnExport">EXPORTAR</div>
+    </div>
+</div>
+@Html.Grid(Model).Build(columns =>
+    {
+        columns.Add(c => c.NombreEmpleado).Titled("Nombre empleado");
+        columns.Add(c => c.DNI).Titled("DNI");
+        columns.Add(c => "$ " + c.Sueldo ).Titled("Sueldo");
+        columns.Add(c => "$ " + c.MontoTotalAPagar ).Titled("Pago");
+        }).Named("Vale-grid").Empty("SIN RESULTADOS").Css("mvc-grid").Pageable(pager =>
+        {
+            pager.PagesToDisplay = 20;
+            pager.RowsPerPage = 30;
+        })
+@*.Css("tablas acceso")*@
+<script src="~/js/table2excel.js"> </script>
+<script>
+$("#btnExport").click(function (e) {
+        $('.mvc-grid-headers').removeAttr('class');
+
+        $('   ').removeAttr('data-name');
+        e.preventDefault();
+        $('.mvc-grid').table2excel({
+            filename: "Tabla.xls"
+        })
+    });
+
+     //# sourceURL=TableLiquidation.js
+</script>

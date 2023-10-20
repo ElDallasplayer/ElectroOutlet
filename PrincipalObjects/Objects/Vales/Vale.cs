@@ -70,6 +70,36 @@ namespace PrincipalObjects.Objects
             return vales;
         }
 
+        public List<Vale> GetValesByEmpId(long empId)
+        {
+            List<Vale> vales = new List<Vale>();
+
+            dynamic valeReturn = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where valEmpleado = " + empId }), (false, "", false));
+
+            foreach (dynamic row in valeReturn.rows)
+            {
+                Vale val = new Vale();
+                val.Id = row["valId"];
+                val.EmpleadoCodigo = row["valEmpleado"];
+
+                try { val.EmpleadoName = new Employee().GetEmployeeById(val.EmpleadoCodigo).NombreCompleto; } catch (Exception ex) { val.EmpleadoName = "Sin Asignar"; }
+
+                val.Monto = row["valValorPesos"];
+                val.Concepto = row["valConcepto"].ToString();
+                val.Fecha = Convert.ToDateTime(row["valFecha"].ToString());
+                val.Eliminado = Convert.ToBoolean(row["valEliminado"].ToString());
+                val.Validado = Convert.ToBoolean(row["valValidado"].ToString());
+                val.base64Huella = row["valHuellaValidadora"].ToString();
+
+                val.FechaAsString = val.Fecha.ToString("dd/MM/yyyy");
+                val.MontoAsString = "$" + val.Monto.ToString();
+
+                vales.Add(val);
+            }
+
+            return vales;
+        }
+
         public Vale GetValeById(long valId)
         {
             dynamic valeReturn = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[1] { "where valId = " + valId }), (false, "", false));

@@ -64,19 +64,37 @@ namespace PrincipalObjects
 
             foreach (Employee empToSearch in empleados.OrderBy(x => x.NombreCompleto))
             {
-                var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, "https://rest.contabilium.com/api/comprobantes/search?fechaDesde=2023-06-01&fechaHasta=2023-10-14&filtro=" + empToSearch.empDocumento);
-                request.Headers.Add("Authorization", "Bearer " + bearerToken);
-                var response = client.SendAsync(request).Result;
-                response.EnsureSuccessStatusCode();
+                if (!String.IsNullOrEmpty(empToSearch.empDocumento))
+                {
+                    var client = new HttpClient();
+                    var request = new HttpRequestMessage(HttpMethod.Get, "https://rest.contabilium.com/api/comprobantes/search?fechaDesde=" + desde.ToString("yyyy-MM-dd") + "&fechaHasta=" + hasta.ToString("yyyy-MM-dd") + "&filtro=" + empToSearch.empDocumento);
+                    request.Headers.Add("Authorization", "Bearer " + bearerToken);
+                    var response = client.SendAsync(request).Result;
+                    response.EnsureSuccessStatusCode();
 
-                string ResponseFromContabilium = response.Content.ReadAsStringAsync().Result;
-                dynamic resJson = Utilities.ConvertToDynamic(ResponseFromContabilium);
+                    string ResponseFromContabilium = response.Content.ReadAsStringAsync().Result;
+                    dynamic resJson = Utilities.ConvertToDynamic(ResponseFromContabilium);
 
-                //AQUI VOY A OBTENER CADA ARTICULO DE LA VENTA
-                //CUANDO LOS TENGA, TENGO QUE CREARSELOS AL EMPLEADO EN UNA LISTA 
-                //LA LISTA LA VOY A PONER EN LA VISTA DEL EMPLEADO 
-                //CREAR NUEVA TABLA PARA ESOS ELEMENTOS, CON LOS DATOS PRINCIPALES NECESARIOS
+                    foreach (dynamic item in resJson.Items)
+                    {
+                        string valorNeto = item.ImporteTotalNeto.Value.ToString().Split(',')[0];
+                        string valorNeto_Decimal = item.ImporteTotalNeto.Value.ToString().Split(',')[1];
+
+                        string valorBruto = item.ImporteTotalBruto.Value.ToString().Split(',')[0];
+                        string valorBruto_Decimal = item.ImporteTotalBruto.Value.ToString().Split(',')[1];
+
+                        Compra compra = new Compra();
+                        compra.comEmpleado = empToSearch.empId;
+                        compra.comFechaEmision = Convert.ToDateTime(item.FechaEmision.Value.ToString());
+                        compra.comIdCliente = Convert.ToInt64(item.IdCliente.Value.ToString());
+                        compra.comTotalNeto = Convert.ToInt32(valorNeto.Replace(".", ""));
+                        compra.comTotalNeto_Decimal = Convert.ToInt32(valorNeto_Decimal);
+                        compra.comTotalBruto = Convert.ToInt32(valorBruto.Replace(".", ""));
+                        compra.comTotalBruto_Decimal = Convert.ToInt32(valorBruto_Decimal);
+                        compra.comIdCompra = Convert.ToInt64(item.Id.Value.ToString());
+                        compra.CrearCompra(compra);
+                    }
+                }
             }
             
             return 1;

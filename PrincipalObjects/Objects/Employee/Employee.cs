@@ -210,7 +210,7 @@ namespace PrincipalObjects.Objects
             dataToSend.Add((empleado.turId != -1? empleado.turId.ToString():"-1", eDataType.number));
 
             dataToSend.Add((empleado.HuellaBase64, eDataType.text));
-            dataToSend.Add((empleado.DedoEnrolado.ToString(), eDataType.number));
+            dataToSend.Add((((int)empleado.DedoEnrolado).ToString(), eDataType.number));
             dataToSend.Add((empleado.empDocumento, eDataType.text));
 
             bool rest = SQLInteract.InsertDataInDatabase(TableName, ColNames, dataToSend);
@@ -238,7 +238,7 @@ namespace PrincipalObjects.Objects
             dataToSend.Add(("empDelete","0", eDataType.number));
             dataToSend.Add(("turId",empleado.turId.ToString(), eDataType.number));
             dataToSend.Add(("empHuella", empleado.HuellaBase64, eDataType.text));
-            dataToSend.Add(("empDedo", empleado.DedoEnrolado.ToString(), eDataType.number));
+            dataToSend.Add(("empDedo", ((int)empleado.DedoEnrolado).ToString(), eDataType.number));
             dataToSend.Add(("empDocumento", empleado.empDocumento, eDataType.text));
 
             bool rest = SQLInteract.UpdateDataInDataBase(TableName, dataToSend, (true, new string[1]{ "empId = " + empleado.empId }));

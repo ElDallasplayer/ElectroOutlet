@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "idKLJ0SF6efV6UplJida6Z/3ZY35OGPtAFOMzitnmxc=",
+  "Hash": "S/wuw0/jsLQuyh0sabEC7kDkOTNXcre2k2Mlxtx7Kms=",
   "Source": "ElectroOULET",
   "BasePath": "_content/ElectroOULET",
   "Mode": "Default",
@@ -916,6 +916,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\sweetalert2.all.js"
+    },
+    {
+      "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\table2excel.js",
+      "SourceId": "ElectroOULET",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\",
+      "BasePath": "_content/ElectroOULET",
+      "RelativePath": "js/table2excel.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\table2excel.js"
     },
     {
       "Identity": "C:\\Users\\CristianMedina\\Documents\\Intelektron\\Aplicaciones\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

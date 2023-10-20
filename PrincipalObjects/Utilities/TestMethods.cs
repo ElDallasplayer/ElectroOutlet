@@ -21,7 +21,7 @@ namespace PrincipalObjects
 
             //KeyValuePair<bool,long> valoresEmpCliente = Contabilium.ClienteExiste("31553625", bearerToken);
 
-            int a = Contabilium.ValidarComprasEntreFechas(DateTime.Now, DateTime.Now, bearerToken);
+            int a = Contabilium.ValidarComprasEntreFechas(new DateTime(2021,01,01), DateTime.Now, bearerToken);
         }
     }
 }

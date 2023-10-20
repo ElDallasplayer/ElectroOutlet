@@ -1,0 +1,23 @@
+﻿@using PrincipalObjects.Objects
+@model List<Compra>;
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "Compras";
+}
+
+<div class="bg-container">
+    <div class="row pt-3 justify-content-start">
+       
+    </div>
+    <div class="row mt-4 justify-content-center">
+        <div class="col-11 mt-3 text-center" id="PartialCompras">
+            @Html.Partial("Partials/_compras",Model)
+        </div>
+    </div>
+    <script>
+            document.querySelectorAll(".mvc-grid").forEach(element => {
+                new MvcGrid(element);});
+            //# sourceURL=IndexCompras.js
+    </script>
+</div>

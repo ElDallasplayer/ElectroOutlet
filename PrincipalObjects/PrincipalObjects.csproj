@@ -185,6 +185,7 @@
     <Compile Include="ConnectionObject.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Objects\CodProductos\CodigoProducto.cs" />
+    <Compile Include="Objects\Compras\Compras.cs" />
     <Compile Include="Objects\Devices\Device.cs" />
     <Compile Include="Objects\Employee\Employee.cs" />
     <Compile Include="Objects\Marcations\Marcations.cs" />

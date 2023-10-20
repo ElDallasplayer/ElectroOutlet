@@ -1,0 +1,14 @@
+﻿@using PrincipalObjects.Objects;
+@using NonFactors.Mvc.Grid
+@model List<Compra>
+
+@Html.Grid(Model).Build(columns =>
+    {
+        columns.Add(c => c.comFechaEmision.Date).Titled("Fecha");
+        columns.Add(c => "$ " + c.comTotalNeto + "," + c.comTotalNeto_Decimal).Titled("Valor compra");
+        }).Named("Vale-grid").Empty("SIN COMPRAS").Css("mvc-grid").Pageable(pager =>
+        {
+            pager.PagesToDisplay = 20;
+            pager.RowsPerPage = 30;
+        })
+    @*.Css("tablas acceso")*@

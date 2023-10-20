@@ -23,7 +23,6 @@
                 </i>
             </div>
 
-
             <div class="card col-8 col-md-6 col-lg-2 cardFather" id="AsistanceButton">
                 <i class="mdi mdi-store-clock principalIcon">
                     <h5 class="fw-bolder cardTitlePrincipal text-center">ASISTENCIAS</h5>
@@ -47,11 +46,17 @@
         }
     </div>
 
-    <div class="row p-0 mt-3 cards justify-content-around">
+    <div class="row pl-1 mt-3 cards justify-content-around">
 
         <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ValesButton">
             <i class="mdi mdi-account-cash principalIcon">
                 <h5 class="fw-bolder cardTitlePrincipal text-center">VALES</h5>
+            </i>
+        </div>
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ComprasButton">
+            <i class="mdi mdi-point-of-sale principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">COMPRAS</h5>
             </i>
         </div>
 
@@ -60,6 +65,16 @@
                 <h5 class="fw-bolder cardTitlePrincipal text-center">CONTROLES</h5>
             </i>
         </div>
+
+        <div class="card col-8 col-md-6 col-lg-2 cardFather" id="LiquidationButton">
+            <i class="mdi mdi-cash-multiple principalIcon">
+                <h5 class="fw-bolder cardTitlePrincipal text-center">LIQUIDACION</h5>
+            </i>
+        </div>
+
+    </div>
+
+     <div class="row pl-1 mt-3 cards justify-content-around">
 
         <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ConfigurationButton">
             <i class="mdi mdi-cog principalIcon">
@@ -89,6 +104,14 @@
 
     $("#ValesButton").on("click", () => {
         window.location.replace('@Url.Action("Index","Vales")?id=' + @user.Id);
+    })
+
+    $("#ComprasButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Compras")?id=' + @user.Id);
+    })
+
+    $("#LiquidationButton").on("click", () => {
+        window.location.replace('@Url.Action("Index","Liquidacion")?id=' + @user.Id);
     })
 </script>
 
