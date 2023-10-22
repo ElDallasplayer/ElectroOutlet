@@ -81,6 +81,13 @@
                         </div>
                     </div>
 
+
+                    <div class="row justify-content-center">
+                        <div class="col-6 p-0 m-0">
+                            <button id="buttonEnrol" class="btn btn-primary">VALIDAR</button>
+                        </div>
+                    </div>
+
                     <!-- BOTONES QUE VAN EN TODAS LAS EDICIONES -->
                     <div class="row p-0 m-0 justify-content-between buttons-function-container">
                         <div class="col-6 p-1">
@@ -97,7 +104,51 @@
     <script>
         $("#EmpleadosSelector").change(function(e){
             $('#EmpleadoCodigo').val($(this).val());
+            if($(this).val() != -1){
+                $("#buttonEnrol").prop('disabled', false);
+            }
         });
+        
+        $("#SaveButton").prop('disabled', true);
+        $("#buttonEnrol").prop('disabled', true);
+
+        $("#buttonEnrol").on("click", (e) =>{
+                e.stopImmediatePropagation();
+                e.preventDefault();
+
+                StartLoader();
+                let id = $('#EmpleadoCodigo').val();
+
+                $.ajax({
+                    url: '/Vales/ValidarHuellaEmpleado?empId=' + id,
+                    dataType: 'json',
+                    async: true,
+                    success: function (data) {
+                        StopLoader();
+                        console.log(data);
+
+                        if(data.result == "OK"){
+                           Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            $("#SaveButton").prop('disabled', false);
+                        }else{
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+
+                        }
+                    }
+                });
+            })
         //# sourceURL=editVale.js
     </script>
 </div>

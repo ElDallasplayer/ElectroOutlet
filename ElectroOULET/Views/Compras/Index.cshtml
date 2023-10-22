@@ -7,17 +7,55 @@
 }
 
 <div class="bg-container">
-    <div class="row pt-3 justify-content-start">
-       
+    <div class="row justify-content-end m-2 pt-3 align-items-center">
+        <div class="col-9">
+            <div class="row p-0 m-0 justify-content-end">
+                <div class="col-5">
+                    <label for="dateI">DESDE</label>
+                    <input class="form-control" value='@DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd")' type="date" id="dateI" />
+                </div>
+                <div class="col-5">
+                    <label for="dateE">HASTA</label>
+                    <input class="form-control" value='@DateTime.Now.ToString("yyyy-MM-dd")' type="date" id="dateE" />
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="btn btn-secondary" id="validarComprasButton">VALIDAR</div>
+        </div>
     </div>
+
     <div class="row mt-4 justify-content-center">
         <div class="col-11 mt-3 text-center" id="PartialCompras">
             @Html.Partial("Partials/_compras",Model)
         </div>
     </div>
     <script>
-            document.querySelectorAll(".mvc-grid").forEach(element => {
-                new MvcGrid(element);});
-            //# sourceURL=IndexCompras.js
+        document.querySelectorAll(".mvc-grid").forEach(element => {
+            new MvcGrid(element);});
+
+            $("#validarComprasButton").on("click", (e) =>{
+                e.stopImmediatePropagation();
+                let fechaInit = $("#dateI").val();
+                let fechaEnd = $("#dateE").val();
+
+                StartLoader();
+                var pdata = new FormData();
+                pdata.append('fechaDesde', fechaInit);
+                pdata.append('fechaHasta', fechaEnd);
+                pdata.append('userId', @user.Id);
+                $.ajax({
+                    url: "ValidarFechas",
+                    type: "POST",
+                    data: pdata,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        StopLoader();
+                        location.reload();
+                    }
+                });
+            })
+        //# sourceURL=IndexCompras.js
     </script>
 </div>

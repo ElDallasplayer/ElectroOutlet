@@ -1,0 +1,24 @@
+﻿@using PrincipalObjects.Objects;
+@using NonFactors.Mvc.Grid
+@model List<Vale>
+
+<div class="row justify-content-between">
+    <div class="col-2">
+        <h6 class="fw-bolder">VALES</h6>
+    </div>
+    <div class="col-2">
+        <h6 class="fw-bolder">@Model.Count</h6>
+    </div>
+</div>
+
+@Html.Grid(Model).Build(columns =>
+    {
+        columns.Add(c => c.Fecha).Titled("Fecha");
+        columns.Add(c => "$ " + c.Monto).Titled("Valor");
+        columns.Add(c => c.Concepto).Titled("Concepto");
+        }).Named("Vale-grid").Empty("SIN VALES").Css("mvc-grid").Pageable(pager =>
+        {
+            pager.PagesToDisplay = 20;
+            pager.RowsPerPage = 30;
+        })
+    @*.Css("tablas acceso")*@

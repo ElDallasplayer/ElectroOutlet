@@ -2,6 +2,12 @@
 @using NonFactors.Mvc.Grid
 @model List<Compra>
 
+<div class="row justify-content-end pb-2">
+    <div class="col-2">
+        <div class="btn btn-primary" id="btnExport">EXPORTAR</div>
+    </div>
+</div>
+
 @Html.Grid(Model).Build(columns =>
     {
         columns.Add(c => c.comFechaEmision).Titled("Fecha");
@@ -14,3 +20,18 @@
             pager.RowsPerPage = 30;
         })
     @*.Css("tablas acceso")*@
+
+<script src="~/js/table2excel.js"> </script>
+<script>
+$("#btnExport").click(function (e) {
+        $('.mvc-grid-headers').removeAttr('class');
+
+        $('   ').removeAttr('data-name');
+        e.preventDefault();
+        $('.mvc-grid').table2excel({
+            filename: "TablaCompras.xls"
+        })
+    });
+
+     //# sourceURL=TableLiquidation.js
+</script>

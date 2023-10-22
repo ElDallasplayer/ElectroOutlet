@@ -47,6 +47,14 @@ body {
     border-radius: 10px;
 }
 
+.esteEdit {
+    height: 100%;
+    line-height: 1em;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100%;
+}
+
 .Edit-Container {
     height: 700px !important;
     width: 700px !important;

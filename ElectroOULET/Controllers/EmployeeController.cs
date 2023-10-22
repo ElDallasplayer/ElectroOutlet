@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PrincipalObjects.Objects;
+using PrincipalObjects;
 
 namespace ElectroOULET.Controllers
 {
@@ -33,7 +34,7 @@ namespace ElectroOULET.Controllers
             employee.turId = -1;
             if (id != -1)
             {
-                employee = new Employee().GetEmployeeById(id);
+                employee = new Employee().GetEmployeeById_Huella(id);
             }
 
             return View(employee);
@@ -72,6 +73,20 @@ namespace ElectroOULET.Controllers
             {
                 return new JsonResult(new { Result = "ERROR", Message = "Error al eliminar" });
             }
+        }
+
+        public JsonResult ObtenerHuellaEmpleado(int empId)
+        {
+            string Huella = Enrolador.ObtenerHuellaEnrolador(empId);
+
+            dynamic jsonResult = Utilities.ConvertToDynamic(Huella);
+
+            if (jsonResult.Response.Value == "SUCCESS")
+            {
+                return new JsonResult(new { Result = "OK", Message = " Huella obtenida correctamente ", Huella = jsonResult.Template_Biostar.Value });
+            }
+
+            return new JsonResult(new { Result = "ERROR", Message = " Error al obtener huella ", Huella = "" });
         }
     }
 }

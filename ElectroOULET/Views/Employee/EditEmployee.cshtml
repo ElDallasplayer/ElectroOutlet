@@ -11,7 +11,11 @@
     {
         comprasEmpleado = new Compra().GetComprasByEmpleadoId(Model.empId).OrderBy(x => x.comFechaEmision).ToList();
     }
-
+    List<Vale> vales = new List<Vale>();
+    if (Model.empId != -1)
+    {
+        vales = new Vale().GetValesByEmpId(Model.empId).OrderBy(x => x.Fecha).ToList();
+    }
 }
 
 
@@ -24,7 +28,7 @@
         </div>
         <div class="row justify-content-center Edit-Body">
             <div class="col-12">
-                <form id="EditForm" asp-action="GuardarEmpleado" asp-controller="Employee">
+                <form id="EditForm" class="esteEdit" asp-action="GuardarEmpleado" asp-controller="Employee">
 
                     <input type="number" class="form-control Form-data" name="empId" value="@Model.empId" hidden />
                     <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
@@ -61,12 +65,12 @@
                         </div>
                     </div>
 
-                    <div class="row p-0 m-0 justify-content-center">
-                        <div class="col-4 p-0 m-1">
+                    <div class="row pt-3 m-0 mt-2 justify-content-center align-item-center w-100">
+                        <div class="col-2 p-0 m-1">
                             <label for="empIdHikVision">Id de HikVision</label>
-                            <input id="empIdHikVision" name="empIdHikVision" type="datetime" class="form-control Form-data" value="@Model.empIdHikVision" />
+                            <input id="empIdHikVision" name="empIdHikVision" type="text" class="form-control Form-data" value="@Model.empIdHikVision" />
                         </div>
-                        
+
                         <div id="EmpsContainer" class="col-4 p-0 m-1">
                             <label for="empTurnSelector">Turno</label>
                             <input id="turId" name="turId" type="number" class="form-control Form-data" value="@(Model.turId == -1?"":Model.turId)" hidden />
@@ -97,12 +101,54 @@
                             </select>
                         </div>
 
-                        <div class="row mt-4 justify-content-center este">
-                            <div class="col-11 mt-3 text-center" id="PartialEmployee">
-                                @Html.Partial("Partials/_comprasEmpleado",comprasEmpleado)
+                        <div class="col-5 p-0 m-1">
+                            <input id="HuellaBase64" name="HuellaBase64" type="datetime" class="form-control Form-data" value="@Model.HuellaBase64" hidden />
+
+                            <div class="">
+                                <input type="number" class="form-control Form-data" name="DedoEnrolado" id="DedoEnrolado" value="@((int)Model.DedoEnrolado)" hidden />
+
+                                <label for="DedoSelector">Seleccionar dedo</label>
+                                <select id="DedoSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+
+                                    @foreach (PrincipalObjects.Enums.eDedo dedo in Enum.GetValues(typeof(PrincipalObjects.Enums.eDedo)))
+                                    {
+                                        @if ((int)Model.DedoEnrolado == (int)dedo)
+                                        {
+                                            <option value="@((int)dedo)" selected>@dedo.ToString()</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@((int)dedo)">@dedo.ToString()</option>
+                                        }
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row justify-content-end text-end">
+                        <div col="col-6">
+                            <div>
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @(Model.HuellaBase64 != ""?"checked":"") disabled>
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Firma digital</label>
+
+                                <div id="buttonEnrol" class="btn btn-primary pl-2">Enrolar</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row mt-4 justify-content-center">
+                            <div class="col-5 mt-3 text-center" id="PartialEmployee">
+                                @Html.Partial("Partials/_comprasEmpleado",comprasEmpleado)
+                            </div>
+
+                            <div class="col-5 mt-3 text-center" id="PartialEmployeeVale">
+                                @Html.Partial("Partials/_valesEmpleado",vales)
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row p-0 m-0 justify-content-between buttons-function-container">
                         <div class="col-6 p-1">
                             <div type="button" id="SaveButton" class="btn btn-secondary">GUARDAR</div>
@@ -112,14 +158,40 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
     <script>
+        $("#DedoSelector").change(function(e){
+                $('#DedoEnrolado').val($(this).val());
+        });
+
             $("#empTurnSelector").change(function(){
                 $('#turId').val($(this).val());
             });
 
+            $("#buttonEnrol").on("click", (e) =>{
+                e.stopImmediatePropagation();
+
+                StartLoader();
+                let id = @Model.empId;
+
+                $.ajax({
+                    url: '/Employee/ObtenerHuellaEmpleado?empId=' + id,
+                    dataType: 'json',
+                    async: true,
+                    success: function (data) {
+                        console.log(data);
+                        if(data.result == "OK"){
+                           $('#HuellaBase64').empty();
+                           $('#HuellaBase64').val(data.huella);
+                           $("#flexSwitchCheckDefault").prop( "checked", true );
+                        }
+                        StopLoader();
+                    }
+                });
+            })
         //# sourceURL=EmployeeEdit.js
     </script>
 </div>

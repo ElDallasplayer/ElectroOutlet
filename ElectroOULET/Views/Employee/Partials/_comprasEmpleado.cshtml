@@ -2,6 +2,15 @@
 @using NonFactors.Mvc.Grid
 @model List<Compra>
 
+<div class="row justify-content-between">
+    <div class="col-2">
+        <h6 class="fw-bolder">COMPRAS</h6>
+    </div>
+    <div class="col-2">
+        <h6 class="fw-bolder">@Model.Count</h6>
+    </div>
+</div>
+
 @Html.Grid(Model).Build(columns =>
     {
         columns.Add(c => c.comFechaEmision.Date).Titled("Fecha");

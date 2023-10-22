@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrincipalObjects.Objects;
+using PrincipalObjects;
 
 namespace ElectroOULET.Controllers
 {
@@ -58,6 +59,35 @@ namespace ElectroOULET.Controllers
             bool eliminado = vale.EliminarVale(vale.Id);
 
             return new JsonResult(new { Result = "OK", Message = "Eliminado correctamente" });
+        }
+
+        public JsonResult ValidarHuellaEmpleado(int empId)
+        {
+            //ViewData["ActiveUser"] = new User().GetUserById(userId);
+
+            Employee emp = new Employee().GetEmployeeById_Huella((long)empId);
+
+            if (String.IsNullOrEmpty(emp.HuellaBase64))
+            {
+                return new JsonResult(new { Result = "ERROR", Message = " El empleado no tiene huella asignada ", Huella = "" });
+            }
+            string HuellaValidacion = Enrolador.ValidarHuella(emp.HuellaBase64);
+
+            dynamic jsonResult = Utilities.ConvertToDynamic(HuellaValidacion);
+
+            if (jsonResult.Response.Value == "SUCCESS")
+            {
+                if(jsonResult.Resultado_Comparacion.Value)
+                {
+                    return new JsonResult(new { Result = "OK", Message = " Huella validada correctamente ", Huella = jsonResult.Resultado_Comparacion.Value.ToString() });
+                }
+                else
+                {
+                    return new JsonResult(new { Result = "ERROR", Message = " La huella no se pudo validar ", Huella = jsonResult.Resultado_Comparacion.Value.ToString() });
+                }
+            }
+
+            return new JsonResult(new { Result = "OK", Message = "Huella validada correctamente", Huella = "" });
         }
     }
 }
