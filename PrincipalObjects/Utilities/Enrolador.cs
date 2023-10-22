@@ -26,6 +26,7 @@ namespace PrincipalObjects
                     if (localIP == "")
                     {
                         localIP = ip.ToString();// esta es nuestra ip
+                        break;
                     }
                 }
             }
@@ -59,6 +60,7 @@ namespace PrincipalObjects
                     if (localIP == "")
                     {
                         localIP = ip.ToString();// esta es nuestra ip
+                        break;
                     }
                 }
             }
