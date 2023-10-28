@@ -48,7 +48,7 @@ namespace ElectroOULET.Controllers
                             {
                                 long empiId = empleados.Where(x => x.empDocumento == linea.DNI).FirstOrDefault().empId;
                                 List<Compra> compras = new Compra().GetComprasByEmpleadoId(empiId);
-                                foreach(Compra cadaCompra in compras)
+                                foreach (Compra cadaCompra in compras)
                                 {
                                     linea.MontoTotalAPagar = linea.MontoTotalAPagar - cadaCompra.comTotalNeto;
                                 }
@@ -63,7 +63,8 @@ namespace ElectroOULET.Controllers
 
                             archivosParaLiquidar.Add(linea);
                         }
-                    }catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         Utilities.WriteLog("ERROR EN DATO: " + line);
                         Utilities.WriteLog("ERROR EN DATO: " + ex.Message);
@@ -75,6 +76,39 @@ namespace ElectroOULET.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GenerarAutomatico(IFormFile FormFile, int userId)
+        {
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
+            List<Employee> empleados = new Employee().GetEmployees_Sueldos();
+            List<ArchivoViewModel> archivosParaLiquidar = new List<ArchivoViewModel>();
+
+            foreach (Employee emp in empleados.OrderBy(x => x.NombreCompleto))
+            {
+                ArchivoViewModel archi = new ArchivoViewModel();
+                archi.NombreEmpleado = emp.NombreCompleto;
+                archi.Sueldo = emp.empSueldo;
+                archi.SueldoRecibo = emp.empSueldoRecibo;
+
+                archi.MontoTotalAPagar = emp.empSueldoRecibo;
+
+                List<Compra> compras = new Compra().GetComprasByEmpleadoId(emp.empId);
+                foreach (Compra cadaCompra in compras)
+                {
+                    archi.MontoTotalAPagar = archi.MontoTotalAPagar - cadaCompra.comTotalNeto;
+                }
+
+                List<Vale> vales = new Vale().GetValesByEmpId(emp.empId);
+                foreach (Vale cadaVale in vales)
+                {
+                    archi.MontoTotalAPagar = archi.MontoTotalAPagar - cadaVale.Monto;
+                }
+                archivosParaLiquidar.Add(archi);
+            }
+        
+            return View("Partials/_tablaLiquidacion", archivosParaLiquidar);
         }
     }
 }

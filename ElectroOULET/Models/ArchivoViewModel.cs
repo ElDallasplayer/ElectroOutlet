@@ -9,6 +9,9 @@ namespace ElectroOULET.Models
     {
         public string DNI { get; set; }
         public int Sueldo { get; set; }
+        public int SueldoRecibo { get; set; }
+
+        public int Presentismo { get; set; }
 
         public string NombreEmpleado { get; set; }
         public int MontoTotalAPagar { get; set; }

@@ -16,12 +16,10 @@
         columns.Add(c => c.NombreEmpleado).Titled("Nombre empleado");
         columns.Add(c => c.DNI).Titled("DNI");
         columns.Add(c => "$ " + c.Sueldo ).Titled("Sueldo");
+        columns.Add(c => "$ " + c.SueldoRecibo ).Titled("Sueldo recibo");
+        columns.Add(c => "$ " + c.Presentismo ).Titled("Presentismo");
         columns.Add(c => "$ " + c.MontoTotalAPagar ).Titled("Pago");
-        }).Named("Vale-grid").Empty("SIN RESULTADOS").Css("mvc-grid").Pageable(pager =>
-        {
-            pager.PagesToDisplay = 20;
-            pager.RowsPerPage = 30;
-        })
+        }).Named("Vale-grid").Empty("SIN RESULTADOS").Css("mvc-grid")
 @*.Css("tablas acceso")*@
 <script src="~/js/table2excel.js"> </script>
 <script>

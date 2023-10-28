@@ -85,7 +85,7 @@ namespace PrincipalObjects
 
                         Compra compra = new Compra();
                         compra.comEmpleado = empToSearch.empId;
-                        compra.comFechaEmision = Convert.ToDateTime(item.FechaEmision.Value.ToString());
+                        compra.comFechaEmision = Convert.ToDateTime(item.FechaAlta.Value.ToString());
                         compra.comIdCliente = Convert.ToInt64(item.IdCliente.Value.ToString());
                         compra.comTotalNeto = Convert.ToInt32(valorNeto.Replace(".", ""));
                         compra.comTotalNeto_Decimal = Convert.ToInt32(valorNeto_Decimal);

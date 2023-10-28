@@ -16,6 +16,15 @@
             </label>
         </div>
 
+    </div>
+    <div class="row text-center justify-content-center">
+
+        <div class="col-10 mt-3">
+            <span class="drop-title"><div type="button" class="btn btn-primary m-3" id="GenerarAutomatico">AUTOMATICO</div></span>
+        </div>
+    </div>
+    <div class="row text-center justify-content-center">
+
         <div class="row mt-4 justify-content-center">
             <div class="col-11 mt-3 text-center" id="PartialLiquidacion">
             </div>
@@ -23,7 +32,7 @@
     </div>
 
     <script>
-        $("#GenerarLiquidacion").on("click", ()=>{
+        $("#GenerarLiquidacion").on("click", () => {
             StartLoader();
             var pdata = new FormData();
             var files = $("#formFile").get(0).files;
@@ -43,9 +52,28 @@
             });
         })
 
-        //# sourceURL=IndexLiquidacion.js
+        $("#GenerarAutomatico").on("click", () => {
+            StartLoader();
+            var pdata = new FormData();
+            var files = $("#formFile").get(0).files;
+            pdata.append('FormFile', files[0]);
+            pdata.append('userId', @user.Id);
+            $.ajax({
+                url: "GenerarAutomatico",
+                type: "POST",
+                data: pdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#PartialLiquidacion').append(data);
+
+                    StopLoader();
+                }
+            });
+        })
+                //# sourceURL=IndexLiquidacion.js
     </script>
-    
+
 
     <style>
         .drop-container {

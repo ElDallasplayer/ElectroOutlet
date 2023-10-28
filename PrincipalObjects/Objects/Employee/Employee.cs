@@ -104,8 +104,8 @@ namespace PrincipalObjects.Objects
                 employee.HuellaBase64 = userFromDB.rows[0]["empHuella"].ToString();
                 employee.DedoEnrolado = (eDedo)Convert.ToInt32((userFromDB.rows[0]["empDedo"] == "" ? "0" : userFromDB.rows[0]["empDedo"]));
 
-                employee.empSueldo = Convert.ToInt32(userFromDB.rows[0]["empSueldo"].ToString()) ?? 0;
-                employee.empSueldoRecibo = Convert.ToInt32(userFromDB.rows[0]["empSueldoRecibo"].ToString()) ?? 0;
+                employee.empSueldo = Convert.ToInt32(userFromDB.rows[0]["empSueldo"] == "" ? "0" : userFromDB.rows[0]["empSueldo"]) ?? 0; 
+                employee.empSueldoRecibo = Convert.ToInt32(userFromDB.rows[0]["empSueldoRecibo"] == "" ? "0" : userFromDB.rows[0]["empSueldoRecibo"]) ?? 0;
 
                 return employee;
             }
@@ -180,6 +180,10 @@ namespace PrincipalObjects.Objects
                         employee.NombreCompleto = employee.empName + ", " + employee.empSurName;
                         employee.Turno = new WorkShift().GetTurById(Convert.ToInt64((String.IsNullOrEmpty(row.turId.Value.ToString()) ? "-1" : row.turId.Value.ToString())));
 
+                        employee.empSueldo = Convert.ToInt32(row["empSueldo"] == "" ? "0" : row["empSueldo"]);
+
+                        employee.empSueldoRecibo = Convert.ToInt32(row["empSueldoRecibo"] == "" ? "0" : row["empSueldoRecibo"]);
+
                         employees.Add(employee);
                     }
                     catch (Exception ex)
@@ -252,6 +256,8 @@ namespace PrincipalObjects.Objects
             dataToSend.Add((empleado.empLegajo.ToString(), eDataType.text));
             dataToSend.Add((empleado.empCard.ToString(), eDataType.text));
             dataToSend.Add((empleado.empIdHikVision.ToString(), eDataType.text));
+            dataToSend.Add((empleado.empSueldo.ToString(), eDataType.number));
+            dataToSend.Add((empleado.empSueldoRecibo.ToString(), eDataType.number));
             dataToSend.Add(("0", eDataType.number));
 
             dataToSend.Add((empleado.turId != -1 ? empleado.turId.ToString() : "-1", eDataType.number));
@@ -287,6 +293,8 @@ namespace PrincipalObjects.Objects
             dataToSend.Add(("empHuella", empleado.HuellaBase64, eDataType.text));
             dataToSend.Add(("empDedo", ((int)empleado.DedoEnrolado).ToString(), eDataType.number));
             dataToSend.Add(("empDocumento", empleado.empDocumento, eDataType.text));
+            dataToSend.Add(("empSueldo", empleado.empSueldo.ToString(), eDataType.number));
+            dataToSend.Add(("empSueldoRecibo", empleado.empSueldoRecibo.ToString(), eDataType.number));
 
             bool rest = SQLInteract.UpdateDataInDataBase(TableName, dataToSend, (true, new string[1] { "empId = " + empleado.empId }));
 
