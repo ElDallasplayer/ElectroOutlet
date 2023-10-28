@@ -71,6 +71,17 @@
                             <input id="empIdHikVision" name="empIdHikVision" type="text" class="form-control Form-data" value="@Model.empIdHikVision" />
                         </div>
 
+                        <div class="col-2 p-0 m-1">
+                            <label for="empSueldo">Sueldo</label>
+                            <input id="empSueldo" name="empSueldo" type="text" class="form-control Form-data" value="@Model.empSueldo" />
+                        </div>
+
+                        <div class="col-2 p-0 m-1">
+                            <label for="empSueldoRecibo">Sueldo Recibo</label>
+                            <input id="empSueldoRecibo" name="empSueldoRecibo" type="text" class="form-control Form-data" value="@Model.empSueldoRecibo" />
+                        </div>
+
+
                         <div id="EmpsContainer" class="col-4 p-0 m-1">
                             <label for="empTurnSelector">Turno</label>
                             <input id="turId" name="turId" type="number" class="form-control Form-data" value="@(Model.turId == -1?"":Model.turId)" hidden />

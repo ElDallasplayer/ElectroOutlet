@@ -1,0 +1,465 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\ElectroOULET.bundle.scp.css",
+      "PackagePath": "staticwebassets\\ElectroOULET.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\Loader.css",
+      "PackagePath": "staticwebassets\\css\\Loader.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\Select2.css",
+      "PackagePath": "staticwebassets\\css\\Select2.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\SwalContainers.css",
+      "PackagePath": "staticwebassets\\css\\SwalContainers.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\material-components-web.min.css",
+      "PackagePath": "staticwebassets\\css\\material-components-web.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\material.min.css",
+      "PackagePath": "staticwebassets\\css\\material.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\materialdesignicons.css",
+      "PackagePath": "staticwebassets\\css\\materialdesignicons.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\materialdesignicons.css.map",
+      "PackagePath": "staticwebassets\\css\\materialdesignicons.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\materialdesignicons.min.css",
+      "PackagePath": "staticwebassets\\css\\materialdesignicons.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\materialdesignicons.min.css.map",
+      "PackagePath": "staticwebassets\\css\\materialdesignicons.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\mvc-grid.css",
+      "PackagePath": "staticwebassets\\css\\mvc-grid.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\mvc-grid\\fonts\\grid-glyphs.woff",
+      "PackagePath": "staticwebassets\\css\\mvc-grid\\fonts\\grid-glyphs.woff"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\mvc-grid\\mvc-grid.css",
+      "PackagePath": "staticwebassets\\css\\mvc-grid\\mvc-grid.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\Material-Design-Icons.eot",
+      "PackagePath": "staticwebassets\\font\\Material-Design-Icons.eot"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\Material-Design-Icons.svg",
+      "PackagePath": "staticwebassets\\font\\Material-Design-Icons.svg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\Material-Design-Icons.ttf",
+      "PackagePath": "staticwebassets\\font\\Material-Design-Icons.ttf"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\Material-Design-Icons.woff",
+      "PackagePath": "staticwebassets\\font\\Material-Design-Icons.woff"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\Material-Design-Icons.woff2",
+      "PackagePath": "staticwebassets\\font\\Material-Design-Icons.woff2"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\materialdesignicons-webfont.eot",
+      "PackagePath": "staticwebassets\\font\\materialdesignicons-webfont.eot"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\materialdesignicons-webfont.svg",
+      "PackagePath": "staticwebassets\\font\\materialdesignicons-webfont.svg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\materialdesignicons-webfont.ttf",
+      "PackagePath": "staticwebassets\\font\\materialdesignicons-webfont.ttf"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\materialdesignicons-webfont.woff",
+      "PackagePath": "staticwebassets\\font\\materialdesignicons-webfont.woff"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\font\\materialdesignicons-webfont.woff2",
+      "PackagePath": "staticwebassets\\font\\materialdesignicons-webfont.woff2"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\fonts\\materialdesignicons-webfont.eot",
+      "PackagePath": "staticwebassets\\fonts\\materialdesignicons-webfont.eot"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\fonts\\materialdesignicons-webfont.ttf",
+      "PackagePath": "staticwebassets\\fonts\\materialdesignicons-webfont.ttf"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\fonts\\materialdesignicons-webfont.woff",
+      "PackagePath": "staticwebassets\\fonts\\materialdesignicons-webfont.woff"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\fonts\\materialdesignicons-webfont.woff2",
+      "PackagePath": "staticwebassets\\fonts\\materialdesignicons-webfont.woff2"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\BACK.jpg",
+      "PackagePath": "staticwebassets\\img\\BACK.jpg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\BACK1.jpg",
+      "PackagePath": "staticwebassets\\img\\BACK1.jpg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\Imagen_Background.jpg",
+      "PackagePath": "staticwebassets\\img\\Imagen_Background.jpg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\Imagen_Background_1.jpg",
+      "PackagePath": "staticwebassets\\img\\Imagen_Background_1.jpg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\Imagen_Background_2.jpg",
+      "PackagePath": "staticwebassets\\img\\Imagen_Background_2.jpg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\PRODUCCION TECNICOS AGOSTO.xlsx",
+      "PackagePath": "staticwebassets\\img\\PRODUCCION TECNICOS AGOSTO.xlsx"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\RESUMEN DE PLANILLAS DE TECNICOS.xlsx",
+      "PackagePath": "staticwebassets\\img\\RESUMEN DE PLANILLAS DE TECNICOS.xlsx"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\img\\electroOULET.jpeg",
+      "PackagePath": "staticwebassets\\img\\electroOULET.jpeg"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\Select2.js",
+      "PackagePath": "staticwebassets\\js\\Select2.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\getmdl-select.min.js",
+      "PackagePath": "staticwebassets\\js\\getmdl-select.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\material-components-web.min.js",
+      "PackagePath": "staticwebassets\\js\\material-components-web.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\material-ui.min.js",
+      "PackagePath": "staticwebassets\\js\\material-ui.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\material.js",
+      "PackagePath": "staticwebassets\\js\\material.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\material.min.js",
+      "PackagePath": "staticwebassets\\js\\material.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid-extencion.js",
+      "PackagePath": "staticwebassets\\js\\mvc-grid-extencion.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid-init.js",
+      "PackagePath": "staticwebassets\\js\\mvc-grid-init.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid-new.js",
+      "PackagePath": "staticwebassets\\js\\mvc-grid-new.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid-old.js",
+      "PackagePath": "staticwebassets\\js\\mvc-grid-old.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid.js",
+      "PackagePath": "staticwebassets\\js\\mvc-grid.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\mvc-grid\\mvc-grid.js",
+      "PackagePath": "staticwebassets\\js\\mvc-grid\\mvc-grid.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\sweetalert2.all.js",
+      "PackagePath": "staticwebassets\\js\\sweetalert2.all.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\js\\table2excel.js",
+      "PackagePath": "staticwebassets\\js\\table2excel.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "D:\\Trabajo\\ElectroOutlet\\ElectroOULET\\wwwroot\\mvc-grid\\fonts\\grid-glyphs.woff",
+      "PackagePath": "staticwebassets\\mvc-grid\\fonts\\grid-glyphs.woff"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.ElectroOULET.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.ElectroOULET.props",
+      "PackagePath": "build\\ElectroOULET.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.ElectroOULET.props",
+      "PackagePath": "buildMultiTargeting\\ElectroOULET.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.ElectroOULET.props",
+      "PackagePath": "buildTransitive\\ElectroOULET.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

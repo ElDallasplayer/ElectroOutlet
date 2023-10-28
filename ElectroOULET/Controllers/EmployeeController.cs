@@ -40,24 +40,34 @@ namespace ElectroOULET.Controllers
             return View(employee);
         }
 
+        public ActionResult EditarSueldosEmpleados(int userId)
+        {
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
+
+            List<Employee> employees = new List<Employee>(); ;
+            employees = new Employee().GetEmployees_Sueldos();
+
+            return View(employees);
+        }
+
         public JsonResult GuardarEmpleado(Employee employeeToSave, int userId)
         {
             ViewData["ActiveUser"] = new User().GetUserById((long)userId);
             Employee employees = employeeToSave;
-            if(employeeToSave.empId != -1)
+            if (employeeToSave.empId != -1)
             {
                 employees = employees.EditarEmpleado(employees);
             }
             else
             {
-                if(employeeToSave.turId == -1|| employeeToSave.turId == 0)
+                if (employeeToSave.turId == -1 || employeeToSave.turId == 0)
                 {
                     employeeToSave.turId = -1;
                 }
                 employees = employees.SaveEmp(employees);
             }
 
-            return new JsonResult(new { Result = "OK", Message = "Empleado guardado con exito"});
+            return new JsonResult(new { Result = "OK", Message = "Empleado guardado con exito" });
         }
 
         public JsonResult EliminarEmpleado(int empleadoId, int userId)

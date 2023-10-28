@@ -1,0 +1,23 @@
+﻿@using NonFactors.Mvc.Grid
+@using PrincipalObjects.Objects;
+@model List<Employee>;
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+
+@Html.Grid(Model).Build(columns =>
+    {
+        columns.Add(c => c.NombreCompleto).Titled("Nombre Completo");
+        columns.Add(c => c.empDocumento).Titled("Documento");
+        columns.Add(c => c.empLegajo).Titled("Legajo");
+
+        columns.Add(c => Html.Raw($"<input id='{c.empId}' type='text' class='form-control Form-data dataSueldo' value='${c.empSueldo}'/>")).Titled("Sueldo");
+        columns.Add(c => Html.Raw($"<input id='{c.empId}' type='text' class='form-control Form-data dataSueldoRecibo' value='${c.empSueldoRecibo}'/>")).Titled("Sueldo Recibo");
+
+        columns.Add(c => Html.Raw("<a class='buttonSaveEmployee_Sueldos' id='"+c.empId+"' href='#'><i class='mdi mdi-content-save-move p-0 m-0' style='font-size: 25px; cursor: pointer;'></i></a>")).Titled(Html.Raw("<i class='mdi mdi-content-save-move p-0 m-0' style='font-size: 25px;'></i>"));
+    }).Named("employees-grid").Empty("SIN EMPLEADOS").Css("mvc-grid")
+@*.Css("tablas acceso")*@
+<script>
+    document.querySelectorAll(".mvc-grid").forEach(element => {
+        new MvcGrid(element);
+    });
+</script>

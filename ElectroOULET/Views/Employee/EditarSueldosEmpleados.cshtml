@@ -1,0 +1,70 @@
+﻿@using PrincipalObjects.Objects
+@model List<Employee>
+
+@{
+    User user = (User)ViewData["ActiveUser"];
+    ViewData["Title"] = "EDIT";
+}
+
+
+<div id="ObjectEdit">
+    <div class="hasBlur">
+    </div>
+    <div class="Edit-Container">
+        <div class="Edit-Title text-center">
+            <h2>Editar sueldos</h2>
+        </div>
+        <div class="row justify-content-center Edit-Body m-0 p-0">
+            <div class="col-12 este">
+                @Html.Partial("Partials/_employeesSueldos",Model)
+
+                <div class="row p-0 m-0 justify-content-between buttons-function-container">
+                    <div class="col-6 p-1">
+                        <div type="button" id="SaveButton" class="btn btn-secondary">GUARDAR</div>
+                    </div>
+                    <div class="col-6 p-1">
+                        <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll(".mvc-grid").forEach(element => {
+            new MvcGrid(element);
+        });
+                //# sourceURL=EmployeeEditSueldos.js
+    </script>
+</div>
+
+<style>
+    .hasBlur {
+        z-index: 5000 !important;
+    }
+
+    .Edit-Container {
+        width: 1000px !important;
+    }
+
+    .Edit-Title {
+        width: 1000px !important;
+    }
+
+    .este {
+        width: 1001px !important;
+        height: 520px !important;
+        margin-top: 90px !important;
+    }
+
+    .empIcon {
+        position: absolute;
+        top: 6%;
+        left: 20%;
+        font-style: normal !important;
+        font-size: 150px;
+        padding-bottom: 35px;
+        padding-top: 100px;
+        border-radius: 10px;
+        z-index: 20;
+    }
+</style>

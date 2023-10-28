@@ -14,6 +14,9 @@
             <div type="button" class="btn btn-secondary m-3" id="AgregarEmpleado"><i class="mdi mdi-account-search" style="font-size: 15px;font-style: normal !important;">AGREGAR</i></div>
         </div>
 
+        <div class="col-2 ml-2">
+            <div class="btn btn-secondary m-3" id="EditarSueldos"><i class="mdi mdi-account-search" style="font-size: 15px;font-style: normal !important;">EDITAR SUELDOS</i></div>
+        </div>
     </div>
     <div class="row mt-4 justify-content-center">
         <div class="col-11 mt-3 text-center" id="PartialEmployee">
@@ -58,6 +61,23 @@
                     });
                 StopLoader();
             })
+
+        $("#EditarSueldos").on("click", (e) => {
+            e.stopImmediatePropagation();
+            StartLoader();
+            $('.Employee-Container').empty();
+            let id = -1;
+
+            $.ajax({
+                url: '/Employee/EditarSueldosEmpleados?userId=@user.Id',
+                dataType: 'html',
+                async: true,
+                success: function (data) {
+                    $('.Employee-Container').append(data);
+                }
+            });
+            StopLoader();
+        })
 
         $(".buttonDeleteEmployee").on("click", (e) => {
                 StartLoader();
