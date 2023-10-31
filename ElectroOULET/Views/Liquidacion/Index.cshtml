@@ -20,6 +20,7 @@
     <div class="row text-center justify-content-center">
 
         <div class="col-10 mt-3">
+            <span class="drop-title"><label for="ValorDePremio">Premio</label><input type="number" id="ValorDePremio" valueplaceholder="Premio..." /></span>
             <span class="drop-title"><div type="button" class="btn btn-primary m-3" id="GenerarAutomatico">AUTOMATICO</div></span>
         </div>
     </div>
@@ -58,6 +59,7 @@
             var files = $("#formFile").get(0).files;
             pdata.append('FormFile', files[0]);
             pdata.append('userId', @user.Id);
+            pdata.append('valorPremio', $("#ValorDePremio").val());
             $.ajax({
                 url: "GenerarAutomatico",
                 type: "POST",

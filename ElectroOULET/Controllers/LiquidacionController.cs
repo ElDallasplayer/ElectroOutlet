@@ -79,7 +79,7 @@ namespace ElectroOULET.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerarAutomatico(IFormFile FormFile, int userId)
+        public ActionResult GenerarAutomatico(IFormFile FormFile, int userId, int valorPremio)
         {
             ViewData["ActiveUser"] = new User().GetUserById((long)userId);
             List<Employee> empleados = new Employee().GetEmployees_Sueldos();
@@ -91,7 +91,7 @@ namespace ElectroOULET.Controllers
                 archi.NombreEmpleado = emp.NombreCompleto;
                 archi.Sueldo = emp.empSueldo;
                 archi.SueldoRecibo = emp.empSueldoRecibo;
-
+                archi.Presentismo = valorPremio;
                 archi.MontoTotalAPagar = emp.empSueldoRecibo;
 
                 List<Compra> compras = new Compra().GetComprasByEmpleadoId(emp.empId);
