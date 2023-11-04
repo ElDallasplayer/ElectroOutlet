@@ -36,7 +36,7 @@
 
     @foreach (Report rep in Model)
     {
-        @if (user.EsAdmin && (rep.ReportType == 0 || rep.ReportType == 1 || rep.ReportType == 2|| rep.ReportType == 4))
+        @if (user.EsAdmin && (rep.ReportType == 0 || rep.ReportType == 1 || rep.ReportType == 2 || rep.ReportType == 4))
         {
             <div class="row p-0 m-0 justify-content-start">
                 <div class="card mt-2 col-12 ">
@@ -75,15 +75,29 @@
             StartLoader();
             e.stopImmediatePropagation();
             MakeReport(e);
-            StopLoader();
-        } );
+        });
 
-        function MakeReport(e){
+        async function MakeReport(e) {
             let id = e.target.getAttribute("id");
             let fechaInit = $("#dateI").val();
             let fechaEnd = $("#dateE").val();
-            
-            window.location = '@Url.Action("DescargarReporte", "Report")?id=' + id + "&dateInit=" + fechaInit + "&dateEnd=" + fechaEnd;
+            let hrefInicial = location.href;
+
+            let diff = new Date(fechaEnd) - new Date(fechaInit);
+            console.log(diff / 100000);
+
+            location.href = '@Url.Action("DescargarReporte", "Report")?id=' + id + "&dateInit=" + fechaInit + "&dateEnd=" + fechaEnd;
+
+            Swal.fire({
+                position: 'center',
+                icon: 'alert',
+                title: "Reporte iniciado...",
+                showConfirmButton: false,
+                timer: diff / 100000
+            }).then((result) => {
+            })
+
+            StopLoader();
         }
 
         $(".ReportIconEdit").on("click", (e) => {
@@ -97,13 +111,14 @@
                 async: true,
                 success: function (data) {
                     $('.EditReport-Container').append(data);
-                    
+
                     StopLoader();
                 }
             });
-        } )
+        })
 
-        $("#AgregarReporteButton").on("click",(e) =>{
+
+        $("#AgregarReporteButton").on("click", (e) => {
             e.stopImmediatePropagation();
 
             StartLoader();
@@ -120,11 +135,11 @@
             StopLoader();
         });
 
-         $(".ReportIconDelete").on("click", (e) => {
-                ButtonEliminar(e,'/Report/EliminarReporte',@user.Id);
-            });
+        $(".ReportIconDelete").on("click", (e) => {
+            ButtonEliminar(e, '/Report/EliminarReporte', @user.Id);
+        });
 
-        //#sourceURL: reportes.js
+                //#sourceURL: reportes.js
     </script>
 </div>
 

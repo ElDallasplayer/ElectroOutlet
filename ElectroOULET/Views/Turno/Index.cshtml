@@ -31,6 +31,7 @@
     })
 
     $("#MarcacionesButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("MarcationsList","Turno")?id=' + @user?.Id);
     })
 </script>

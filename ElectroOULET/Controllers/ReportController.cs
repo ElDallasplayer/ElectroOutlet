@@ -71,6 +71,7 @@ namespace ElectroOULET.Controllers
             return new JsonResult(new { Result = "OK", Message = "Guardado correctamente" });
         }
 
+
         public async Task<FileResult> DescargarReporte(int id, string dateInit, string dateEnd)
         {
             Report report = new Report().GetReportById((long)id);
@@ -81,6 +82,7 @@ namespace ElectroOULET.Controllers
         public async Task<FileResult> GenerarExcel(string nombreArchivo, string employeesId, Enums.Reports reportType, string initDate, string endDate)
         {
             DataTable dataTable = new DataTable();
+            List<DataTable> listData = new List<DataTable>();
             DateTime dateInit = Convert.ToDateTime(initDate);
             DateTime dateEnd = Convert.ToDateTime(endDate);
 
@@ -93,52 +95,112 @@ namespace ElectroOULET.Controllers
                 case Enums.Reports.ReporteDeHorasPorPeriodo:
                     dataTable = await Reports.ReporteDeHorasPorPeriodo(employeesId, dateInit, dateEnd); break;
                 case Enums.Reports.ReporteDeRegistros:
-                    dataTable = await Reports.ReporteDeRegistros(employeesId, dateInit, dateEnd); break;
+                    listData = await Reports.ReporteDeRegistros(employeesId, dateInit, dateEnd); break;
                 case Enums.Reports.ReporteDeRegistrosReducido:
                     dataTable = await Reports.ReporteDeRegistrosReducido(employeesId, dateInit, dateEnd); break;
             }
 
-            using (XLWorkbook wb = new XLWorkbook())
+            if (listData.Count > 0)
             {
-                var ws = wb.Worksheets.Add("Using Colors");
-
-                for (int c = 1; c <= dataTable.Columns.Count; c++)
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    ws.Cell(1, c).Style.Fill.BackgroundColor = XLColor.FromArgb(202, 207, 210);
-                    ws.Cell(1, c).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(1, c).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(1, c).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(1, c).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(1, c).Value = dataTable.Columns[c - 1].ToString();
-                }
-
-                int rowInicio = 2;
-                for (int i = 0; i < dataTable.Rows.Count; i++)
-                {
-                    for (int c = 1; c <= dataTable.Columns.Count; c++)
+                    foreach (DataTable dataTable1 in listData)
                     {
-                        ws.Cell(rowInicio + i, c).Style.Fill.BackgroundColor = XLColor.FromArgb(234, 237, 237);
-                        ws.Cell(rowInicio + i, c).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                        ws.Cell(rowInicio + i, c).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                        ws.Cell(rowInicio + i, c).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        ws.Cell(rowInicio + i, c).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                        ws.Cell(rowInicio + i, c).Value = dataTable.Rows[i][c - 1].ToString();
+                        string spreedsheetname = dataTable1.Columns[0].ColumnName.ToString();
+
+                        IXLWorksheet ws = null;
+                        try
+                        {
+                            ws = wb.Worksheets.Add(spreedsheetname);
+                        }
+                        catch (Exception ex)
+                        {
+                            ws = wb.Worksheets.Add(spreedsheetname + Guid.NewGuid());
+                        }
+
+                        //wb.Worksheets.Add(spreedsheetname);
+
+                        for (int c = 1; c <= dataTable1.Columns.Count; c++)
+                        {
+                            ws.Cell(1, c).Style.Fill.BackgroundColor = XLColor.FromArgb(202, 207, 210);
+                            ws.Cell(1, c).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(1, c).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(1, c).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(1, c).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(1, c).Value = dataTable1.Columns[c - 1].ToString();
+                        }
+
+                        int rowInicio = 2;
+                        for (int i = 0; i < dataTable1.Rows.Count; i++)
+                        {
+                            for (int c = 1; c <= dataTable1.Columns.Count; c++)
+                            {
+                                ws.Cell(rowInicio + i, c).Style.Fill.BackgroundColor = XLColor.FromArgb(247, 247, 247);
+                                ws.Cell(rowInicio + i, c).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                                ws.Cell(rowInicio + i, c).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                                ws.Cell(rowInicio + i, c).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                                ws.Cell(rowInicio + i, c).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                                ws.Cell(rowInicio + i, c).Value = dataTable1.Rows[i][c - 1].ToString();
+                            }
+                        }
+
+                        ws.Columns().AdjustToContents();
+                    }
+
+                    //wb.Worksheets.Add(dataTable);
+
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(),
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            nombreArchivo);
                     }
                 }
-
-                ws.Columns().AdjustToContents();
-
-                //wb.Worksheets.Add(dataTable);
-
-                using (MemoryStream stream = new MemoryStream())
+            }
+            else
+            {
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(),
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        nombreArchivo);
+                    var ws = wb.Worksheets.Add("Using Colors");
+
+                    for (int c = 1; c <= dataTable.Columns.Count; c++)
+                    {
+                        ws.Cell(1, c).Style.Fill.BackgroundColor = XLColor.FromArgb(202, 207, 210);
+                        ws.Cell(1, c).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(1, c).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(1, c).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(1, c).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(1, c).Value = dataTable.Columns[c - 1].ToString();
+                    }
+
+                    int rowInicio = 2;
+                    for (int i = 0; i < dataTable.Rows.Count; i++)
+                    {
+                        for (int c = 1; c <= dataTable.Columns.Count; c++)
+                        {
+                            ws.Cell(rowInicio + i, c).Style.Fill.BackgroundColor = XLColor.FromArgb(234, 237, 237);
+                            ws.Cell(rowInicio + i, c).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(rowInicio + i, c).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(rowInicio + i, c).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(rowInicio + i, c).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(rowInicio + i, c).Value = dataTable.Rows[i][c - 1].ToString();
+                        }
+                    }
+
+                    ws.Columns().AdjustToContents();
+
+                    //wb.Worksheets.Add(dataTable);
+
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(),
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            nombreArchivo);
+                    }
                 }
             }
-
         }
     }
 }

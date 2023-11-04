@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static PrincipalObjects.Enums;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PrincipalObjects.Objects
 {
@@ -50,6 +53,66 @@ namespace PrincipalObjects.Objects
             List<CodigoProducto> codigosProd = new CodigoProducto().GetCodigoProductos();
 
             dynamic repReturn = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (false, new string[0] { }), (false, "", false));
+
+            List<Reparacion> ret = new List<Reparacion>();
+
+            foreach (dynamic row in repReturn.rows)
+            {
+                try
+                {
+                    Reparacion rep = new Reparacion()
+                    {
+                        Id = Convert.ToInt64(row.reId.Value.ToString()),
+                        Fecha = Convert.ToDateTime(row.reFecha.Value.ToString()),
+                        CodProducto = Convert.ToInt64(row.reCodProd.Value.ToString()),
+                        Estado = (reState)Convert.ToInt32(row.reEstado.Value.ToString()),
+                        Repuesto = row.reRepuesto.Value.ToString(),
+                        Trazabilidad = row.reTrazabilidad.Value.ToString(),
+                        Eliminado = Convert.ToBoolean(row.reEliminado.Value.ToString()),
+                        Empleado = Convert.ToInt32(row.reEmpleado.Value.ToString()) ?? -1,
+                        Usuario = Convert.ToInt32(row.reUsuario.Value.ToString()) ?? -1,
+                        ReparacionRealizada = row.reReparacion.Value?.ToString() ?? "",
+                    };
+                    try
+                    {
+                        rep.NombreEmpelado = employees.Where(x => x.empId == rep.Empleado).FirstOrDefault().NombreCompleto;
+                    }
+                    catch (Exception ex)
+                    {
+                        rep.NombreEmpelado = "Sin asignar";
+                    }
+
+                    rep.FechaAsString = rep.Fecha.ToString("dd/MM/yyyy");
+                    rep.EstadoAsString = rep.Estado.ToString();
+                    if (codigosProd.Any(x => x.Id == rep.CodProducto))
+                    {
+                        rep.CodigoProductoAsString = codigosProd.Where(x => x.Id == rep.CodProducto).FirstOrDefault().CodProducto;
+                    }
+                    else
+                    {
+                        rep.CodigoProductoAsString = "-";
+                    }
+                    ret.Add(rep);
+                }
+                catch (Exception ex)
+                {
+                    Utilities.WriteLog("ERROR AL CREAR REPARACION => " + ex.Message);
+                    Utilities.WriteLog("JSON => " + row.ToString());
+                }
+            }
+            return ret;
+        }
+
+        //Recibe un valor maximo de busqueda, y su distribucion de paginado
+        public List<Reparacion> GetReparacionesMaxValue(int valorMaximo, int cantidadBloquesAEliminar)
+        {
+            int offsetValue = valorMaximo * cantidadBloquesAEliminar;
+            List<Employee> employees = new Employee().GetEmployees();
+            List<CodigoProducto> codigosProd = new CodigoProducto().GetCodigoProductos();
+
+            string query = $"SELECT {String.Join(",",ColNames)} FROM {TableName} ORDER BY reId desc OFFSET {offsetValue} ROWS FETCH NEXT {valorMaximo} ROWS ONLY";
+
+            dynamic repReturn = SQLInteract.GetDataFromDataBase_Special(query, ColNames);
 
             List<Reparacion> ret = new List<Reparacion>();
 

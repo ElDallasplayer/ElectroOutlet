@@ -28,7 +28,7 @@ namespace ElectroOULET.Controllers
         {
             ViewData["ActiveUser"] = new User().GetUserById(id);
 
-            DateTime yesterday = DateTime.Today.AddDays(-30);
+            DateTime yesterday = DateTime.Today.AddDays(-7);
             DateTime today = DateTime.Today;
             List<Marcations> marcationsToView = new Marcations().GetMarcations(yesterday, today.AddDays(1));
 

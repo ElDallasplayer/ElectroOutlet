@@ -194,51 +194,56 @@ namespace ElectroOULET
         }
         #endregion
 
-        public static async Task<DataTable> ReporteDeRegistros(string employeesId, DateTime desde, DateTime hasta)
+        public static async Task<List<DataTable>> ReporteDeRegistros(string employeesId, DateTime desde, DateTime hasta)
         {
             List<Reparacion> reparacionesParaReporte = new Reparacion().GetReparaciones();
+            List<DataTable> tablas = new List<DataTable>();
 
-            DataTable dataTable = new DataTable("ReporteDeMarcaciones");
-            dataTable.Columns.AddRange(new DataColumn[]
+            List<Employee> employees = new Employee().GetEmployeesToReport(employeesId);
+            foreach (Employee employee in employees)
             {
-                new DataColumn(""),
+                DataTable dataTable = new DataTable("ReporteDeMarcaciones");
+                dataTable.Columns.AddRange(new DataColumn[]
+                {
+                new DataColumn(employee.NombreCompleto),
                 new DataColumn(""),
                 new DataColumn(""),
                 new DataColumn(""),
                 new DataColumn(""),
                 new DataColumn("")
-            });
+                });
 
-            for (DateTime d = desde; d <= hasta; d = d.AddDays(1))
-            {
-                List<Reparacion> reparacionesDelDia = reparacionesParaReporte.Where(x => x.Fecha.Date == d.Date).ToList();
-                dataTable.Rows.Add("FECHA", "COD. PRODUCTO", "REPARACION", "REPUESTO", "TRAZABILIDAD", "EMPLEADO");
-
-                if (reparacionesDelDia.Count > 0)
+                for (DateTime d = desde; d <= hasta; d = d.AddDays(1))
                 {
-                    int unico = 0;
-                    foreach (Reparacion repa in reparacionesDelDia.OrderBy(x => x.Fecha))
+                    List<Reparacion> reparacionesDelDia = reparacionesParaReporte.Where(x => x.Fecha.Date == d.Date).Where(x => x.Empleado == employee.empId).ToList();
+                    dataTable.Rows.Add("FECHA", "COD. PRODUCTO", "REPARACION", "REPUESTO", "TRAZABILIDAD", "EMPLEADO");
+
+                    if (reparacionesDelDia.Count > 0)
                     {
-                        if (unico == 0)
+                        int unico = 0;
+                        foreach (Reparacion repa in reparacionesDelDia.OrderBy(x => x.Fecha))
                         {
-                            dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado);
-                            unico++;
+                            if (unico == 0)
+                            {
+                                dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado);
+                                unico++;
+                            }
+                            else
+                            {
+                                dataTable.Rows.Add("", repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado);
+                            }
                         }
-                        else
-                        {
-                            dataTable.Rows.Add("", repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado);
-                        }
+                        dataTable.Rows.Add("", "", "", "", "", "");
                     }
-                    dataTable.Rows.Add("", "", "", "", "", "");
+                    else
+                    {
+                        dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), "", "", "", "", "");
+                    }
                 }
-                else
-                {
-                    dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), "", "", "", "", "");
-                }
+                tablas.Add(dataTable);
             }
-
-
-            return dataTable;
+            
+            return tablas;
         }
 
         public static async Task<DataTable> ReporteDeHorasPorPeriodo(string employeesId, DateTime desde, DateTime hasta)

@@ -9,7 +9,7 @@ namespace ElectroOULET.Controllers
         {
             ViewData["ActiveUser"] = new User().GetUserById((long)id);
 
-            return View(new Reparacion().GetReparaciones());
+            return View(new Reparacion().GetReparacionesMaxValue(400,0));
         }
 
         public ActionResult EditReparacion(int id, int userId)

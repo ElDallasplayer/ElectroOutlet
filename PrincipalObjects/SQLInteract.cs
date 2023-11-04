@@ -71,6 +71,35 @@ namespace PrincipalObjects
             return Utilities.ConvertToDynamic(toJson);
         }
 
+        public static dynamic GetDataFromDataBase_Special(string initialQuery, string[] colsNames)
+        {
+            string query = initialQuery;
+
+            SqlConnection connection = CreateConnection();
+            connection.Open();
+
+            SqlCommand comando = new SqlCommand(query, connection);
+            SqlDataReader reader = comando.ExecuteReader();
+
+            string toJson = "{\"rows\":[";
+
+            while (reader.Read())
+            {
+                toJson = toJson + "{";
+                for (int i = 0; i < colsNames.Length; i++)
+                {
+                    toJson = toJson + "\"" + colsNames[i] + "\":\"" + reader[i] + "\",";
+                }
+                toJson = toJson.TrimEnd(',');
+                toJson = toJson + "},";
+            }
+            toJson = toJson.TrimEnd(',');
+            toJson = toJson + "]}";
+            connection.Close();
+
+            return Utilities.ConvertToDynamic(toJson);
+        }
+
         public static bool UpdateDataInDataBase(string tableName, List<(string, string, Enums.eDataType)> colsAndValuesAndTypes, (bool, string[]) useFilter)
         {
             string query = "update " + tableName + " set ";// " user_Name = 'admin',user_Password = 'admin' where user_Id = 1";

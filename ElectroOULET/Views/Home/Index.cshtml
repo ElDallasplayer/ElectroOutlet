@@ -87,30 +87,37 @@
 
 <script>
     $("#EmployeeButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Employee")?id=' + @user.Id);
     })
 
     $("#AsistanceButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Turno")?id=' + @user.Id);
     })
 
     $("#ReportButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Report")?id=' + @user.Id);
     })
 
     $("#CTecnicoButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Reparaciones")?id=' + @user.Id);
     })
 
     $("#ValesButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Vales")?id=' + @user.Id);
     })
 
     $("#ComprasButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Compras")?id=' + @user.Id);
     })
 
     $("#LiquidationButton").on("click", () => {
+        StartLoader();
         window.location.replace('@Url.Action("Index","Liquidacion")?id=' + @user.Id);
     })
 </script>

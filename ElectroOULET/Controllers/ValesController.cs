@@ -87,7 +87,7 @@ namespace ElectroOULET.Controllers
                 }
             }
 
-            return new JsonResult(new { Result = "OK", Message = "Huella validada correctamente", Huella = "" });
+            return new JsonResult(new { Result = "ERROR", Message = " La huella no se pudo validar ", Huella = "" });
         }
     }
 }
