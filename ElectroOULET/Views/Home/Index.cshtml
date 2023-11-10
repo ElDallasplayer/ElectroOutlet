@@ -5,14 +5,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="hasBlur">
-</div>
+@* <div class="hasBlur">
+</div> *@
 <div class="row p-0 mt-4">
-    <div class="text-center" style="z-index: 100;">
-        <h1 class="display-4">Bienvenido</h1>
-        @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
-    </div>
-
     <div class="row p-0 m-0 cards justify-content-around">
 
         @if (user.EsAdmin)
@@ -44,10 +39,6 @@
                 </i>
             </div>
         }
-    </div>
-
-    <div class="row pl-1 mt-3 cards justify-content-around">
-
         <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ValesButton">
             <i class="mdi mdi-account-cash principalIcon">
                 <h5 class="fw-bolder cardTitlePrincipal text-center">VALES</h5>
@@ -71,10 +62,6 @@
                 <h5 class="fw-bolder cardTitlePrincipal text-center">LIQUIDACION</h5>
             </i>
         </div>
-
-    </div>
-
-     <div class="row pl-1 mt-3 cards justify-content-around">
 
         <div class="card col-8 col-md-6 col-lg-2 cardFather" id="ConfigurationButton">
             <i class="mdi mdi-cog principalIcon">
@@ -119,6 +106,11 @@
     $("#LiquidationButton").on("click", () => {
         StartLoader();
         window.location.replace('@Url.Action("Index","Liquidacion")?id=' + @user.Id);
+    })
+    
+    $("#ConfigurationButton").on("click", () => {
+        StartLoader();
+        window.location.replace('@Url.Action("Index","Configuration")?id=' + @user.Id);
     })
 </script>
 

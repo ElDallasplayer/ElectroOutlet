@@ -105,6 +105,7 @@ body {
 }
 
 .card {
+    margin-top: 15px !important;
     text-align: center;
     box-shadow: 7px 7px 20px #808080;
 }

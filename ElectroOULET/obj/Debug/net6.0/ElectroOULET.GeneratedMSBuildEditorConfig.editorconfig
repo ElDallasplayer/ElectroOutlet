@@ -32,6 +32,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHJhc1xQYXJ0aWFsc1xfY29tcHJhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Trabajo/ElectroOutlet/ElectroOULET/Views/Configuration/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlndXJhdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Trabajo/ElectroOutlet/ElectroOULET/Views/Configuration/PrincipalConfigurations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlndXJhdGlvblxQcmluY2lwYWxDb25maWd1cmF0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Trabajo/ElectroOutlet/ElectroOULET/Views/Configuration/UserList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlndXJhdGlvblxVc2VyTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Trabajo/ElectroOutlet/ElectroOULET/Views/Employee/EditarSueldosEmpleados.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRWRpdGFyU3VlbGRvc0VtcGxlYWRvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
