@@ -40,41 +40,53 @@
     {
         @if (ViewData["Title"] != null)
         {
+            <style>
+                .nav-link {
+                    font-size: 15px;
+                }
+            </style>
             <header>
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 position-sticky">
+                <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 position-sticky text-white">
                     <div class="container-fluid">
-
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                                aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <div class="text-end">
-
-                                <ul class="navbar-nav flex-grow-1">
+                                <ul class="navbar-nav d-flex align-items-center">
                                     <li>
                                         <a class="nav-link" href="/Home/Index?id=@user.Id"><i class="navbar-brand mdi mdi-home IndexIcon m-0 p-0" style="font-size:40px;" id="ToHomeButton"></i></a>
                                     </li>
                                     <li class="nav-item active" id="empNavbar">
-                                        <a class="nav-link" href="/Employee/Index?id=@user.Id">Empleados</a>
+                                        <a class="nav-link fw-bold" href="/Employee/Index?id=@user.Id">Empleados</a>
                                     </li>
-                                    <li class="nav-item" id="asiNavbar">
+                                    <li class="nav-item fw-bold" id="asiNavbar">
                                         <a class="nav-link" href="/Turno/Index?id=@user.Id">Asistencias</a>
                                     </li>
-                                    <li class="nav-item" id="repNavbar">
+                                    @if (user.EsAdmin)
+                                    {
+                                        <li class="nav-item fw-bold" id="devNavbar">
+                                            <a class="nav-link" href="/Report/Index?id=@user.Id">Dispositivos</a>
+                                        </li>
+                                        <li class="nav-item fw-bold" id="devNavbar">
+                                            <a class="nav-link" href="/Vales/Index?id=@user.Id">Vales</a>
+                                        </li>
+                                        <li class="nav-item fw-bold" id="repNavbar">
+                                            <a class="nav-link" href="/Compras/Index?id=@user.Id">Compras</a>
+                                        </li>
+                                    }
+                                    <li class="nav-item fw-bold" id="repNavbar">
                                         <a class="nav-link" href="/Report/Index?id=@user.Id">Reportes</a>
                                     </li>
-                                    <li class="nav-item" id="devNavbar">
-                                        <a class="nav-link" href="/Report/Index?id=@user.Id">Dispositivos</a>
-                                    </li>
-                                    <li class="nav-item" id="devNavbar">
-                                        <a class="nav-link" href="/Reparaciones/Index?id=@user.Id">Registros</a>
+                                    <li class="nav-item fw-bold" id="devNavbar">
+                                        <a class="nav-link" href="/Reparaciones/Index?id=@user.Id">Reparaciones</a>
                                     </li>
                                 </ul>
 
                             </div>
                             <div class="text-end">
-                                <ul class="navbar-nav flex-grow-1">
+                                <ul class="navbar-nav flex-grow-2 d-flex align-items-stretch">
                                     <li class="nav-item mr-3">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
@@ -96,7 +108,9 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    @Html.Partial("Partials/_notificaciones")
+                                    <li class="nav-item d-flex align-self-center">
+                                        @Html.Partial("Partials/_notificaciones")
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -122,8 +136,8 @@
     <script src="~/js/getmdl-select.min.js"></script>
 
     @*<script src="~/js/mvc-grid.js" asp-append-version="true"></script>
-        <script src="~/js/mvc-grid-extencion.js" asp-append-version="true"></script>
-        <script src="~/js/mvc-grid-init.js" asp-append-version="true"></script>
+    <script src="~/js/mvc-grid-extencion.js" asp-append-version="true"></script>
+    <script src="~/js/mvc-grid-init.js" asp-append-version="true"></script>
     *@
     <script src="~/js/mvc-grid/mvc-grid.js" asp-append-version="true"></script>
     <script src="~/js/Select2.js"></script>
@@ -139,45 +153,46 @@
         $("#ToHomeButton").on("click", () => {
             window.location.replace('@Url.Action("Index","Home")?id=' + @user?.Id);
         })
+
     </script>
 
     <script>
-                      function ReloadNotifications() {
-                        $(".NotificationList").empty();
-                        $(".NotificationList").load("/Home/NotificacionesParaVista");
+        function ReloadNotifications() {
+            $(".NotificationList").empty();
+            $(".NotificationList").load("/Home/NotificacionesParaVista");
 
-                        $(".NotificationButton").on("click", (e) => {
-                            let id = e.target.getAttribute("id");
+            $(".NotificationButton").on("click", (e) => {
+                let id = e.target.getAttribute("id");
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '@Url.Action("EliminarNotificacion", "Notification")?id=' + id,
-                                    success: function (result) {
-                                        console.log(result);
-                                    }
-                                });
-                            })
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("EliminarNotificacion", "Notification")?id=' + id,
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            })
 
-                        }
+        }
 
-                        setInterval(ReloadNotifications, 3000);
+        setInterval(ReloadNotifications, 3000);
 
 
-                $(".LogOutButton").on("click", (e) => {
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
+        $(".LogOutButton").on("click", (e) => {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
 
-                    let id = e.target.getAttribute("id");
-                    $.ajax({
-                        url: '@Url.Action("LogOut","Account")?id=' + id,
-                        type: "POST",
-                        success: function (e) {
-                            window.location.replace('@Url.Action("Login","Account")')
-                        }
-                    })
-                })
+            let id = e.target.getAttribute("id");
+            $.ajax({
+                url: '@Url.Action("LogOut","Account")?id=' + id,
+                type: "POST",
+                success: function (e) {
+                    window.location.replace('@Url.Action("Login","Account")')
+                }
+            })
+        })
 
-                        //#sourceURL: Layout.js
+                                //#sourceURL: Layout.js
     </script>
 
     <style>

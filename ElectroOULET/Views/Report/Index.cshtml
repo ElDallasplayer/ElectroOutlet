@@ -9,16 +9,16 @@
     DateTime menosMes = DateTime.Now.AddDays(-30);
 }
 
-<div id="EditBlur" class="hasBlur">
+<div id="EditBlur" class="">
 </div>
 <div class="EditReport-Container">
 </div>
 <div class="row p-0 m-0 justify-content-end" style="position:relative;z-index:1000 !important;">
-    <div class="row p-0">
-        <div class="col-3">
-            <div class="btn btn-secondary" id="AgregarReporteButton">AGREGAR</div>
+    <div class="row p-0 mb-4">
+        <div class="col-4 d-flex align-items-end">
+            <div class="btn btn-secondary btn-secondary-custom" id="AgregarReporteButton"><span class="fw-bold">CREAR REPORTE</span></div>
         </div>
-        <div class="col-9">
+        <div class="col-8">
             <div class="row p-0 m-0 justify-content-end">
                 <div class="col-5">
                     <label for="dateI">DESDE</label>
@@ -32,44 +32,79 @@
         </div>
     </div>
 </div>
-<div class="row p-0 mt-4">
+<style>
+    .ReportsContainer {
+        background-color: #E8E8E9;
+        border: solid 1px black;
+        border-top-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        z-index: 9000;
+    }
 
-    @foreach (Report rep in Model)
+    .TitleBlack {
+        z-index: 9000;
+        width: 25%;
+        height: 40px;
+        background-color: #383030;
+        border: solid 1px black;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+</style>
+<div class="row p-0 mt-4">
+    @foreach (int repType in Enum.GetValues(typeof(PrincipalObjects.Enums.Reports)))
     {
-        @if (user.EsAdmin && (rep.ReportType == 0 || rep.ReportType == 1 || rep.ReportType == 2 || rep.ReportType == 4))
-        {
-            <div class="row p-0 m-0 justify-content-start">
-                <div class="card mt-2 col-12 ">
-                    <div class="row p-0 m-0">
-                        <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
-                        <div class="col-4"><h5 class="">@rep.Name</h5></div>
-                        <div class="col-4"><h5 class="">@rep.Description</h5></div>
-                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
-                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
-                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-play-box ReportIconPlay"></i></a></div>
-                    </div>
+        <div style="z-index: 9000;">
+            <div class="TitleBlack Sombra">
+                <div class="row p-0 m-0 text-light d-flex align-items-center">
+                    <b class="p-0 m-0 text-center">
+                        <h5 class="p-0 m-0 mt-3">@(((PrincipalObjects.Enums.Reports)repType).ToString())</h5>
+                    </b>
                 </div>
             </div>
-        }
-        else
-        {
-            @if (rep.ReportType == 3 || rep.ReportType == 4)
-            {
-                <div class="row p-0 m-0 justify-content-start">
-                    <div class="card mt-2 col-12 ">
-                        <div class="row p-0 m-0">
-                            <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
-                            <div class="col-4"><h5 class="">@rep.Name</h5></div>
-                            <div class="col-4"><h5 class="">@rep.Description</h5></div>
-                            <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
-                            <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
-                            <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-play-box ReportIconPlay"></i></a></div>
+            <div class="row p-3 m-0 mb-5 ReportsContainer Sombra">
+                @foreach (Report rep in Model.Where(x => x.ReportType == repType))
+                {
+                    @if (user.EsAdmin && (rep.ReportType == 0 || rep.ReportType == 1 || rep.ReportType == 2 || rep.ReportType == 4))
+                    {
+                        <div class="row p-0 m-0 justify-content-start">
+                            <div class="card mt-2 col-12 ">
+                                <div class="row p-0 m-0">
+                                    <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
+                                    <div class="col-4"><h5 class="fw-bold" style="font-size: 20px;" title="@rep.Description">@rep.Name</h5></div>
+                                    <div class="col-4"><h5 class="">@rep.Description</h5></div>
+                                    <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
+                                    <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
+                                    <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-play-box ReportIconPlay"></i></a></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            }
-        }
+                    }
+                    else
+                    {
+                        @if (rep.ReportType == 3 || rep.ReportType == 4)
+                        {
+                            <div class="row p-0 m-0 justify-content-start">
+                                <div class="card mt-2 col-12 ">
+                                    <div class="row p-0 m-0">
+                                        <div class="col-1"><i class="mdi mdi-table-large ReportIcon"></i></div>
+                                        <div class="col-4"><h5 class="fw-bold" style="font-size: 20px;" title="@rep.Description">@rep.Name</h5></div>
+                                        <div class="col-4"><h5 class="">@rep.Description</h5></div>
+                                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-pencil ReportIconEdit"></i></a></div>
+                                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-delete ReportIconDelete"></i></a></div>
+                                        <div class="col-1"><a class="buttonMakeReport"><i id="@rep.Id" class="mdi mdi-play-box ReportIconPlay"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
     }
+
     <script>
         $(".ReportIconPlay").on("click", (e) => {
             StartLoader();
@@ -139,7 +174,7 @@
             ButtonEliminar(e, '/Report/EliminarReporte', @user.Id);
         });
 
-                //#sourceURL: reportes.js
+                                //#sourceURL: reportes.js
     </script>
 </div>
 

@@ -202,10 +202,13 @@ namespace ElectroOULET
             List<Employee> employees = new Employee().GetEmployeesToReport(employeesId);
             foreach (Employee employee in employees)
             {
+                long totalReparacionesEmpleados = 0; 
+
                 DataTable dataTable = new DataTable("ReporteDeMarcaciones");
                 dataTable.Columns.AddRange(new DataColumn[]
                 {
                 new DataColumn(employee.NombreCompleto),
+                new DataColumn(""),
                 new DataColumn(""),
                 new DataColumn(""),
                 new DataColumn(""),
@@ -216,33 +219,35 @@ namespace ElectroOULET
                 for (DateTime d = desde; d <= hasta; d = d.AddDays(1))
                 {
                     List<Reparacion> reparacionesDelDia = reparacionesParaReporte.Where(x => x.Fecha.Date == d.Date).Where(x => x.Empleado == employee.empId).ToList();
-                    dataTable.Rows.Add("FECHA", "COD. PRODUCTO", "REPARACION", "REPUESTO", "TRAZABILIDAD", "EMPLEADO");
+                    dataTable.Rows.Add("FECHA", "COD. PRODUCTO", "REPARACION", "REPUESTO", "TRAZABILIDAD", "EMPLEADO","CANTIDAD");
 
                     if (reparacionesDelDia.Count > 0)
                     {
+                        totalReparacionesEmpleados += reparacionesDelDia.Count;
                         int unico = 0;
                         foreach (Reparacion repa in reparacionesDelDia.OrderBy(x => x.Fecha))
                         {
                             if (unico == 0)
                             {
-                                dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado);
+                                dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado, (reparacionesDelDia.Count.ToString()));
+
                                 unico++;
                             }
                             else
                             {
-                                dataTable.Rows.Add("", repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado);
+                                dataTable.Rows.Add("", repa.CodigoProductoAsString, repa.ReparacionRealizada, repa.Repuesto, repa.Trazabilidad, repa.NombreEmpelado,"");
                             }
                         }
-                        dataTable.Rows.Add("", "", "", "", "", "");
+                        dataTable.Rows.Add("", "", "", "", "", "","");
                     }
                     else
                     {
-                        dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), "", "", "", "", "");
+                        dataTable.Rows.Add(d.ToString("dd") + "-" + d.ToString("MMMM"), "", "", "", "", "","0");
                     }
                 }
+                dataTable.Rows.Add("", "", "", "", "", "TOTALES", totalReparacionesEmpleados.ToString());
                 tablas.Add(dataTable);
             }
-            
             return tablas;
         }
 

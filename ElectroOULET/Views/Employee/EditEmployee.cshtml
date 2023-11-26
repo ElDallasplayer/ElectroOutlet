@@ -17,7 +17,42 @@
         vales = new Vale().GetValesByEmpId(Model.empId).OrderBy(x => x.Fecha).ToList();
     }
 }
+<style>
+    .EmployeeContainer {
+        width: 100%;
+        height: 500px;
+        backgroud-color: white;
+        border: solid 2px double;
+        border-radius: 1rem;
+    }
 
+    .EmployeeContainer_Principal{
+        position: absolute;
+        top: 100px;
+    }
+
+    .empIcon {
+        position: absolute;
+        font-style: normal !important;
+        font-size: 150px;
+        padding-bottom: 90px;
+        padding-top: 90px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 10px;
+        border: solid 2px black;
+        z-index: 20;
+    }
+
+    .SubTitle{
+        background-color: #31343B;
+        color: white;
+        width: 100%;
+        height: 70px;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+</style>
 
 <div id="ObjectEdit">
     <div class="hasBlur">
@@ -26,145 +61,161 @@
         <div class="Edit-Title text-center">
             <h2>Editar empleado</h2>
         </div>
-        <div class="row justify-content-center Edit-Body">
-            <div class="col-12">
+        <div class="row p-0 m-0 justify-content-center Edit-Body">
+            <div class="col-12 EmployeeContainer_Principal">
                 <form id="EditForm" class="esteEdit" asp-action="GuardarEmpleado" asp-controller="Employee">
 
                     <input type="number" class="form-control Form-data" name="empId" value="@Model.empId" hidden />
                     <input type="number" class="form-control Form-data" name="userId" value="@user.Id" hidden />
-
-                    <div class="row pt-2 mt-3 justify-content-center">
-                        <div class="col-4">
-                            <i class="mdi mdi-account-tie empIcon"></i>
-                        </div>
-                        <div class="col-8">
-                            <div class="row p-0 m-0 justify-content-center">
-                                <div class="col-6">
-                                    <label for="Name">Nombre</label>
-                                    <input type="text" class="form-control Form-data" name="empName" value="@Model.empName" />
-                                </div>
-                                <div class="col-6">
-                                    <label for="Description">Apellido</label>
-                                    <input type="text" class="form-control Form-data" name="empSurName" value="@Model.empSurName" />
+                    
+                    <div class="row p-1 m-0 justify-content-center EmployeeContainer este">
+                        <div class="row p-0 m-1 Sombra" style="border-radius:1rem;border:solid 1px gray;">
+                            <div class="col-3">
+                                <div style="position:relative;display:flex;top:20px;">
+                                    <i class="mdi mdi-account-tie empIcon"></i>
                                 </div>
                             </div>
-                            <div class="row p-0 m-0 justify-content-around">
-                                <div class="col-6">
-                                    <label for="empLegajo">Legajo</label>
-                                    <input id="empLegajo" name="empLegajo" type="datetime" class="form-control Form-data" value="@Model.empLegajo" />
-                                </div>
-                                <div class="col-3">
-                                    <label for="empCard">Tarjeta</label>
-                                    <input id="empCard" name="empCard" type="datetime" class="form-control Form-data" value="@Model.empCard" />
-                                </div>
-                                <div class="col-3">
-                                    <label for="empDocumento">Documento</label>
-                                    <input id="empDocumento" name="empDocumento" type="text" class="form-control Form-data" value="@Model.empDocumento" />
+
+                            <div class="col-9">
+                                <div class="row p-0 mb-3 justify-content-center" style="position:relative;display:flex;top:20px;">
+                                    <div class="col-4 mt-3">
+                                        <label for="Name" class="form-label"><span class="fst-italic">Nombre</span></label>
+                                        <input id="Name" type="text" name="empName" class="form-control" value="@Model.empName" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="Description" class="form-label"><span class="fst-italic">Apellido</span></label>
+                                        <input id="Description" type="text" name="empSurName" class="form-control" value="@Model.empSurName" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="empLegajo" class="form-label"><span class="fst-italic">Legajo</span></label>
+                                        <input id="empLegajo" type="text" name="empLegajo" class="form-control" value="@Model.empLegajo" />
+                                    </div>
+
+                                    <div class="row p-0 mt-3 mb-3 justify-content-between">
+                                        <div class="col-4 mt-2 mb-3">
+                                            <label for="empDocumento" class="form-label"><span class="fst-italic">Documento</span></label>
+                                            <input id="empDocumento" type="text" name="empDocumento" class="form-control" value="@Model.empDocumento" />
+                                        </div>
+                                        <div class="col-2 mt-2">
+                                            <label for="empIdHikVision" class="form-label"><span class="fst-italic">ID HIK</span></label>
+                                            <input id="empIdHikVision" type="text" name="empIdHikVision" class="form-control" value="@Model.empIdHikVision" />
+                                        </div>
+                                        <div class="col-4 mt-2 mb-2">
+                                            <label for="empCard" class="form-label"><span class="fst-italic">Tarjeta HIK</span></label>
+                                            <input id="empCard" type="text" name="empCard" class="form-control" value="@Model.empCard" />
+                                        </div>
+                                        <label for="empCard" class="form-label"><span class="fst-italic">Firma digital</span></label>
+                                        <div col="col-4 mt-2">
+                                            <style>
+                                                .input-group-per {
+                                                    position: relative;
+                                                    display: flex;
+                                                }
+                                            </style>
+                                            <div class="input-group-per">
+                                                <div class="input-group-text">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled @(Model.HuellaBase64 != "" ? "checked" : "")>
+                                                </div>
+                                                <input id="HuellaBase64" name="HuellaBase64" type="datetime" class="form-control Form-data" value="@Model.HuellaBase64" hidden />
+
+                                                <div class="">
+                                                    <input type="number" class="form-control Form-data" name="DedoEnrolado" id="DedoEnrolado" value="@((int)Model.DedoEnrolado)" hidden />
+
+                                                    <select id="DedoSelector" class="form-select form-select-lg" aria-label=".form-select-lg example">
+
+                                                        @foreach (PrincipalObjects.Enums.eDedo dedo in Enum.GetValues(typeof(PrincipalObjects.Enums.eDedo)))
+                                                        {
+                                                            @if ((int)Model.DedoEnrolado == (int)dedo)
+                                                            {
+                                                                <option value="@((int)dedo)" selected>@dedo.ToString()</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@((int)dedo)">@dedo.ToString()</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div id="buttonEnrol" class="btn btn-secondary pl-2 d-flex align-items-center" style="background-color: #383030 !important;"><span class="fw-bold">Enrolar</span></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="row p-0 mt-1">
+                                <div class="col-3"></div>
+                                <div class="col-2">
+                                    <label for="empSueldo"><span class="fst-italic">Sueldo</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input id="empSueldo" name="empSueldo" type="text" class="form-control Form-data" value="@Model.empSueldo" />
+                                        <span class="input-group-text">.00</span>
+                                    </div>
+                                </div>
 
-                    <div class="row pt-3 m-0 mt-2 justify-content-center align-item-center w-100">
-                        <div class="col-2 p-0 m-1">
-                            <label for="empIdHikVision">Id de HikVision</label>
-                            <input id="empIdHikVision" name="empIdHikVision" type="text" class="form-control Form-data" value="@Model.empIdHikVision" />
-                        </div>
+                                <div class="col-2">
+                                    <label for="empSueldoRecibo"><span class="fst-italic">Sueldo recibo</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input id="empSueldoRecibo" name="empSueldoRecibo" type="text" class="form-control Form-data" value="@Model.empSueldoRecibo" />
+                                        <span class="input-group-text">.00</span>
+                                    </div>
+                                </div>
 
-                        <div class="col-2 p-0 m-1">
-                            <label for="empSueldo">Sueldo</label>
-                            <input id="empSueldo" name="empSueldo" type="text" class="form-control Form-data" value="@Model.empSueldo" />
-                        </div>
-
-                        <div class="col-2 p-0 m-1">
-                            <label for="empSueldoRecibo">Sueldo Recibo</label>
-                            <input id="empSueldoRecibo" name="empSueldoRecibo" type="text" class="form-control Form-data" value="@Model.empSueldoRecibo" />
-                        </div>
-
-
-                        <div id="EmpsContainer" class="col-4 p-0 m-1">
-                            <label for="empTurnSelector">Turno</label>
-                            <input id="turId" name="turId" type="number" class="form-control Form-data" value="@(Model.turId == -1?"":Model.turId)" hidden />
-                            <select id="empTurnSelector" class="form-select mb-0" aria-label=".form-select-lg example">
-                                @if (turnos.Count > 0 && Model.turId != -1 && Model.turId != 0)
-                                {
-                                    @foreach (WorkShift tur in turnos)
-                                    {
-                                        @if (Model.turId == tur.turId)
+                                <div id="EmpsContainer" class="col-4 p-0 mb-5">
+                                    <label for="empTurnSelector">Turno</label>
+                                    <input id="turId" name="turId" type="number" class="form-control Form-data" value="@(Model.turId == -1?"":Model.turId)" hidden />
+                                    <select id="empTurnSelector" class="form-select mb-0" aria-label=".form-select-lg example">
+                                        @if (turnos.Count > 0 && Model.turId != -1 && Model.turId != 0)
                                         {
-                                            <option value="@tur.turId" selected>@tur.turName</option>
+                                            @foreach (WorkShift tur in turnos)
+                                            {
+                                                @if (Model.turId == tur.turId)
+                                                {
+                                                    <option value="@tur.turId" selected>@tur.turName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@tur.turId">@tur.turName</option>
+                                                }
+                                            }
                                         }
                                         else
                                         {
-                                            <option value="@tur.turId">@tur.turName</option>
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <option value="-1" selected>Sin turnos</option>
-                                    @foreach (WorkShift tur in turnos)
-                                    {
-                                        <option value="@tur.turId">@tur.turName</option>
-                                    }
+                                            <option value="-1" selected>Sin turnos</option>
+                                            @foreach (WorkShift tur in turnos)
+                                            {
+                                                <option value="@tur.turId">@tur.turName</option>
+                                            }
 
-                                }
-                            </select>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
                         </div>
+                        
+                        <div class="row p-0 m-1 Sombra" style="border-radius:1rem;border:solid 1px gray;">
+                            <div class="SubTitle text-center">
+                                <h4>Datos adicionales</h4>
+                            </div>
+                            <div class="row mt-4 mb-4 justify-content-center">
+                                <div class="col-5 mt-3 text-center" id="PartialEmployee">
+                                    @Html.Partial("Partials/_comprasEmpleado",comprasEmpleado)
+                                </div>
 
-                        <div class="col-5 p-0 m-1">
-                            <input id="HuellaBase64" name="HuellaBase64" type="datetime" class="form-control Form-data" value="@Model.HuellaBase64" hidden />
-
-                            <div class="">
-                                <input type="number" class="form-control Form-data" name="DedoEnrolado" id="DedoEnrolado" value="@((int)Model.DedoEnrolado)" hidden />
-
-                                <label for="DedoSelector">Seleccionar dedo</label>
-                                <select id="DedoSelector" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-
-                                    @foreach (PrincipalObjects.Enums.eDedo dedo in Enum.GetValues(typeof(PrincipalObjects.Enums.eDedo)))
-                                    {
-                                        @if ((int)Model.DedoEnrolado == (int)dedo)
-                                        {
-                                            <option value="@((int)dedo)" selected>@dedo.ToString()</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@((int)dedo)">@dedo.ToString()</option>
-                                        }
-                                    }
-                                </select>
+                                <div class="col-5 mt-3 text-center" id="PartialEmployeeVale">
+                                    @Html.Partial("Partials/_valesEmpleado",vales)
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row justify-content-end text-end">
-                        <div col="col-6">
-                            <div>
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @(Model.HuellaBase64 != ""?"checked":"") disabled>
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Firma digital</label>
-
-                                <div id="buttonEnrol" class="btn btn-primary pl-2">Enrolar</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="row mt-4 justify-content-center">
-                            <div class="col-5 mt-3 text-center" id="PartialEmployee">
-                                @Html.Partial("Partials/_comprasEmpleado",comprasEmpleado)
-                            </div>
-
-                            <div class="col-5 mt-3 text-center" id="PartialEmployeeVale">
-                                @Html.Partial("Partials/_valesEmpleado",vales)
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row p-0 m-0 justify-content-between buttons-function-container">
-                        <div class="col-6 p-1">
+                    <div class="row p-0 mt-5 justify-content-end buttons-function-container">
+                        <div class="col-9 p-1"></div>
+                        <div class="col-3 p-1">
                             <div type="button" id="SaveButton" class="btn btn-secondary">GUARDAR</div>
-                        </div>
-                        <div class="col-6 p-1">
                             <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
                         </div>
                     </div>
@@ -174,36 +225,36 @@
         </div>
     </div>
     <script>
-        $("#DedoSelector").change(function(e){
-                $('#DedoEnrolado').val($(this).val());
+        $("#DedoSelector").change(function (e) {
+            $('#DedoEnrolado').val($(this).val());
         });
 
-            $("#empTurnSelector").change(function(){
-                $('#turId').val($(this).val());
-            });
+        $("#empTurnSelector").change(function () {
+            $('#turId').val($(this).val());
+        });
 
-            $("#buttonEnrol").on("click", (e) =>{
-                e.stopImmediatePropagation();
+        $("#buttonEnrol").on("click", (e) => {
+            e.stopImmediatePropagation();
 
-                StartLoader();
-                let id = @Model.empId;
+            StartLoader();
+            let id = @Model.empId;
 
-                $.ajax({
-                    url: '/Employee/ObtenerHuellaEmpleado?empId=' + id,
-                    dataType: 'json',
-                    async: true,
-                    success: function (data) {
-                        console.log(data);
-                        if(data.result == "OK"){
-                           $('#HuellaBase64').empty();
-                           $('#HuellaBase64').val(data.huella);
-                           $("#flexSwitchCheckDefault").prop( "checked", true );
-                        }
-                        StopLoader();
+            $.ajax({
+                url: '/Employee/ObtenerHuellaEmpleado?empId=' + id,
+                dataType: 'json',
+                async: true,
+                success: function (data) {
+                    console.log(data);
+                    if (data.result == "OK") {
+                        $('#HuellaBase64').empty();
+                        $('#HuellaBase64').val(data.huella);
+                        $("#flexSwitchCheckDefault").prop("checked", true);
                     }
-                });
-            })
-        //# sourceURL=EmployeeEdit.js
+                    StopLoader();
+                }
+            });
+        })
+                                //# sourceURL=EmployeeEdit.js
     </script>
 </div>
 
@@ -220,15 +271,4 @@
         width: 1000px !important;
     }
 
-    .empIcon {
-        position: absolute;
-        top: 6%;
-        left: 20%;
-        font-style: normal !important;
-        font-size: 150px;
-        padding-bottom: 35px;
-        padding-top: 100px;
-        border-radius: 10px;
-        z-index: 20;
-    }
 </style>

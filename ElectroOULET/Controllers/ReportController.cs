@@ -21,7 +21,7 @@ namespace ElectroOULET.Controllers
 
             List<Report> reports = new Report().GetReports();
 
-            return View(reports);
+            return View(reports.OrderBy(x => x.ReportType).ToList());
         }
 
         public ActionResult EditReport(int id, int userId)
