@@ -460,14 +460,17 @@ namespace ElectroOULET
             return dataTable;
         }
 
-        public static async Task<DataTable> ReporteDeHorasPorPeriodoPorDia(string employeesId, DateTime desde, DateTime hasta)
+        public static async Task<List<DataTable>> ReporteDeHorasPorPeriodoPorDia(string employeesId, DateTime desde, DateTime hasta)
         {
+            List<DataTable> toReturn = new List<DataTable>();
             List<Employee> empleadosToReport = new Employee().GetEmployeesToReport(employeesId);
 
-            DataTable dataTable = new DataTable("ReporteDeMarcaciones");
-            dataTable.Columns.AddRange(new DataColumn[]
+            foreach (Employee emp in empleadosToReport.OrderBy(x => x.empName))
             {
-                new DataColumn("NombreEmpleado"),
+                DataTable dataTable = new DataTable("ReporteDeMarcaciones");
+                dataTable.Columns.AddRange(new DataColumn[]
+                {
+                new DataColumn(emp.NombreCompleto),
                 new DataColumn("Tarjeta"),
                 new DataColumn("Dia"),
                 new DataColumn("Desde1"),
@@ -485,10 +488,8 @@ namespace ElectroOULET
                 new DataColumn("Extras"),
                 new DataColumn("SalidaAnticipada"),
                 new DataColumn("Desde-Hasta")
-            });
+                });
 
-            foreach (Employee emp in empleadosToReport.OrderBy(x => x.empName))
-            {
                 List<Marcations> marcs = new Marcations().GetMarcsByEmpId(emp.empId, desde, hasta);
                 WorkShift turno = emp.Turno;
 
@@ -710,19 +711,23 @@ namespace ElectroOULET
                             //d = d.AddDays(1);
                         }
                     }
+
+                    //dataTable.Rows.Add("", "", "", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0),
+                    //(Totales == new TimeSpan(0, 0, 0) ? "--" : Totales),
+                    //(Tardes == new TimeSpan(0, 0, 0) ? "--" : Tardes),
+                    //(Anticipadas == new TimeSpan(0, 0, 0) ? "--" : Anticipadas),
+                    //(Normales == new TimeSpan(0, 0, 0) ? "--" : Normales),
+                    //(Descanso == new TimeSpan(0, 0, 0) ? "--" : Descanso),
+                    //(ExcesoDesc == new TimeSpan(0, 0, 0) ? "--" : ExcesoDesc),
+                    //(Extras == new TimeSpan(0, 0, 0) ? "--" : Extras),
+                    //(SalidaAnticipada == new TimeSpan(0, 0, 0) ? "--" : SalidaAnticipada), (desde.ToString("dd-MM-yyyy") + " " + hasta.ToString("dd-MM-yyyy")));
+
                 }
 
-                dataTable.Rows.Add("", "", "", new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0), new TimeSpan(0, 0, 0),
-                    (Totales == new TimeSpan(0, 0, 0) ? "--" : Totales),
-                    (Tardes == new TimeSpan(0, 0, 0) ? "--" : Tardes),
-                    (Anticipadas == new TimeSpan(0, 0, 0) ? "--" : Anticipadas),
-                    (Normales == new TimeSpan(0, 0, 0) ? "--" : Normales),
-                    (Descanso == new TimeSpan(0, 0, 0) ? "--" : Descanso),
-                    (ExcesoDesc == new TimeSpan(0, 0, 0) ? "--" : ExcesoDesc),
-                    (Extras == new TimeSpan(0, 0, 0) ? "--" : Extras),
-                    (SalidaAnticipada == new TimeSpan(0, 0, 0) ? "--" : SalidaAnticipada), (desde.ToString("dd-MM-yyyy") + " " + hasta.ToString("dd-MM-yyyy")));
+
+                toReturn.Add(dataTable);
             }
-            return dataTable;
+            return toReturn;
         }
         
         public static async Task<DataTable> ReporteDeRegistrosReducido(string employeesId, DateTime desde, DateTime hasta)

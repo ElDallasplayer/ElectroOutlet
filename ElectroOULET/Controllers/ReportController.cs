@@ -91,7 +91,7 @@ namespace ElectroOULET.Controllers
                 case Enums.Reports.ReporteDeMarcaciones:
                     dataTable = await Reports.ReporteDeMarcaciones(employeesId, dateInit, dateEnd); break;
                 case Enums.Reports.ReporteDeHorasPorDia:
-                    dataTable = await Reports.ReporteDeHorasPorPeriodoPorDia(employeesId, dateInit, dateEnd); break;
+                    listData = await Reports.ReporteDeHorasPorPeriodoPorDia(employeesId, dateInit, dateEnd); break;
                 case Enums.Reports.ReporteDeHorasPorPeriodo:
                     dataTable = await Reports.ReporteDeHorasPorPeriodo(employeesId, dateInit, dateEnd); break;
                 case Enums.Reports.ReporteDeRegistros:
@@ -115,7 +115,7 @@ namespace ElectroOULET.Controllers
                         }
                         catch (Exception ex)
                         {
-                            ws = wb.Worksheets.Add(spreedsheetname + Guid.NewGuid());
+                            ws = wb.Worksheets.Add(spreedsheetname + Environment.TickCount);
                         }
 
                         //wb.Worksheets.Add(spreedsheetname);

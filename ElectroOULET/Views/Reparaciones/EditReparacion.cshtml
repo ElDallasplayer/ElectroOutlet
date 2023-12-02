@@ -135,7 +135,7 @@
                     <div class="row p-0 mt-5 justify-content-end buttons-function-container">
                         <div class="col-9 p-1"></div>
                         <div class="col-3 p-1">
-                            <div type="button" id="SaveButton" class="btn btn-secondary">GUARDAR</div>
+                            <button type="submit" id="SaveButton" class="btn btn-secondary">GUARDAR</button>
                             <div id="CancelButton" class="btn btn-dark text-white">CANCELAR</div>
                         </div>
                     </div>
@@ -185,6 +185,12 @@
             e.stopImmediatePropagation()
             if(e.val() == ""){
                 $("#Repuesto").focus();
+            }
+        });
+
+        $(document).keyup(function (event) {
+            if (event.which === 13) {
+                $("#SaveButton").click();
             }
         });
         //# sourceURL=editReparacion.js
