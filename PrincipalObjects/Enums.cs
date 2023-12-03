@@ -43,7 +43,9 @@ namespace PrincipalObjects
             ReporteDeHorasPorDia = 1,
             ReporteDeHorasPorPeriodo = 2,
             ReporteDeRegistros = 3,
-            ReporteDeRegistrosReducido = 4
+            ReporteDeRegistrosReducido = 4,
+            ReporteDeRegistrosEstadistico = 5,
+            ReporteDeMarcacionesPorEmpleado = 6
         }
 
         public enum eDayWeek

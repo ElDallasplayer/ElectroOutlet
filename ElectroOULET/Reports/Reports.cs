@@ -756,6 +756,129 @@ namespace ElectroOULET
             return dataTable;
         }
 
+        public static async Task<List<DataTable>> ReporteDeMarcacionesPorEmpleado(string employeesId, DateTime desde, DateTime hasta)
+        {
+            List<Employee> empleados = new Employee().GetEmployeesToReport(employeesId);
+            List<Marcations> marcations = new Marcations().GetMarcations(desde, hasta);
+
+            List<DataTable> Datatables = new List<DataTable>();
+
+            foreach (Employee emp in empleados.OrderBy(x => x.NombreCompleto))
+            {
+                DataTable dataTable = new DataTable("ReporteDeMarcaciones");
+                dataTable.Columns.AddRange(new DataColumn[]
+                {
+                new DataColumn(emp.NombreCompleto),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn(""),
+                new DataColumn("")
+                });
+                dataTable.Rows.Add("LEGAJO","NOMBRE COMPLETO", "FECHA", "ENTRADA_1", "SALIDA_1", "ENTRADA_2", "SALIDA_2", "ENTRADA_3", "SALIDA_3", "ENTRADA_4", "SALIDA_4");
+
+                List<Marcations> marcacionesEmpleado = marcations.Where(x => x.empId == emp.empId).ToList();
+
+                for (DateTime d = desde; d <= hasta; d = d.AddDays(1))
+               {
+                    List<Marcations> marcacionesEmpleadoHoy = marcacionesEmpleado.Where(x => x.marcDate.Date == d.Date).ToList();
+                    string legajo = emp.empLegajo;
+                    string nombreCompletoEmpelado = emp.NombreCompleto;
+                    string fechaReporte = d.ToString("dd/MM/yyyy");
+                    string entrada1 = "--";
+                    string salida1 = "--";
+                    string entrada2 = "--";
+                    string salida2 = "--";
+                    string entrada3 = "--";
+                    string salida3 = "--";
+                    string entrada4 = "--";
+                    string salida4 = "--";
+
+                    if (marcacionesEmpleado.Count() > 0)
+                    {
+                        foreach (Marcations marc in marcacionesEmpleadoHoy.OrderBy(x => x.marcDate))
+                        {
+                            if (entrada1 == "--")
+                            {
+                                entrada1 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (salida1 == "--")
+                            {
+                                salida1 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (entrada2 == "--")
+                            {
+                                entrada2 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (salida2 == "--")
+                            {
+                                salida2 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (entrada3 == "--")
+                            {
+                                entrada3 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (salida3 == "--")
+                            {
+                                salida3 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (entrada4 == "--")
+                            {
+                                entrada4 = marc.marcDate.ToString("HH:mm");
+                            }
+                            else if (salida4 == "--")
+                            {
+                                salida4 = marc.marcDate.ToString("HH:mm");
+                            }
+                        }
+                    }
+                    dataTable.Rows.Add(legajo,nombreCompletoEmpelado,fechaReporte,entrada1,salida1,entrada2,salida2,entrada3,salida3,entrada4,salida4);
+                }
+                Datatables.Add(dataTable);
+            }
+
+            return Datatables;
+        }
+
+        public static async Task<DataTable> ReporteDeRegistrosEstadistico(string employeesId, DateTime desde, DateTime hasta)
+        {
+            List<Employee> empleados = new Employee().GetEmployeesToReport(employeesId);
+            List<Reparacion> reparacionesParaReporte = new Reparacion().GetReparacionByFechas(desde, hasta);
+
+            DataTable dataTable = new DataTable("ReporteDeMarcaciones");
+            dataTable.Columns.AddRange(new DataColumn[]
+            {
+                new DataColumn("TECNICOS APELLIDO Y NOMBRE"),
+                new DataColumn("DIAS"),
+                new DataColumn("CANTIDAD")
+            });
+
+            foreach (Employee emp in empleados.OrderBy(x => x.NombreCompleto))
+            {
+                List<Reparacion> repDelEmpleado = reparacionesParaReporte.Where(x => x.Empleado != null).Where(y => y.Empleado == emp.empId).ToList();
+
+                int CantidadReparacionesPorEmpleado = 0;
+                int DiasTotalesReparacion = 0;
+                for (DateTime d = desde; d <= hasta; d = d.AddDays(1))
+                {
+                    if (repDelEmpleado.Any(x => x.Fecha.Date == d.Date))
+                    {
+                        DiasTotalesReparacion++;
+                        CantidadReparacionesPorEmpleado += repDelEmpleado.Where(x => x.Fecha.Date == d.Date).ToList().Count;
+                    }
+                }
+
+                dataTable.Rows.Add(emp.NombreCompleto, DiasTotalesReparacion + " DIAS", CantidadReparacionesPorEmpleado + " Reparaciones");
+            }
+
+            return dataTable;
+        }
+
         public static List<Marcations> removeDuplicates(List<Marcations> listOriginal)
         {
             List<Marcations> marcationsDuplicate = listOriginal;
