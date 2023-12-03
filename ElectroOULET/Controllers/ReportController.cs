@@ -98,6 +98,10 @@ namespace ElectroOULET.Controllers
                     listData = await Reports.ReporteDeRegistros(employeesId, dateInit, dateEnd); break;
                 case Enums.Reports.ReporteDeRegistrosReducido:
                     dataTable = await Reports.ReporteDeRegistrosReducido(employeesId, dateInit, dateEnd); break;
+                case Enums.Reports.ReporteDeRegistrosEstadistico:
+                    dataTable = await Reports.ReporteDeRegistrosEstadistico(employeesId, dateInit, dateEnd); break;
+                case Enums.Reports.ReporteDeMarcacionesPorEmpleado:
+                    listData = await Reports.ReporteDeMarcacionesPorEmpleado(employeesId, dateInit, dateEnd); break;
             }
 
             if (listData.Count > 0)
@@ -162,7 +166,7 @@ namespace ElectroOULET.Controllers
             {
                 using (XLWorkbook wb = new XLWorkbook())
                 {
-                    var ws = wb.Worksheets.Add("Using Colors");
+                    var ws = wb.Worksheets.Add(nombreArchivo.Split('_')[0]);
 
                     for (int c = 1; c <= dataTable.Columns.Count; c++)
                     {

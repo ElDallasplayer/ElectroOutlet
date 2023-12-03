@@ -44,7 +44,7 @@ namespace PrincipalObjects.Objects
 
         public List<Marcations> GetMarcations(DateTime dateInit, DateTime dateFinish)
         {
-            dynamic marcsFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[2] { "where marcDate >= '" + dateInit.ToString("yyyy-MM-dd HH:mm:ss") + "'", " marcDate <= '" + dateFinish.ToString("yyyy-MM-dd HH:mm:ss") + "'" }), (true, "marcDate", false));
+            dynamic marcsFromDB = SQLInteract.GetDataFromDataBase((false, -1), ColNames, TableName, (true, new string[2] { "where marcDate >= '" + dateInit.ToString("yyyy-MM-dd 00:00:00") + "'", " marcDate <= '" + dateFinish.ToString("yyyy-MM-dd 23:59:59") + "'" }), (true, "marcDate", false));
             List<Marcations> marcList = new List<Marcations>();
 
             foreach (dynamic row in marcsFromDB.rows)
