@@ -13,6 +13,7 @@ namespace PrincipalObjects.Objects
         public long empId { get; set; }
         public string marcCard { get; set; }
         public long marcHikId { get; set; }
+        public long marcHikIdHuella { get; set; }
         public Enums.mDirection marcDirection { get; set; }
         public DateTime marcDate { get; set; }
         public bool marcEdited { get; set; }
@@ -25,7 +26,7 @@ namespace PrincipalObjects.Objects
 
         #region dbObject
         string TableName = "oMarcations";
-        string[] ColNames = new string[11] {
+        string[] ColNames = new string[12] {
             "marcId",
             "empId",
             "marcCard",
@@ -36,7 +37,8 @@ namespace PrincipalObjects.Objects
             "marcEditedValue",
             "marcDescription",
             "marcDelete",
-            "devId"
+            "devId",
+            "marcHikIdHuella"
         };
         #endregion
 
@@ -63,7 +65,8 @@ namespace PrincipalObjects.Objects
                         marcEditedValue = Convert.ToDateTime(String.IsNullOrEmpty(row.marcEditedValue.Value.ToString()) ? "1900-01-01 00:00:00" : row.marcEditedValue.Value.ToString()),
                         marcDescription = row.marcDescription.Value.ToString(),
                         Deleted = Convert.ToBoolean(row.marcDelete.Value.ToString()),
-                        devId = Convert.ToInt32(row.devId.Value.ToString())
+                        devId = Convert.ToInt32(row.devId.Value.ToString()),
+                        marcHikIdHuella = Convert.ToInt64(row.marcHikIdHuella.Value.ToString())
                     };
 
                     Employee emp = new Employee().GetEmployeeById(marc.empId);
@@ -99,7 +102,8 @@ namespace PrincipalObjects.Objects
                     marcEditedValue = Convert.ToDateTime(String.IsNullOrEmpty(marcsFromDB.rows[0].marcEditedValue.Value.ToString()) ? "1900-01-01 00:00:00" : marcsFromDB.rows[0].marcEditedValue.Value.ToString()),
                     marcDescription = marcsFromDB.rows[0].marcDescription.Value.ToString(),
                     Deleted = Convert.ToBoolean(marcsFromDB.rows[0].marcDelete.Value.ToString()),
-                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString())
+                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString()),
+                    marcHikIdHuella = Convert.ToInt64(marcsFromDB.rows[0].marcHikIdHuella.Value.ToString())
                 };
 
                 Employee emp = new Employee().GetEmployeeById(marc.empId);
@@ -133,7 +137,8 @@ namespace PrincipalObjects.Objects
                     marcEditedValue = Convert.ToDateTime(String.IsNullOrEmpty(marcsFromDB.rows[0].marcEditedValue.Value.ToString()) ? "1900-01-01 00:00:00" : marcsFromDB.rows[0].marcEditedValue.Value.ToString()),
                     marcDescription = marcsFromDB.rows[0].marcDescription.Value.ToString(),
                     Deleted = Convert.ToBoolean(marcsFromDB.rows[0].marcDelete.Value.ToString()),
-                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString())
+                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString()),
+                    marcHikIdHuella = Convert.ToInt64(marcsFromDB.rows[0].marcHikIdHuella.Value.ToString())
                 };
 
                 Employee emp = new Employee().GetEmployeeById(marc.empId);
@@ -172,7 +177,8 @@ namespace PrincipalObjects.Objects
                     marcEditedValue = Convert.ToDateTime(String.IsNullOrEmpty(marcsFromDB.rows[0].marcEditedValue.Value.ToString()) ? "1900-01-01 00:00:00" : marcsFromDB.rows[0].marcEditedValue.Value.ToString()),
                     marcDescription = marcsFromDB.rows[0].marcDescription.Value.ToString(),
                     Deleted = Convert.ToBoolean(marcsFromDB.rows[0].marcDelete.Value.ToString()),
-                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString())
+                    devId = Convert.ToInt32(marcsFromDB.rows[0].devId.Value.ToString()),
+                    marcHikIdHuella = Convert.ToInt64(marcsFromDB.rows[0].marcHikIdHuella.Value.ToString())
                 };
 
                 Employee emp = new Employee().GetEmployeeById(marc.empId);
@@ -208,7 +214,8 @@ namespace PrincipalObjects.Objects
                         marcEditedValue = Convert.ToDateTime(String.IsNullOrEmpty(row.marcEditedValue.Value.ToString()) ? "1900-01-01 00:00:00" : row.marcEditedValue.Value.ToString()),
                         marcDescription = row.marcDescription.Value.ToString(),
                         Deleted = Convert.ToBoolean(row.marcDelete.Value.ToString()),
-                        devId = Convert.ToInt32(row.devId.Value.ToString())
+                        devId = Convert.ToInt32(row.devId.Value.ToString()),
+                        marcHikIdHuella = Convert.ToInt64(row.marcHikIdHuella.Value.ToString())
                     };
 
                     Employee emp = new Employee().GetEmployeeById(marc.empId);
@@ -225,14 +232,14 @@ namespace PrincipalObjects.Objects
             return marcList;
         }
 
-        public Marcations SaveMarcation(Marcations marcation)
+        public Marcations SaveMarcation(Marcations marcation, Marcations marcHuella = null)
         {
             List<(string, eDataType)> dataToSend = new List<(string, eDataType)>();
 
             Marcations marcaLast = new Marcations().GetLastMarcationByDate(marcation.marcDate);
 
-            if (marcaLast == null)
-            {
+            //if (marcaLast == null)
+            //{
                 long LastId = SQLInteract.GetLastIdFromInsertedElement(TableName, "marcId") + 1;
 
                 dataToSend.Add((LastId.ToString(), eDataType.number));
@@ -246,6 +253,7 @@ namespace PrincipalObjects.Objects
                 dataToSend.Add((marcation.marcDescription?.ToString(), eDataType.text));
                 dataToSend.Add(("0", eDataType.number));
                 dataToSend.Add((marcation.devId.ToString(), eDataType.number));
+                dataToSend.Add((marcation.marcHikIdHuella.ToString(), eDataType.text));
 
                 bool rest = SQLInteract.InsertDataInDatabase(TableName, ColNames, dataToSend);
 
@@ -257,11 +265,11 @@ namespace PrincipalObjects.Objects
                 {
                     return null;
                 }
-            }
-            else
-            {
-                return null;
-            }
+            //}
+            //else
+            //{
+                
+            //}
         }
     }
 }

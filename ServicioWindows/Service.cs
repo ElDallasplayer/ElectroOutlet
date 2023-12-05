@@ -10,16 +10,23 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+
 namespace ServicioWindows
 {
     public class Service
     {
         public static async Task<bool> StartService()
         {
+
             List<Device> devices = new Device().GetDevices();
             foreach (Device device in devices)
             {
-                ObtenerMarcacionesAsync(device);
+                Thread funcion = new Thread(new ParameterizedThreadStart(delegate
+                {
+                    ObtenerMarcacionesAsync(device);
+                }));
+                funcion.Start();
             }
             Utilities.WriteLog("INICIADO CORRECTAMENTE");
 
@@ -44,11 +51,9 @@ namespace ServicioWindows
                 {
                     Marcations marcUltima = new Marcations().GetLastMarcation();
                     string jonToSend = "{\"AcsEventCond\":{\"searchID\":\"0\",\"responseStatusStrg\":\"OK\",\"searchResultPosition\":" + marcUltima.marcHikId + ",\"maxResults\":10,\"major\":5,\"minor\":75,\"time\":\"" + (DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss") + "-03:00") + "\"}}";
-
-
+                    Utilities.WriteLog("JSON = " + jonToSend.ToString());
                     dynamic jsonRes = CallISAPIFunction(device.devUser, device.devPassword, device.devHost, "AccessControl/AcsEvent?format=json", "POST", jonToSend).Result;
                     //dynamic jsonRes = ObtenerEjemplo();
-
                     long totalMatches = Convert.ToInt64(jsonRes.AcsEvent.totalMatches.Value.ToString());
                     long matchNum = Convert.ToInt64(jsonRes.AcsEvent.numOfMatches.Value.ToString());
 
@@ -70,6 +75,7 @@ namespace ServicioWindows
                                 {
                                     jonToSend = "{\"AcsEventCond\":{\"searchID\":\"0\",\"responseStatusStrg\":\"OK\",\"searchResultPosition\":0,\"maxResults\":10,\"major\":5,\"minor\":75,\"time\":\"" + (DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss") + "-03:00") + "\"}}";
                                     jsonRes = CallISAPIFunction(device.devUser, device.devPassword, device.devHost, "AccessControl/AcsEvent?format=json", "POST", jonToSend).Result;
+
                                 }
                             }
                             else
@@ -83,7 +89,8 @@ namespace ServicioWindows
                             {
                                 dynamic element = jsonRes.AcsEvent.InfoList[i];
                                 string date = element.time.Value.ToString().Split('-')[0];
-                                Utilities.WriteLog("FECHA = " + date);
+
+                                Utilities.WriteLog("JSON = " + element.ToString());
 
                                 bool sinTarjeta = false;
 
@@ -92,7 +99,8 @@ namespace ServicioWindows
                                 try
                                 {
                                     marc.marcCard = element.cardNo.Value.ToString();
-                                }catch (Exception ex)
+                                }
+                                catch (Exception ex)
                                 {
                                     sinTarjeta = true;
                                     marc.marcCard = element.employeeNoString.Value.ToString();
@@ -103,6 +111,7 @@ namespace ServicioWindows
                                 marc.marcHikId = idBase + 1 + i;
                                 marc.marcEditedValue = Convert.ToDateTime(date);
                                 marc.marcDirection = PrincipalObjects.Enums.mDirection.In;
+                                marc.marcHikIdHuella = marcUltima.marcHikIdHuella;
 
                                 Employee employee = new Employee();
 
@@ -163,7 +172,8 @@ namespace ServicioWindows
 
                                 try
                                 {
-                                    marc.SaveMarcation(marc);
+                                    Marcations res = marc.SaveMarcation(marc, marc);
+                                    Utilities.WriteLog("MARC GUARDADA =  " + (res != null ? res.marcHikId.ToString() : "Nula").ToString());
                                 }
                                 catch (Exception ex)
                                 {
@@ -181,9 +191,171 @@ namespace ServicioWindows
                 {
                     Utilities.WriteLog("EROR AL CREAR MARCACIONES: " + ex.Message);
                 }
-                Thread.Sleep(30000);
+
+                bool rest = ObtenerMarcacionesHuellasAsync(device).Result;
+
+                Thread.Sleep(3000);
             }
 
+            return true;
+        }
+
+        public static async Task<bool> ObtenerMarcacionesHuellasAsync(Device device)
+        {
+            try
+            {
+                Marcations marcUltima = new Marcations().GetLastMarcation();
+                string jsonToSendFingerPrint = "{\"AcsEventCond\":{\"searchID\":\"0\",\"responseStatusStrg\":\"OK\",\"searchResultPosition\":" + marcUltima.marcHikIdHuella + ",\"maxResults\":10,\"major\":5,\"minor\":38,\"time\":\"" + (marcUltima.marcDate.ToString("yyyy-MM-ddT00:00:00")) + "-03:00\"}}";
+                Utilities.WriteLog("JSON = " + jsonToSendFingerPrint.ToString());
+                dynamic jsonRes = CallISAPIFunction(device.devUser, device.devPassword, device.devHost, "AccessControl/AcsEvent?format=json", "POST", jsonToSendFingerPrint).Result;
+                //dynamic jsonRes = ObtenerEjemplo();
+                long totalMatches = Convert.ToInt64(jsonRes.AcsEvent.totalMatches.Value.ToString());
+                long matchNum = Convert.ToInt64(jsonRes.AcsEvent.numOfMatches.Value.ToString());
+
+                try
+                {
+                    Utilities.WriteLog("JSON HUELLA= " + jsonToSendFingerPrint.ToString());
+                    jsonRes = CallISAPIFunction(device.devUser, device.devPassword, device.devHost, "AccessControl/AcsEvent?format=json", "POST", jsonToSendFingerPrint).Result;
+                    //dynamic jsonRes = ObtenerEjemplo();
+
+                    totalMatches = Convert.ToInt64(jsonRes.AcsEvent.totalMatches.Value.ToString());
+                    matchNum = Convert.ToInt64(jsonRes.AcsEvent.numOfMatches.Value.ToString());
+
+
+                    if (marcUltima.marcHikIdHuella == totalMatches)
+                    {
+
+                    }
+                    else
+                    {
+                        if (jsonRes.AcsEvent.InfoList.Count == 0)
+                        {
+                            if (marcUltima.marcHikIdHuella == totalMatches)
+                            {
+
+                            }
+                            else
+                            {
+                                jsonToSendFingerPrint = "{\"AcsEventCond\":{\"searchID\":\"0\",\"responseStatusStrg\":\"OK\",\"searchResultPosition\":0,\"maxResults\":10,\"major\":5,\"minor\":38,\"time\":\"" + (marcUltima.marcDate.ToString("yyyy-MM-ddT00:00:00") + "-03:00") + "\"}}";
+                                jsonRes = CallISAPIFunction(device.devUser, device.devPassword, device.devHost, "AccessControl/AcsEvent?format=json", "POST", jsonToSendFingerPrint).Result;
+
+                            }
+                        }
+                        else
+                        {
+
+                        }
+
+                        long idBase = marcUltima.marcHikIdHuella;
+
+                        for (int i = 0; i < matchNum; i++)
+                        {
+                            dynamic element = jsonRes.AcsEvent.InfoList[i];
+                            string date = element.time.Value.ToString().Split('-')[0];
+
+                            Utilities.WriteLog("JSON DE= " + element.ToString());
+
+                            bool sinTarjeta = false;
+
+                            Marcations marc = new Marcations();
+                            marc.Deleted = false;
+                            try
+                            {
+                                marc.marcCard = element.cardNo.Value.ToString();
+                            }
+                            catch (Exception ex)
+                            {
+                                sinTarjeta = true;
+                                marc.marcCard = element.employeeNoString.Value.ToString();
+                            }
+                            marc.devId = device.devId;
+                            marc.marcDate = (Convert.ToDateTime(date));
+                            marc.marcEdited = false;
+                            marc.marcHikId = marcUltima.marcHikId;
+                            marc.marcEditedValue = Convert.ToDateTime(date);
+                            marc.marcDirection = PrincipalObjects.Enums.mDirection.In;
+                            marc.marcHikIdHuella = idBase + 1 + i;
+
+                            Utilities.WriteLog("NUM A GUARDAR = " + (idBase + 1 + i).ToString());
+                            Utilities.WriteLog("FECHA A GUARDAR = " + marc.marcDate.ToString("yyyyMMdd HH:mm:ss"));
+                            Employee employee = new Employee();
+
+                            if (sinTarjeta)
+                            {
+                                employee = new Employee().GetEmployeeByCardId(marc.marcCard);
+                                if (employee == null)
+                                {
+                                    employee = new Employee().GetEmployeeByCardId(element.serialNo.Value.ToString());
+                                }
+                            }
+                            else
+                            {
+                                employee = new Employee().GetEmployeeByCardId(marc.marcCard);
+                            }
+
+                            try
+                            {
+                                if (employee != null)
+                                {
+                                    marc.empId = employee.empId;
+                                }
+                                else
+                                {
+                                    employee = new Employee();
+                                    employee.empId = Convert.ToInt64(element.serialNo.Value.ToString());
+                                    try
+                                    {
+                                        employee.empName = element.name.Value.ToString().Split(' ')[1];
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        employee.empName = "Sin nombre";
+                                    }
+                                    try
+                                    {
+                                        employee.empSurName = element.name.Value.ToString().Split(' ')[0];
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        employee.empSurName = "Sin apellido";
+                                    }
+
+                                    employee.empCard = marc.marcCard;
+                                    employee.turId = -1;
+                                    employee.empLegajo = element.serialNo.Value.ToString();
+                                    employee.empIdHikVision = Convert.ToInt64(element.serialNo.Value.ToString());
+
+                                    employee.SaveEmp(employee);
+                                    employee = new Employee().GetEmployeeByCardId(marc.marcCard);
+                                    marc.empId = employee.empId;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Utilities.WriteLog("ERROR AL CREAR EMPLEADO:" + ex.Message);
+                            }
+
+                            try
+                            {
+                                Marcations res = marc.SaveMarcation(marc, marc);
+                                Utilities.WriteLog("MARC GUARDADA =  " + (res != null ? res.marcHikId.ToString() : "Nula").ToString());
+                            }
+                            catch (Exception ex)
+                            {
+                                Utilities.WriteLog(ex.Message);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Utilities.WriteLog("EROR AL GESTIONAR MARCACION: " + jsonRes + " --- " + ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.WriteLog("EROR AL CREAR MARCACIONES: " + ex.Message);
+            }
             return true;
         }
 

@@ -791,7 +791,7 @@ namespace ElectroOULET
 
                 for (DateTime d = desde; d <= hasta; d = d.AddDays(1))
                {
-                    List<Marcations> marcacionesEmpleadoHoy = marcacionesEmpleado.Where(x => x.marcDate.Date == d.Date).ToList();
+                    List<Marcations> marcacionesEmpleadoHoy = removeDuplicates(marcacionesEmpleado.Where(x => x.marcDate.Date == d.Date).ToList());
                     string legajo = emp.empLegajo;
                     string nombreCompletoEmpelado = emp.NombreCompleto;
                     string fechaReporte = d.ToString("dd/MM/yyyy");
