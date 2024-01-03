@@ -1,0 +1,29 @@
+﻿@using NonFactors.Mvc.Grid
+@using PrincipalObjects.Objects
+@model List<CodigoProducto>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+
+
+<div class="col-12 m-3 gridContainer">
+    <b>CODIGOS DE PRODUCTOS</b>
+    @Html.Grid(Model).Build(columns =>
+    {
+    columns.Add(c => c.CodProducto).Titled("Codigo").Sortable(true);
+    columns.Add(c => Html.Raw("<a class='buttonDeleteCodigoProducto' id='"+ c.Id +"' href='#'><i class='mdi mdi-delete-circle p-0 m-0' id='"+ c.Id +"' style='font-size: 25px; cursor: pointer;'></i></a>")).Titled(Html.Raw("<i class='mdi mdi-delete-circle p-0 m-0' style='font-size: 25px;'></i>"));
+    }).Named("Codigos-grid").Filterable().Empty("SIN CODIGOS").Css("mvc-grid").Pageable(pager =>
+    {
+    pager.PagesToDisplay = 1;
+    pager.RowsPerPage = 6;
+    })
+    @*.Css("tablas acceso")*@
+</div>
+
+<style>
+    .gridContainer {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 100%;
+        height: 500px;
+    }
+</style>

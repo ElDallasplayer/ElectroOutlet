@@ -4,12 +4,28 @@
 @{
     User user = (User)ViewData["ActiveUser"];
     ViewData["Title"] = "Reparaciones";
+
+    List<CodigoProducto> codigosProductos = ViewBag.CodigosProductos;
 }
 
 
+<style>
+    main{
+        width: 115rem !important;
+    }
+    .col-1{
+            width: 19rem !important;
+    }
+    .container {
+        width: 100% !important;
+        padding: 0px !important;
+        margin: 5px !important;
+    }
+    </style>
+
 <div class="EditReparacion-Container">
 </div>
-<div class="bg-container">
+<div class="bg-container" style="width: 98% !important;">
     <div class="row p-0 m-0 justify-content-center text-center Title-View d-flex align-items-center">
         <h3 class="p-3 m-0"><span class="fw-bold">LISTADO DE REPARACIONES</span></h3>
     </div>
@@ -21,8 +37,11 @@
 
     </div>
     <div class="row mt-4 justify-content-center">
-        <div class="col-11 mt-3 text-center" id="PartialEmployee">
+        <div class="col-9 p-0 mt-3 text-center" id="PartialEmployee">
             @Html.Partial("Partials/_reparaciones",Model)
+        </div>
+        <div class="col-1 p-0 mt-3 text-center">
+            @Html.Partial("Partials/_codigos",codigosProductos)
         </div>
     </div>
 </div>
@@ -55,6 +74,7 @@
                 }
             }, false);
 
+
     document.querySelectorAll(".mvc-grid").forEach(element => {new MvcGrid(element)
         $("#AgregarReparacion").on("click",(e) =>{
             StartLoader();
@@ -71,7 +91,8 @@
                         }
                     });
                 StopLoader();
-            })
+            });
+
     });
 
     $(".buttonEditReparacion").on("click", (e) => {
@@ -108,6 +129,34 @@
                   if (result.isConfirmed) {
                         $.ajax({
                             url: '/Reparaciones/EliminarReparacion?reparacionId=' + id + '&userId=@user.Id',
+                            dataType: 'html',
+                            async: true,
+                            success: function (data) {
+                                location.reload();
+                            }
+                        });
+                  }
+                })
+                StopLoader();
+            });
+
+
+            $(".buttonDeleteCodigoProducto").on("click", (e) => {
+                StartLoader();
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                let id = e.target.getAttribute('id');
+
+                Swal.fire({
+                  title: 'Seguro que deseas eliminar el registro?',
+                  showDenyButton: true,
+                  confirmButtonText: 'Eliminar',
+                  denyButtonText: `Cancelar`,
+                }).then((result) => {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Reparaciones/EliminarCodigo?codigoId=' + id + '&userId=@user.Id',
                             dataType: 'html',
                             async: true,
                             success: function (data) {

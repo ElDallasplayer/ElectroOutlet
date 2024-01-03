@@ -122,9 +122,16 @@ namespace PrincipalObjects
 
         public static dynamic ConvertToDynamic(string stringAsJson)
         {
-            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            dynamic toResponse = JsonConvert.DeserializeObject(stringAsJson, settings);
-            return toResponse;
+            try
+            {
+                var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+                dynamic toResponse = JsonConvert.DeserializeObject(stringAsJson, settings);
+                return toResponse;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

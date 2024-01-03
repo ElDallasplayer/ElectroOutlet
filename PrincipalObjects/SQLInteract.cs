@@ -59,7 +59,7 @@ namespace PrincipalObjects
                 toJson = toJson + "{";
                 for (int i = 0; i < colsNames.Length; i++)
                 {
-                    toJson = toJson + "\"" + colsNames[i] + "\":\"" + reader[i] + "\",";
+                    toJson = toJson + "\"" + colsNames[i] + "\":\"" + (reader[i].ToString().Contains("\"")? reader[i].ToString().Replace('\"', '\'') : reader[i]) + "\",";
                 }
                 toJson = toJson.TrimEnd(',');
                 toJson = toJson + "},";
@@ -88,7 +88,7 @@ namespace PrincipalObjects
                 toJson = toJson + "{";
                 for (int i = 0; i < colsNames.Length; i++)
                 {
-                    toJson = toJson + "\"" + colsNames[i] + "\":\"" + reader[i] + "\",";
+                    toJson = toJson + "\"" + colsNames[i] + "\":\"" + (reader[i].ToString().Contains("\"")? reader[i].ToString().Replace('\"', '\'') : reader[i]) + "\",";
                 }
                 toJson = toJson.TrimEnd(',');
                 toJson = toJson + "},";

@@ -116,50 +116,54 @@ namespace PrincipalObjects.Objects
 
             List<Reparacion> ret = new List<Reparacion>();
 
-            foreach (dynamic row in repReturn.rows)
+            if (repReturn != null)
             {
-                try
+                foreach (dynamic row in repReturn.rows)
                 {
-                    Reparacion rep = new Reparacion()
-                    {
-                        Id = Convert.ToInt64(row.reId.Value.ToString()),
-                        Fecha = Convert.ToDateTime(row.reFecha.Value.ToString()),
-                        CodProducto = Convert.ToInt64(row.reCodProd.Value.ToString()),
-                        Estado = (reState)Convert.ToInt32(row.reEstado.Value.ToString()),
-                        Repuesto = row.reRepuesto.Value.ToString(),
-                        Trazabilidad = row.reTrazabilidad.Value.ToString(),
-                        Eliminado = Convert.ToBoolean(row.reEliminado.Value.ToString()),
-                        Empleado = Convert.ToInt32(row.reEmpleado.Value.ToString()) ?? -1,
-                        Usuario = Convert.ToInt32(row.reUsuario.Value.ToString()) ?? -1,
-                        ReparacionRealizada = row.reReparacion.Value?.ToString() ?? "",
-                    };
                     try
                     {
-                        rep.NombreEmpelado = employees.Where(x => x.empId == rep.Empleado).FirstOrDefault().NombreCompleto;
+                        Reparacion rep = new Reparacion()
+                        {
+                            Id = Convert.ToInt64(row.reId.Value.ToString()),
+                            Fecha = Convert.ToDateTime(row.reFecha.Value.ToString()),
+                            CodProducto = Convert.ToInt64(row.reCodProd.Value.ToString()),
+                            Estado = (reState)Convert.ToInt32(row.reEstado.Value.ToString()),
+                            Repuesto = row.reRepuesto.Value.ToString(),
+                            Trazabilidad = row.reTrazabilidad.Value.ToString(),
+                            Eliminado = Convert.ToBoolean(row.reEliminado.Value.ToString()),
+                            Empleado = Convert.ToInt32(row.reEmpleado.Value.ToString()) ?? -1,
+                            Usuario = Convert.ToInt32(row.reUsuario.Value.ToString()) ?? -1,
+                            ReparacionRealizada = row.reReparacion.Value?.ToString() ?? "",
+                        };
+                        try
+                        {
+                            rep.NombreEmpelado = employees.Where(x => x.empId == rep.Empleado).FirstOrDefault().NombreCompleto;
+                        }
+                        catch (Exception ex)
+                        {
+                            rep.NombreEmpelado = "Sin asignar";
+                        }
+
+                        rep.FechaAsString = rep.Fecha.ToString("dd/MM/yyyy");
+                        rep.EstadoAsString = rep.Estado.ToString();
+                        if (codigosProd.Any(x => x.Id == rep.CodProducto))
+                        {
+                            rep.CodigoProductoAsString = codigosProd.Where(x => x.Id == rep.CodProducto).FirstOrDefault().CodProducto;
+                        }
+                        else
+                        {
+                            rep.CodigoProductoAsString = "-";
+                        }
+                        ret.Add(rep);
                     }
                     catch (Exception ex)
                     {
-                        rep.NombreEmpelado = "Sin asignar";
+                        Utilities.WriteLog("ERROR AL CREAR REPARACION => " + ex.Message);
+                        Utilities.WriteLog("JSON => " + row.ToString());
                     }
-
-                    rep.FechaAsString = rep.Fecha.ToString("dd/MM/yyyy");
-                    rep.EstadoAsString = rep.Estado.ToString();
-                    if (codigosProd.Any(x => x.Id == rep.CodProducto))
-                    {
-                        rep.CodigoProductoAsString = codigosProd.Where(x => x.Id == rep.CodProducto).FirstOrDefault().CodProducto;
-                    }
-                    else
-                    {
-                        rep.CodigoProductoAsString = "-";
-                    }
-                    ret.Add(rep);
-                }
-                catch (Exception ex)
-                {
-                    Utilities.WriteLog("ERROR AL CREAR REPARACION => " + ex.Message);
-                    Utilities.WriteLog("JSON => " + row.ToString());
                 }
             }
+            
             return ret;
         }
 

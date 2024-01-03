@@ -9,6 +9,7 @@ namespace ElectroOULET.Controllers
         {
             ViewData["ActiveUser"] = new User().GetUserById((long)id);
 
+            ViewBag.CodigosProductos = new CodigoProducto().GetCodigoProductos();
             return View(new Reparacion().GetReparacionesMaxValue(400,0));
         }
 
@@ -84,6 +85,30 @@ namespace ElectroOULET.Controllers
             CodigoProducto cod = new CodigoProducto().AgregarCodigoDeProducto(nombreDeCodigo);
 
             return new JsonResult(new { Result = "OK", Message = "Guardado correctamente", Codigo = cod.Id, Nombre = cod.CodProducto });
+        }
+
+        public ActionResult ObtenerCodigosReparacion(int userId) 
+        {
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
+
+            List<CodigoProducto> cod = new CodigoProducto().GetCodigoProductos();
+
+            return View("Partials/_codigos", cod);
+        }
+
+        public JsonResult EliminarCodigo(int codigoId, int userId)
+        {
+            ViewData["ActiveUser"] = new User().GetUserById((long)userId);
+            bool eliminado = new CodigoProducto().DeleteCodigoProducto(codigoId);
+
+            if (eliminado)
+            {
+                return new JsonResult(new { Result = "OK", Message = "Registro eliminado correctamente" });
+            }
+            else
+            {
+                return new JsonResult(new { Result = "ERROR", Message = "Error al eliminar" });
+            }
         }
     }
 }

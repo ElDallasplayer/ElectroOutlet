@@ -99,5 +99,11 @@ namespace PrincipalObjects.Objects
                 return new CodigoProducto() { Id = -1, CodProducto = "ERROR AL GUARDAR" };
             }
         }
+
+        public bool DeleteCodigoProducto(long id)
+        {
+            bool isDelete = SQLInteract.DeleteDataInDatabase(TableName, (true, new string[1] { "codId = " + id }));
+            return isDelete;
+        }
     }
 }
